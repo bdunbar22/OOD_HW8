@@ -1,9 +1,12 @@
 package cs3500.music.model;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Allow for notes to be stored in a list and manipulated.
+ * Note that the start beat of a song is always beat 0. But Notes don't have to start at 0, meaning
+ * there could be all rests at the start of a song.
  *
  * Created by Ben on 3/2/16.
  */
@@ -92,13 +95,24 @@ public interface INoteList {
     List<INote> getNotesInBeat(final int beat);
 
     /**
-     * Return the last beat that will contain audible cs3500.music in a song.
-     * Note a note a beat 0 with a duration of 1 will play on beat 0 only. So that is the last beat.
+     * Return the last beat that will contain audible music in a song.
+     * Note a note at beat 0 with a duration of 1 will play on beat 0 only. So that is the last beat.
      * A note on beat 4 with a duration of 4 will play on beats 4, 5, 6, 7, so 7 is the last beat.
      * Note: a duration can not be 0.
-     * Empty song has a last beat of 0 because nothing was played.
+     * Empty song has a last beat of 0 because nothing was played and the start beat of a song is
+     * always 0 for the purposes of this project.
      *
      * @return the length of the song.
      */
     int getLastBeat();
+
+    /**
+     * This function will return a Map representation of the data that will be great for working
+     * with when it comes to accessing beats fast. Each key will be a beat of the song and the List
+     * of notes will contain all notes that will be audible at that beat. It will be a copied form
+     * of the data.
+     *
+     * @return consolidation map
+     */
+    Map<Integer, List<INote>> getConsolidationMap();
 }

@@ -73,6 +73,12 @@ public class NoteList implements INoteList{
         return _getLastBeat();
     }
 
+    //TODO: TESTING ON THIS
+    @Override
+    public Map<Integer, List<INote>> getConsolidationMap() {
+        return _getConsolidationMap();
+    }
+
     private void _addNote(final INote note) {
         if(this.notes.contains(note)) {
             return;
@@ -143,12 +149,20 @@ public class NoteList implements INoteList{
 
     private List<INote> _getNotesInBeat(final int beat) {
         List<INote> notesInBeat = new ArrayList<>();
-        for (INote note : this.notes) {
+        for(INote note : this.notes) {
             if(beat >= note.getStart() && beat < note.getStart() + note.getDuration()) {
                 notesInBeat.add(note.copy());
             }
         }
         return notesInBeat;
+    }
+
+    private Map<Integer, List<INote>> _getConsolidationMap() {
+        Map<Integer, List<INote>> data = new HashMap<>();
+        for(int i = 0; i <= this.getLastBeat(); i++) {
+            data.put(i, this.getNotesInBeat(i));
+        }
+        return data;
     }
 
     private int _getLastBeat() {
