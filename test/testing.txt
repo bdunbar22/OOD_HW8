@@ -1,0 +1,4 @@
+Testing view:
+
+As the model gives data to the view test that it works by 'simulating' the java graphics class
+- mock functions that draw a rectangle for example. Then test that mock function.
