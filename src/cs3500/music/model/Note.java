@@ -17,6 +17,29 @@ public final class Note implements INote{
     private Octave octave;
     private int start;
     private int duration;
+    private int instrument;
+    private int volume;
+
+
+    public Note(final Pitch pitch, final Octave octave, final int start, final int duration,
+      final int instrument, final int volume) {
+        if(start < 0) {
+            throw new IllegalArgumentException("Error. Note must start at beat 0 or later.");
+        }
+        if(duration < 1) {
+            throw new IllegalArgumentException("Error. Durations must be 1 beat or greater.");
+        }
+        this.pitch = pitch;
+        this.octave = octave;
+        this.start = start;
+        this.duration = duration;
+        this.instrument = instrument;
+        this.volume = volume;
+
+        System.out.print(this.volume);
+        //TODO: SET RANGE VALUES FOR VOLUME AND INSTRUMENT also... why is this constructor not
+        // being hit?
+    }
 
     /**
      * Allow for the creation of a note. Must provide parameters, there should not be such a thing
@@ -38,6 +61,8 @@ public final class Note implements INote{
         this.octave = octave;
         this.start = start;
         this.duration = duration;
+        this.instrument = 0;
+        this.volume = 64;
     }
 
     public int getStart() {
@@ -56,6 +81,10 @@ public final class Note implements INote{
         return new Octave(this.octave.getValue());
     }
 
+    public int getInstrument() { return this.instrument; }
+
+    public int getVolume() { return this.volume; }
+
     public void setPitch(final Pitch pitch) {
         this.pitch = pitch;
     }
@@ -71,6 +100,10 @@ public final class Note implements INote{
     public void setDuration(final int duration) {
         this.duration = duration;
     }
+
+    public void setInstrument(final int instrument) { this.instrument = instrument; }
+
+    public void setVolume(final int volume) { this.volume = volume; }
 
     /**
      * Shows the display of a note.
@@ -182,5 +215,23 @@ public final class Note implements INote{
     private Boolean checkTone(INote checkNote) {
         return (this.pitch.hashCode() == checkNote.getPitch().hashCode() &&
             this.octave.getValue() == checkNote.getOctave().getValue());
+    }
+
+    /**
+     * Gets the Midi integer value associated with the note's pitch for use in Midi players.
+     *
+     * @return Midi value
+     */
+  public int getMidiPitch() {
+        if ((pitch.compareTo(Pitch.A) < 0 && octave.getValue() == 0) || octave.getValue() < 0) {
+            throw new IllegalArgumentException("Error. Pitch too low for Midi use.");
+        }
+        if ((pitch.compareTo(Pitch.C) > 0 && octave.getValue() == 8) || octave.getValue() > 8) {
+            throw new IllegalArgumentException("Error. Pitch too high for Midi use.");
+        }
+
+        int pitchValue = this.pitch.ordinal() + 1;
+        int octave = this.octave.getValue();
+        return pitchValue + (octave * 12) + 11;
     }
 }

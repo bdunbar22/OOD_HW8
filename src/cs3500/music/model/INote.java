@@ -17,6 +17,10 @@ public interface INote {
 
     Octave getOctave();
 
+    int getInstrument();
+
+    int getVolume();
+
     void setPitch(final Pitch pitch);
 
     void setOctave(final Octave octave);
@@ -25,18 +29,20 @@ public interface INote {
 
     void setDuration(final int duration);
 
+    void setInstrument(final int instrument);
+
+    void setVolume(final int volume);
+
     /**
      * Shows the display of a note.
-     *
+     * <p>
      * Notes are displayed as a five-character string with the pitch and octave centered.
      * The pitch and octaves go from 2 characters (ex. C1) to 4 characters (ex. A#10).
-     *
      *
      * @return display string
      * @throws IllegalStateException if the tone is invalid.
      */
-    @Override
-    String toString();
+    @Override String toString();
 
 
     /**
@@ -74,4 +80,6 @@ public interface INote {
      * of check note.
      */
     Boolean isPersisting(INote checkNote);
+
+    int getMidiPitch();
 }

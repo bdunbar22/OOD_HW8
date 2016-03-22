@@ -372,4 +372,38 @@ public class NoteTest {
         //start beat out of bounds after
         assertFalse(testNote1.isPersisting(testNote2));
     }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void midiPitchTooLowPitch() {
+        Note testNote1 = new Note(Pitch.C, new Octave(0), 1, 1);
+        testNote1.getMidiPitch();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void midiPitchTooLowOctave() {
+        Note testNote1 = new Note(Pitch.ASHARP, new Octave(-1), 1, 1);
+        testNote1.getMidiPitch();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void midiPitchTooHighOctave() {
+        Note testNote1 = new Note(Pitch.C, new Octave(9), 1, 1);
+        testNote1.getMidiPitch();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void midiPitchTooHighPitch() {
+        Note testNote1 = new Note(Pitch.A, new Octave(8), 1, 1);
+        testNote1.getMidiPitch();
+    }
+
+    @Test
+    public void getMidiPitch() {
+        Note testNote1 = new Note(Pitch.C, new Octave(4), 1, 1);
+        assertEquals(60, testNote1.getMidiPitch());
+        testNote1 = new Note(Pitch.A, new Octave(0), 1, 1);
+        assertEquals(21, testNote1.getMidiPitch());
+        testNote1 = new Note(Pitch.C, new Octave(8), 1, 1);
+        assertEquals(108, testNote1.getMidiPitch());
+    }
 }
