@@ -3,15 +3,38 @@ package cs3500.music.model;
 import java.util.List;
 
 /**
- * Allow for a piece of cs3500.music to be realized. A piece of cs3500.music has all of the abilities of
+ * Allow for a piece of cs3500.music to be realized. A piece of music has all of the abilities of
  * a set of notes. It can also perform macro operations on these notes to create new pieces of
- * cs3500.music.
+ * music. A piece of music has a measure length and a current beat.
+ *
  *
  * Created by Ben on 3/3/16.
  */
 public final class Piece extends NoteList implements IPiece {
+    private int measure;
+    private int currentBeat;
+
     public Piece() {
         super();
+        this.measure = 4;
+        this.currentBeat = 0;
+    }
+
+    //TODO: Test measure and current beat functions and integrate to other methods.
+    public void setMeasure(int measure) {
+        this.measure = measure;
+    }
+
+    public int getMeasure() {
+        return measure;
+    }
+
+    public void setBeat(int beat) {
+        this.currentBeat = beat;
+    }
+
+    public int getBeat() {
+        return currentBeat;
     }
 
     @Override

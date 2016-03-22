@@ -110,7 +110,10 @@ public interface INoteList {
      * This function will return a Map representation of the data that will be great for working
      * with when it comes to accessing beats fast. Each key will be a beat of the song and the List
      * of notes will contain all notes that will be audible at that beat. It will be a copied form
-     * of the data.
+     * of the data. Note that notes with a duration of x will appear x times in the map, once for
+     * beat they will be audible during. Keep in mind that editing one will not necessarily affect
+     * the others because implementations may use copies for each time the note is added to the map
+     * rather than a reference.
      *
      * @return consolidation map
      */

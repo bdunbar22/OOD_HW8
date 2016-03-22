@@ -2,13 +2,11 @@ README
 
 Working in collaboration: Ben Dunbar and Sam Letcher
 
-TODO: update
-
 Hello
 
-This is my project submission for homework 5, The Music Editor: First Movement. It realizes a model
-for representing and editing music. It allows for a number of operations to be made to a musical
-work.
+This is our project submission for homework 6, The Music Editor: Second Movement. It realizes a
+model for representing and editing music. It allows for a number of operations to be made to a
+musical work. It also provides three views to be used on the model.
 
 In this model music is represented as a list of notes. Each note is an object with a pitch, start
 beat, duration and octave. The note class ensures that the start beat >= 0 and the duration is > 0.
@@ -71,7 +69,7 @@ From INoteList:
 - Get the notes in a list of music (Returns a deep copied list for security)
 - Get the number of the last beat that music will be playing in.
   and
-- DISPLAY MUSIC TO THE CONSOLE: String musicOutput();
+- Get a consolidation map. Great data model for accessing notes that are audible at a given beat.
 
 From IPiece
 (All methods return a new piece of music so the original(s) aren't lost.)
@@ -85,6 +83,10 @@ From IPiece
 - increment a field on every note a given number of times.
 - reverse a piece of music
 - copy a piece of music
+
+In order to have fast access to the notes at a given beat. The INoteList includes a function that
+will consolidate the data into a Map<Integer, List<INote>> that gives fast access to the list of
+notes playing at any given beat.
 
 All provided methods have been tested thoroughly.
 
