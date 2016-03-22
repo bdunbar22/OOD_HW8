@@ -1,28 +1,36 @@
 package cs3500.music.view;
 
-import javax.sound.midi.*;
-/*
+import cs3500.music.model.IPiece;
 
-*/
+import javax.sound.midi.*;
+
 /**
  * A skeleton for MIDI playback
- *//*
-
+ */
 public class MidiViewImpl implements IMusicView {
   private final Synthesizer synth;
   private final Receiver receiver;
 
   public MidiViewImpl() {
+    Synthesizer trySynth;
+    Receiver tryReceive;
     try {
-      this.synth = MidiSystem.getSynthesizer();
-      this.receiver = synth.getReceiver();
+      trySynth = MidiSystem.getSynthesizer();
+      tryReceive = trySynth.getReceiver();
+    } catch (MidiUnavailableException e) {
+      e.printStackTrace();
+      trySynth = null;
+      tryReceive = null;
+    }
+    this.synth = trySynth;
+    this.receiver = tryReceive;
+    try {
       this.synth.open();
     } catch (MidiUnavailableException e) {
       e.printStackTrace();
     }
   }
-  */
-/**
+  /**
    * Relevant classes and methods from the javax.sound.midi library:
    * <ul>
    *  <li>{@link MidiSystem#getSynthesizer()}</li>
@@ -51,8 +59,7 @@ public class MidiViewImpl implements IMusicView {
    * @see <a href="https://en.wikipedia.org/wiki/General_MIDI">
    *   https://en.wikipedia.org/wiki/General_MIDI
    *   </a>
-   *//*
-
+   */
 
   public void playNote() throws InvalidMidiDataException {
     MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, 0, 60, 64);
@@ -61,5 +68,9 @@ public class MidiViewImpl implements IMusicView {
     this.receiver.send(stop, this.synth.getMicrosecondPosition() + 200000);
     this.receiver.close(); // Only call this once you're done playing *all* notes
   }
+
+  @Override
+  public void viewMusic(IPiece music) {
+    //TODO: this.
+  }
 }
-*/

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -456,6 +457,68 @@ public class NoteListTest {
         assertTrue(notes.contains(new Note(Pitch.FSHARP, new Octave(6), 2, 4)));
     }
 
+    /**
+     * Test the consolidation map
+     */
+    @Test
+    public void testConsolitationMap() {
+        INoteList testList = testNormalListHelper5();
+        Map<Integer, List<INote>> data = testList.getConsolidationMap();
+        assertEquals(7, data.size());
+        //Playing at beat 0
+        assertTrue(data.get(0).contains(new Note(Pitch.DSHARP, new Octave(2), 0, 3)));
+
+        //Playing at beat 1
+        assertTrue(data.get(1).contains(new Note(Pitch.CSHARP, new Octave(3), 1, 2)));
+        assertTrue(data.get(1).contains(new Note(Pitch.DSHARP, new Octave(2), 1, 4)));
+        assertTrue(data.get(1).contains(new Note(Pitch.FSHARP, new Octave(2), 1, 3)));
+        assertTrue(data.get(1).contains(new Note(Pitch.B, new Octave(2), 1, 4)));
+        assertTrue(data.get(1).contains(new Note(Pitch.C, new Octave(2), 1, 3)));
+        //Continueing at beat 1
+        assertTrue(data.get(1).contains(new Note(Pitch.DSHARP, new Octave(2), 0, 3)));
+
+        //Playing at beat 2
+        assertTrue(data.get(2).contains(new Note(Pitch.FSHARP, new Octave(2), 2, 4)));
+        assertTrue(data.get(2).contains(new Note(Pitch.ASHARP, new Octave(3), 2, 2)));
+        assertTrue(data.get(2).contains(new Note(Pitch.E, new Octave(3), 2, 2)));
+        //Continueing at beat 2
+        assertTrue(data.get(2).contains(new Note(Pitch.DSHARP, new Octave(2), 0, 3)));
+        assertTrue(data.get(2).contains(new Note(Pitch.CSHARP, new Octave(3), 1, 2)));
+        assertTrue(data.get(2).contains(new Note(Pitch.DSHARP, new Octave(2), 1, 4)));
+        assertTrue(data.get(2).contains(new Note(Pitch.FSHARP, new Octave(2), 1, 3)));
+        assertTrue(data.get(2).contains(new Note(Pitch.B, new Octave(2), 1, 4)));
+        assertTrue(data.get(2).contains(new Note(Pitch.C, new Octave(2), 1, 3)));
+
+        //Playing at beat 3
+        assertTrue(data.get(3).contains(new Note(Pitch.ASHARP, new Octave(2), 3, 2)));
+        //Continueing at beat 3
+        assertTrue(data.get(3).contains(new Note(Pitch.FSHARP, new Octave(2), 1, 3)));
+        assertTrue(data.get(3).contains(new Note(Pitch.C, new Octave(2), 1, 3)));
+        assertTrue(data.get(3).contains(new Note(Pitch.ASHARP, new Octave(3), 2, 2)));
+        assertTrue(data.get(3).contains(new Note(Pitch.E, new Octave(3), 2, 2)));
+        assertTrue(data.get(3).contains(new Note(Pitch.FSHARP, new Octave(2), 2, 4)));
+        assertTrue(data.get(3).contains(new Note(Pitch.DSHARP, new Octave(2), 1, 4)));
+        assertTrue(data.get(3).contains(new Note(Pitch.DSHARP, new Octave(2), 1, 4)));
+
+        //Playing at beat 4
+        assertTrue(data.get(4).contains(new Note(Pitch.CSHARP, new Octave(3), 4, 3)));
+        assertTrue(data.get(4).contains(new Note(Pitch.D, new Octave(3), 4, 3)));
+        //Continuing at beat 4
+        assertTrue(data.get(4).contains(new Note(Pitch.FSHARP, new Octave(2), 2, 4)));
+        assertTrue(data.get(4).contains(new Note(Pitch.ASHARP, new Octave(2), 3, 2)));
+        assertTrue(data.get(4).contains(new Note(Pitch.DSHARP, new Octave(2), 1, 4)));
+        assertTrue(data.get(4).contains(new Note(Pitch.B, new Octave(2), 1, 4)));
+
+        //Continuing at beat 5
+        assertTrue(data.get(5).contains(new Note(Pitch.FSHARP, new Octave(2), 2, 4)));
+        assertTrue(data.get(5).contains(new Note(Pitch.CSHARP, new Octave(3), 4, 3)));
+        assertTrue(data.get(5).contains(new Note(Pitch.D, new Octave(3), 4, 3)));
+
+        //Continuing at beat 6
+        assertTrue(data.get(6).contains(new Note(Pitch.CSHARP, new Octave(3), 4, 3)));
+        assertTrue(data.get(6).contains(new Note(Pitch.D, new Octave(3), 4, 3)));
+    }
+
     private INoteList testNormalListHelper() {
         INoteList testList = new NoteList();
         testList.addNote(new Note(Pitch.A, new Octave(3), 0, 1));
@@ -491,6 +554,23 @@ public class NoteListTest {
         testList.addNote(new Note(Pitch.CSHARP, new Octave(4), 4, 3));
         testList.addNote(new Note(Pitch.FSHARP, new Octave(6), 1, 3));
         testList.addNote(new Note(Pitch.ASHARP, new Octave(3), 2, 2));
+        return testList;
+    }
+
+    private INoteList testNormalListHelper5() {
+        INoteList testList = new NoteList();
+        testList.addNote(new Note(Pitch.DSHARP, new Octave(2), 0, 3));
+        testList.addNote(new Note(Pitch.CSHARP, new Octave(3), 1, 2));
+        testList.addNote(new Note(Pitch.FSHARP, new Octave(2), 2, 4));
+        testList.addNote(new Note(Pitch.ASHARP, new Octave(2), 3, 2));
+        testList.addNote(new Note(Pitch.DSHARP, new Octave(2), 1, 4));
+        testList.addNote(new Note(Pitch.CSHARP, new Octave(3), 4, 3));
+        testList.addNote(new Note(Pitch.FSHARP, new Octave(2), 1, 3));
+        testList.addNote(new Note(Pitch.ASHARP, new Octave(3), 2, 2));
+        testList.addNote(new Note(Pitch.B, new Octave(2), 1, 4));
+        testList.addNote(new Note(Pitch.D, new Octave(3), 4, 3));
+        testList.addNote(new Note(Pitch.C, new Octave(2), 1, 3));
+        testList.addNote(new Note(Pitch.E, new Octave(3), 2, 2));
         return testList;
     }
 }

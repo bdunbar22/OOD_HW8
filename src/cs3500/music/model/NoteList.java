@@ -56,15 +56,6 @@ public class NoteList implements INoteList{
         return _getNotes();
     }
 
-    /**
-     * This may be improved by reorganizing how we are storing notes to a
-     * Map<beat, List<INote>>
-     * Also consider just doing a consolidation Map before playing the song. This way it is
-     * easy to work with the notes while editing, but allows for a data structure that can be
-     * navigated faster while playing after editing is done.
-     * @param beat
-     * @return
-     */
     @Override
     public List<INote> getNotesInBeat(final int beat) { return _getNotesInBeat(beat); }
 
@@ -73,7 +64,6 @@ public class NoteList implements INoteList{
         return _getLastBeat();
     }
 
-    //TODO: TESTING ON THIS
     @Override
     public Map<Integer, List<INote>> getConsolidationMap() {
         return _getConsolidationMap();
