@@ -32,6 +32,6 @@ public class GuiViewFrame extends JFrame implements IMusicView {
 
   @Override
   public void viewMusic(IPiece music) {
-
+    this.initialize();
   }
 }

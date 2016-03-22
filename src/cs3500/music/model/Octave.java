@@ -16,7 +16,7 @@ public final class Octave {
     private final static int low = -9;
     private final static int high = 99;
 
-    Octave(final Integer octave) {
+    public Octave(final Integer octave) {
         if(octave < low || octave > high) {
             throw new IllegalArgumentException("This octave is out of bounds.");
         }
