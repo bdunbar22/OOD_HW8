@@ -86,4 +86,6 @@ public interface IViewPiece {
      * Get the beat of the song that the piece is currently at
      */
     int getBeat();
+
+    int getTempo();
 }
