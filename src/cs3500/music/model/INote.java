@@ -81,5 +81,11 @@ public interface INote {
      */
     Boolean isPersisting(INote checkNote);
 
+    /**
+     * This function converts the note's pitch and duration to a Midi pitch and duration.
+     * TODO: This should be moved to the midi view as a private function... A note shouldn't care
+     * how the view interprets it.
+     * @return
+     */
     int getMidiPitch();
 }

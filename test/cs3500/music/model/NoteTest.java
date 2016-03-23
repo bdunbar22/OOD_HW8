@@ -373,28 +373,28 @@ public class NoteTest {
         assertFalse(testNote1.isPersisting(testNote2));
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void midiPitchTooLowPitch() {
         Note testNote1 = new Note(Pitch.C, new Octave(0), 1, 1);
-        testNote1.getMidiPitch();
+        assertEquals(21, testNote1.getMidiPitch());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void midiPitchTooLowOctave() {
         Note testNote1 = new Note(Pitch.ASHARP, new Octave(-1), 1, 1);
-        testNote1.getMidiPitch();
+        assertEquals(21, testNote1.getMidiPitch());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void midiPitchTooHighOctave() {
         Note testNote1 = new Note(Pitch.C, new Octave(9), 1, 1);
-        testNote1.getMidiPitch();
+        assertEquals(108, testNote1.getMidiPitch());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void midiPitchTooHighPitch() {
         Note testNote1 = new Note(Pitch.A, new Octave(8), 1, 1);
-        testNote1.getMidiPitch();
+        assertEquals(108, testNote1.getMidiPitch());
     }
 
     @Test

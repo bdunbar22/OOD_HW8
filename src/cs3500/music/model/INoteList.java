@@ -1,5 +1,7 @@
 package cs3500.music.model;
 
+import javafx.util.Pair;
+
 import java.util.List;
 import java.util.Map;
 
@@ -105,6 +107,11 @@ public interface INoteList {
      * @return the length of the song.
      */
     int getLastBeat();
+
+    /**
+     * Get Tone Range for the piece
+     */
+    List<Pair<Octave, Pitch>> getToneRange();
 
     /**
      * This function will return a Map representation of the data that will be great for working

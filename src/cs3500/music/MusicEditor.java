@@ -2,10 +2,8 @@ package cs3500.music;
 
 import cs3500.music.model.*;
 import cs3500.music.util.MusicReader;
-import cs3500.music.view.ConsoleView;
-import cs3500.music.view.GuiViewFrame;
+import cs3500.music.view.*;
 import cs3500.music.view.MidiViewImpl;
-//import cs3500.music.view.MidiViewImpl;
 
 import javax.sound.midi.InvalidMidiDataException;
 import java.io.IOException;
@@ -13,17 +11,15 @@ import java.io.IOException;
 
 public class MusicEditor {
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    /* Sam: Use musicReader to get a noteList() and then use it in each of the
-    Views. I think, at least.
-     */
     MusicReader musicReader;
     IPiece piece = testBuildPiece();
-    //GuiViewFrame view = new GuiViewFrame();
-    //view.viewMusic(piece);
-    MidiViewImpl midiView = new MidiViewImpl();
-    midiView.viewMusic(piece);
-    //ConsoleView consoleView = new ConsoleView();
-    // You probably need to connect these views to your model, too...
+    IPieceView pieceView = new PieceView(piece);
+    GuiViewFrame view = new GuiViewFrame(pieceView);
+    view.viewMusic();
+    MidiViewImpl midiView = new MidiViewImpl(pieceView);
+    midiView.viewMusic();
+    ConsoleView consoleView = new ConsoleView(pieceView);
+    consoleView.viewMusic();
   }
 
   private static IPiece testBuildPiece() {

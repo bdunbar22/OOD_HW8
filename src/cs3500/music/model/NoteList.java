@@ -65,6 +65,9 @@ public class NoteList implements INoteList{
     }
 
     @Override
+    public List<Pair<Octave, Pitch>> getToneRange() { return _getToneRange(); }
+
+    @Override
     public Map<Integer, List<INote>> getConsolidationMap() {
         return _getConsolidationMap();
     }
@@ -182,7 +185,7 @@ public class NoteList implements INoteList{
      * Return a sorted list of all of the tones in the piece. Ex C0 - B10.
      * This list should contain all of the tones between the extremes.
      */
-    private List<Pair<Octave, Pitch>> getToneRange() {
+    private List<Pair<Octave, Pitch>> _getToneRange() {
         Collections.sort(this.notes, new PitchAndOctaveComparator());
         //Identify the range.
         Pitch lowPitch = this.notes.get(0).getPitch();

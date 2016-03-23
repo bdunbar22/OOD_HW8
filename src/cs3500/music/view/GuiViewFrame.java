@@ -15,8 +15,8 @@ public class GuiViewFrame extends JFrame implements IMusicView {
   /**
    * Creates new GuiView
    */
-  public GuiViewFrame() {
-    this.displayPanel = new ConcreteGuiViewPanel();
+  public GuiViewFrame(IPieceView pieceView) {
+    this.displayPanel = new ConcreteGuiViewPanel(pieceView);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     this.getContentPane().add(displayPanel);
     this.pack();
@@ -31,7 +31,7 @@ public class GuiViewFrame extends JFrame implements IMusicView {
   }
 
   @Override
-  public void viewMusic(IPiece music) {
+  public void viewMusic() {
     this.initialize();
   }
 }
