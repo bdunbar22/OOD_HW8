@@ -48,6 +48,8 @@ public final class Piece extends NoteList implements IPiece {
         notes.addAll(notesToAdd);
 
         builder.addNotes(notes);
+        builder.setBeat(this.getBeat());
+        builder.setMeasure(this.getMeasure());
         return builder;
     }
 
@@ -58,6 +60,8 @@ public final class Piece extends NoteList implements IPiece {
         List<INote> notesToAdd = piece.getNotes();
         notes.addAll(notesToAdd);
         builder.addNotes(notes);
+        builder.setBeat(this.getBeat());
+        builder.setMeasure(this.getMeasure());
         return builder;
     }
 
@@ -69,6 +73,8 @@ public final class Piece extends NoteList implements IPiece {
             note.increment(field);
         }
         piece.addNotes(notes);
+        piece.setBeat(this.getBeat());
+        piece.setMeasure(this.getMeasure());
         return piece;
     }
 
@@ -80,6 +86,8 @@ public final class Piece extends NoteList implements IPiece {
         for(int i = 1; i < num; i++) {
             piece = piece.changeField(field);
         }
+        piece.setBeat(this.getBeat());
+        piece.setMeasure(this.getMeasure());
         return piece;
     }
 
@@ -94,6 +102,8 @@ public final class Piece extends NoteList implements IPiece {
             edit.setStart(lastBeat - note.getStart() - note.getDuration() + 1);
             reversed.changeNote(note, edit);
         }
+        reversed.setBeat(this.getBeat());
+        reversed.setMeasure(this.getMeasure());
         return reversed;
     }
 
@@ -102,6 +112,8 @@ public final class Piece extends NoteList implements IPiece {
         IPiece copy = new Piece();
         List<INote> notes = this.getNotes();
         copy.addNotes(notes);
+        copy.setBeat(this.getBeat());
+        copy.setMeasure(this.getMeasure());
         return copy;
     }
 }

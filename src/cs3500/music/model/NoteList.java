@@ -2,7 +2,9 @@ package cs3500.music.model;
 
 import javafx.util.Pair;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Implements INoteList
@@ -122,10 +124,14 @@ public class NoteList implements INoteList{
         output += this.printNoteRange(toneRange) + "\n";
 
         //Get each subsequent row
+        List<INote> notesInBeat = new ArrayList<>();
         for(int i = 0; i <= songLength; i++) {
             output += this.getRowNumber(i, songLength);
+
+            notesInBeat = this.getNotesInBeat(i);
+
             for(Pair<Octave, Pitch> tone : toneRange) {
-                    output += this.displayForNote(new Note(tone.getValue(), tone.getKey(), i, 1));
+                output += displayForNote(notesInBeat, new Note(tone.getValue(), tone.getKey(), i, 1));
             }
             output += "\n";
         }
@@ -271,13 +277,14 @@ public class NoteList implements INoteList{
      * If a note is not present return "     "
      * If a note is starting to be played return "  X  "
      * If a note is persisting return "  |  "
+     * Playing takes precedence over continuing (persisting)
      */
-    private String displayForNote(INote noteToCheck) {
-        for(INote note : this.notes) {
+    private String displayForNote(List<INote> notesInBeat, INote noteToCheck) {
+        for(INote note : notesInBeat) {
             if(note.isStarting(noteToCheck)) {
                 return Output.START.toString();
             }
-            if(note.isPersisting(noteToCheck)) {
+            else if(note.isPersisting(noteToCheck)) {
                 return Output.PLAYING.toString();
             }
         }

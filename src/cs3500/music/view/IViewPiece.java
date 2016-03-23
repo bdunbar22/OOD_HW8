@@ -76,4 +76,14 @@ public interface IViewPiece {
      * @return string to display
      */
     String musicOutput();
+
+    /**
+     * Get the measure length of a piece of music
+     */
+    int getMeasure();
+
+    /**
+     * Get the beat of the song that the piece is currently at
+     */
+    int getBeat();
 }

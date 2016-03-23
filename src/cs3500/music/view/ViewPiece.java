@@ -45,4 +45,10 @@ public class ViewPiece implements IViewPiece {
     public String musicOutput() {
         return piece.musicOutput();
     }
+
+    @Override
+    public int getMeasure() { return piece.getMeasure(); }
+
+    @Override
+    public int getBeat() { return piece.getBeat(); }
 }

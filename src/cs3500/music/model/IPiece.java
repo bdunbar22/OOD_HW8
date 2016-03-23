@@ -74,4 +74,27 @@ public interface IPiece extends INoteList{
      * @return the copy.
      */
     IPiece copy();
+
+    /**
+     * Set the measure length of a piece of music. Default is 4.
+     * @param measure to set
+     */
+    void setMeasure(int measure);
+
+    /**
+     * Get the measure length of a piece of music
+     */
+    int getMeasure();
+
+    /**
+     * Set the current beat of a piece of music. Default starts at 0 because the song has
+     * not started
+     * @param beat to go to
+     */
+    void setBeat(int beat);
+
+    /**
+     * Get the beat of the song that the piece is currently at
+     */
+    int getBeat();
 }
