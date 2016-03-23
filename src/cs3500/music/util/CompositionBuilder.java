@@ -1,34 +1,30 @@
 package cs3500.music.util;
 
+import cs3500.music.model.*;
+
 /**
- * A builder of compositions.  Since we do not know in advance what
- * the name of the main type is for a model, we parameterize this builder interface
- * by an unknown type.
- *
- * @param <T> The type of the constructed composition
+ * Created by Sam Letcher on 3/23/2016.
  */
-public interface CompositionBuilder<T> {
-  /**
-   * Constructs an actual composition, given the notes that have been added
-   * @return The new composition
-   */
-  T build();
+public class CompositionBuilder implements ICompositionBuilder<IPiece> {
+  Piece piece = new Piece();
 
-  /**
-   * Sets the tempo of the piece
-   * @param tempo The speed, in microseconds per beat
-   * @return This builder
-   */
-  CompositionBuilder<T> setTempo(int tempo);
+  public IPiece build() {
+    return piece;
+  }
 
-  /**
-   * Adds a new note to the piece
-   * @param start The start time of the note, in beats
-   * @param end The end time of the note, in beats
-   * @param instrument The instrument number (to be interpreted by MIDI)
-   * @param pitch The pitch (in the range [0, 127], where 60 represents C4, the middle-C on a piano)
-   * @param volume The volume (in the range [0, 127])
-   * @return
-   */
-  CompositionBuilder<T> addNote(int start, int end, int instrument, int pitch, int volume);
+  public ICompositionBuilder<IPiece> setTempo(int tempo) {
+    piece.setTempo(tempo);
+    return this;
+  }
+//TODO: TEST THIS
+  public ICompositionBuilder<IPiece> addNote(int start, int end, int instrument, int pitch, int
+    volume) {
+    pitch = pitch - 11;
+    Octave octave = new Octave(pitch/12);
+    Pitch charPitch = Pitch.values()[pitch % 12];
+    int duration = end - start;
+
+    piece.addNote(new Note(charPitch, octave, start, duration, instrument, volume));
+    return this;
+  }
 }

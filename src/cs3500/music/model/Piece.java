@@ -13,14 +13,16 @@ import java.util.List;
 public final class Piece extends NoteList implements IPiece {
     private int measure;
     private int currentBeat;
+    private int tempo;
 
     public Piece() {
         super();
         this.measure = 4;
         this.currentBeat = 0;
+        this.tempo = 500000;
     }
 
-    //TODO: Test measure and current beat functions and integrate to other methods.
+    //TODO: Test measure and current beat methods and integrate to other methods.
     public void setMeasure(int measure) {
         this.measure = measure;
     }
@@ -36,6 +38,10 @@ public final class Piece extends NoteList implements IPiece {
     public int getBeat() {
         return currentBeat;
     }
+
+    public void setTempo(final int tempo) {this.tempo = tempo; }
+
+    public int getTempo() { return this.tempo; }
 
     @Override
     public IPiece serialMerge(IPiece piece) {

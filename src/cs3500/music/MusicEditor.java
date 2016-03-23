@@ -38,4 +38,12 @@ public class MusicEditor {
     System.out.print(piece.musicOutput());
     return piece;
   }
+
+  private static IPiece buildPiece(String[] args) {
+    IPiece piece = new Piece();
+    for (String s : args) {
+      System.out.print(s);
+    }
+    return piece;
+  }
 }

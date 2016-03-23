@@ -26,7 +26,7 @@ public class MusicReader {
    * @param <T> The main model interface type describing cs3500.music compositions
    * @return
    */
-  public static <T> T parseFile(Readable readable, CompositionBuilder<T> piece) {
+  public static <T> T parseFile(Readable readable, ICompositionBuilder<T> piece) {
     Scanner scanner = new Scanner(readable);
     while (scanner.hasNext()) {
       String lineType = scanner.next();
