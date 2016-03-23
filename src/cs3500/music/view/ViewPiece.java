@@ -51,4 +51,7 @@ public class ViewPiece implements IViewPiece {
 
     @Override
     public int getBeat() { return piece.getBeat(); }
+
+    @Override
+    public int getTempo() { return piece.getTempo(); }
 }
