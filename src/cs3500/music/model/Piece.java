@@ -45,45 +45,33 @@ public final class Piece extends NoteList implements IPiece {
 
     @Override
     public IPiece serialMerge(IPiece piece) {
-        IPiece builder = new Piece();
-        final int lastNote = this.getLastBeat();
-        List<INote> notes = this.getNotes();
+        IPiece builder = this.copy();
+        final int lastNote = builder.getLastBeat();
 
         IPiece pieceToAdd = piece.changeField(NoteField.START, lastNote);
         List<INote> notesToAdd = pieceToAdd.getNotes();
-        notes.addAll(notesToAdd);
 
-        builder.addNotes(notes);
-        builder.setBeat(this.getBeat());
-        builder.setMeasure(this.getMeasure());
-        builder.setTempo(this.getTempo());
+        builder.addNotes(notesToAdd);
         return builder;
     }
 
     @Override
     public IPiece parallelMerge(IPiece piece) {
-        IPiece builder = new Piece();
-        List<INote> notes = this.getNotes();
+        IPiece builder = this.copy();
         List<INote> notesToAdd = piece.getNotes();
-        notes.addAll(notesToAdd);
-        builder.addNotes(notes);
-        builder.setBeat(this.getBeat());
-        builder.setMeasure(this.getMeasure());
-        builder.setTempo(this.getTempo());
+        builder.addNotes(notesToAdd);
         return builder;
     }
 
     @Override
     public IPiece changeField(NoteField field) {
-        IPiece piece = new Piece();
-        List<INote> notes = this.getNotes();
+        IPiece piece = this.copy();
+        List<INote> notes = piece.getNotes();
         for(INote note : notes) {
-            note.increment(field);
+            INote edit = note.copy();
+            edit.increment(field);
+            piece.changeNote(note, edit);
         }
-        piece.addNotes(notes);
-        piece.setBeat(this.getBeat());
-        piece.setMeasure(this.getMeasure());
-        piece.setTempo(this.getTempo());
         return piece;
     }
 
@@ -95,16 +83,13 @@ public final class Piece extends NoteList implements IPiece {
         for(int i = 1; i < num; i++) {
             piece = piece.changeField(field);
         }
-        piece.setBeat(this.getBeat());
-        piece.setMeasure(this.getMeasure());
-        piece.setTempo(this.getTempo());
         return piece;
     }
 
     @Override
     public IPiece reversePiece() {
         IPiece reversed = this.copy();
-        final int lastBeat = this.getLastBeat();
+        final int lastBeat = reversed.getLastBeat();
         //get notes returns a deep copy of the list. But the changeNote function will use the
         //Notes equals functionality to find what to change. This will result in a correct change.
         for(INote note : reversed.getNotes()) {
@@ -112,9 +97,6 @@ public final class Piece extends NoteList implements IPiece {
             edit.setStart(lastBeat - note.getStart() - note.getDuration() + 1);
             reversed.changeNote(note, edit);
         }
-        reversed.setBeat(this.getBeat());
-        reversed.setMeasure(this.getMeasure());
-        reversed.setTempo(this.getTempo());
         return reversed;
     }
 

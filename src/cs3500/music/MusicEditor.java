@@ -10,9 +10,15 @@ import java.io.IOException;
 
 
 public class MusicEditor {
+  /**
+   * Arguments to main should be the text file name and the
+   * @param args
+   * @throws IOException
+   * @throws InvalidMidiDataException
+     */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
     MusicReader musicReader;
-    IPiece piece = testBuildPiece();
+    IPiece piece = testBuildPieceMelody();
     IViewPiece viewPiece = new ViewPiece(piece);
     GuiViewFrame view = new GuiViewFrame(viewPiece);
     view.viewMusic();
@@ -38,6 +44,20 @@ public class MusicEditor {
     piece = piece.serialMerge(piece.reversePiece());
     piece.addNote(new Note(Pitch.GSHARP, new Octave(2), 49, 16));
     System.out.print(piece.musicOutput());
+    return piece;
+  }
+
+  private static IPiece testBuildPieceMelody() {
+    IPiece piece = new Piece();
+    piece.addNote(new Note(Pitch.A, new Octave(3), 0, 2));
+    piece.addNote(new Note(Pitch.B, new Octave(3), 1, 2));
+    piece.addNote(new Note(Pitch.C, new Octave(4), 2, 2));
+    piece.addNote(new Note(Pitch.D, new Octave(4), 3, 2));
+    piece.addNote(new Note(Pitch.E, new Octave(4), 4, 2));
+    IPiece piece2 = piece.serialMerge(piece.reversePiece());
+    piece = piece2.serialMerge(piece2);
+    piece = piece.serialMerge(piece.changeField(NoteField.OCTAVE));
+    piece = piece.parallelMerge(piece2.changeField(NoteField.START, 23));
     return piece;
   }
 

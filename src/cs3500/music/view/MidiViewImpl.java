@@ -65,8 +65,10 @@ public class MidiViewImpl implements IMusicView {
    */
 
   public void playNote(INote note) throws InvalidMidiDataException {
-    long startTime = (note.getStart() * 1000000) + this.synth.getMicrosecondPosition();
-    long endTime = (startTime + (note.getDuration() * 1000000));
+    //Standard Midi tempo is 50000. We will just use the tempo from the piece
+    int tempoModifier = viewPiece.getTempo();
+    long startTime = (note.getStart() * tempoModifier) + this.synth.getMicrosecondPosition();
+    long endTime = (startTime + (note.getDuration() * tempoModifier));
     int pitch = note.getMidiPitch();
     int instrument = note.getInstrument();
     int volume = note.getVolume();
