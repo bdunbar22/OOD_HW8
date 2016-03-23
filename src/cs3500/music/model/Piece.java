@@ -56,6 +56,7 @@ public final class Piece extends NoteList implements IPiece {
         builder.addNotes(notes);
         builder.setBeat(this.getBeat());
         builder.setMeasure(this.getMeasure());
+        builder.setTempo(this.getTempo());
         return builder;
     }
 
@@ -68,6 +69,7 @@ public final class Piece extends NoteList implements IPiece {
         builder.addNotes(notes);
         builder.setBeat(this.getBeat());
         builder.setMeasure(this.getMeasure());
+        builder.setTempo(this.getTempo());
         return builder;
     }
 
@@ -81,6 +83,7 @@ public final class Piece extends NoteList implements IPiece {
         piece.addNotes(notes);
         piece.setBeat(this.getBeat());
         piece.setMeasure(this.getMeasure());
+        piece.setTempo(this.getTempo());
         return piece;
     }
 
@@ -94,6 +97,7 @@ public final class Piece extends NoteList implements IPiece {
         }
         piece.setBeat(this.getBeat());
         piece.setMeasure(this.getMeasure());
+        piece.setTempo(this.getTempo());
         return piece;
     }
 
@@ -110,6 +114,7 @@ public final class Piece extends NoteList implements IPiece {
         }
         reversed.setBeat(this.getBeat());
         reversed.setMeasure(this.getMeasure());
+        reversed.setTempo(this.getTempo());
         return reversed;
     }
 
@@ -120,6 +125,7 @@ public final class Piece extends NoteList implements IPiece {
         copy.addNotes(notes);
         copy.setBeat(this.getBeat());
         copy.setMeasure(this.getMeasure());
+        copy.setTempo(this.getTempo());
         return copy;
     }
 }

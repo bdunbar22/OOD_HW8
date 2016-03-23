@@ -97,4 +97,18 @@ public interface IPiece extends INoteList{
      * Get the beat of the song that the piece is currently at
      */
     int getBeat();
+
+    /**
+     * Every song should have a tempo.
+     *
+     * @param tempo to set
+     */
+    void setTempo(final int tempo);
+
+    /**
+     * get the tempo of the song.
+     *
+     * @return tempo
+     */
+    int getTempo();
 }
