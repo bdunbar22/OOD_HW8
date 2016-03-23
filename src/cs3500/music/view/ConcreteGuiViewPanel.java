@@ -44,9 +44,8 @@ public class ConcreteGuiViewPanel extends JPanel {
     // Add the background graph
     this.drawGraph(g);
 
-    //TODO: start beat: #000
-    //TODO: continue play color: #00FF4F
-    //For future line color: #FF0017
+    // Draw the current beat with a red line
+    this.drawPlaceholder(g);
   }
 
   /**
@@ -169,5 +168,16 @@ public class ConcreteGuiViewPanel extends JPanel {
     }
     g2.setStroke(new BasicStroke(2));
     g2.drawLine(lowX, highY, highX, highY);
+  }
+
+  private void drawPlaceholder(Graphics g) {
+    int beat = viewPiece.getBeat();
+    int x = lowX + 1 + beat * xGraphStep;
+    int highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
+
+    Graphics2D g2 = (Graphics2D) g;
+    g2.setStroke(new BasicStroke(2));
+    g.setColor(Color.decode("#FF0017"));
+    g2.drawLine(x, lowY, x, highY);
   }
 }

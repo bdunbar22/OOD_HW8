@@ -37,7 +37,6 @@ public class MusicEditor {
     piece.addNote(new Note(Pitch.FSHARP, new Octave(3), 22, 3));
     piece = piece.serialMerge(piece.reversePiece());
     piece.addNote(new Note(Pitch.GSHARP, new Octave(2), 49, 16));
-    piece.setMeasure(5);
     System.out.print(piece.musicOutput());
     return piece;
   }
