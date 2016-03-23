@@ -11,10 +11,10 @@ import javax.sound.midi.*;
 public class MidiViewImpl implements IMusicView {
   private final Synthesizer synth;
   private final Receiver receiver;
-  private IPieceView pieceView;
+  private IViewPiece viewPiece;
 
-  public MidiViewImpl(IPieceView pieceView) {
-    this.pieceView = pieceView;
+  public MidiViewImpl(IViewPiece viewPiece) {
+    this.viewPiece = viewPiece;
     Synthesizer trySynth;
     Receiver tryReceive;
     try {
@@ -79,7 +79,7 @@ public class MidiViewImpl implements IMusicView {
 
   @Override
   public void viewMusic() {
-    for (INote note : pieceView.getNotes()) {
+    for (INote note : viewPiece.getNotes()) {
       try {
         playNote(note);
       } catch (InvalidMidiDataException e) {
@@ -87,7 +87,7 @@ public class MidiViewImpl implements IMusicView {
       }
     }
     try {
-      Thread.sleep((pieceView.getLastBeat()+1) * 1000);
+      Thread.sleep((viewPiece.getLastBeat()+1) * 1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

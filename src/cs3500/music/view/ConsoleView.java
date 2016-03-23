@@ -7,15 +7,15 @@ import cs3500.music.model.IPiece;
  * Created by Ben on 3/21/16.
  */
 public class ConsoleView implements IMusicView {
-    private IPieceView pieceView;
+    private IViewPiece viewPiece;
 
-    public ConsoleView(IPieceView pieceView) {
-        this.pieceView = pieceView;
+    public ConsoleView(IViewPiece viewPiece) {
+        this.viewPiece = viewPiece;
     }
 
     public void viewMusic() {
         // Sam: I'm pretty sure this is all that the ConsoleView has to do...
-        System.out.print(pieceView.musicOutput());
+        System.out.print(viewPiece.musicOutput());
 
         //TODO: See below
         System.out.print("This should be done as an appendable and then "

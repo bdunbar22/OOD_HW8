@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * Created by Ben on 3/23/16.
  */
-public interface IPieceView {
+public interface IViewPiece {
     /**
      * Return a copied list of the notes from this note list. The notes should be copied so that
      * this note list will not be affected.
