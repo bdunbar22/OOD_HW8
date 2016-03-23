@@ -27,7 +27,7 @@ public class GuiViewFrame extends JFrame implements IMusicView {
   }
 
   public Dimension getPreferredSize(){
-    return new Dimension(100, 100);
+    return new Dimension(1500, 600);
   }
 
   @Override
