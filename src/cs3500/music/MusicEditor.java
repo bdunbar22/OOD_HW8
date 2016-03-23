@@ -13,12 +13,12 @@ public class MusicEditor {
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
     MusicReader musicReader;
     IPiece piece = testBuildPiece();
-    IPieceView pieceView = new PieceView(piece);
-    GuiViewFrame view = new GuiViewFrame(pieceView);
+    IViewPiece viewPiece = new ViewPiece(piece);
+    GuiViewFrame view = new GuiViewFrame(viewPiece);
     view.viewMusic();
-    MidiViewImpl midiView = new MidiViewImpl(pieceView);
+    MidiViewImpl midiView = new MidiViewImpl(viewPiece);
     midiView.viewMusic();
-    ConsoleView consoleView = new ConsoleView(pieceView);
+    ConsoleView consoleView = new ConsoleView(viewPiece);
     consoleView.viewMusic();
   }
 

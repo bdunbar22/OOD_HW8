@@ -9,10 +9,10 @@ import java.util.Map;
 /**
  * Created by Ben on 3/23/16.
  */
-public class PieceView implements IPieceView {
+public class ViewPiece implements IViewPiece {
     private IPiece piece;
 
-    public PieceView(IPiece piece) {
+    public ViewPiece(IPiece piece) {
         this.piece = piece;
     }
 

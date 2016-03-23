@@ -7,10 +7,10 @@ import java.awt.*;
  * A dummy view that simply draws a string 
  */
 public class ConcreteGuiViewPanel extends JPanel {
-  private IPieceView pieceView;
+  private IViewPiece viewPiece;
 
-  public ConcreteGuiViewPanel(IPieceView pieceView) {
-    this.pieceView = pieceView;
+  public ConcreteGuiViewPanel(IViewPiece viewPiece) {
+    this.viewPiece = viewPiece;
   }
 
   @Override
