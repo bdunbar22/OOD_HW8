@@ -1,24 +1,30 @@
 package cs3500.music;
 
 import cs3500.music.model.*;
+import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicReader;
 import cs3500.music.view.*;
 import cs3500.music.view.MidiViewImpl;
 
 import javax.sound.midi.InvalidMidiDataException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 
 public class MusicEditor {
   /**
-   * Arguments to main should be the text file name and the
+   * Arguments to main should be the text file name and the view to use
    * @param args
    * @throws IOException
    * @throws InvalidMidiDataException
      */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    MusicReader musicReader;
-    IPiece piece = testBuildPieceMelody();
+    String fileName = "mystery-1.txt";
+    String desiredView = "console";
+    BufferedReader in = new BufferedReader(new FileReader("text/" + fileName));
+    IPiece piece = MusicReader.parseFile(in, new CompositionBuilder());
+
     IViewPiece viewPiece = new ViewPiece(piece);
     GuiViewFrame view = new GuiViewFrame(viewPiece);
     view.viewMusic();
@@ -26,6 +32,15 @@ public class MusicEditor {
     midiView.viewMusic();
     ConsoleView consoleView = new ConsoleView(viewPiece);
     consoleView.viewMusic();
+
+//    IPiece piece = testBuildPieceMelody();
+//    IViewPiece viewPiece = new ViewPiece(piece);
+//    GuiViewFrame view = new GuiViewFrame(viewPiece);
+//    view.viewMusic();
+//    MidiViewImpl midiView = new MidiViewImpl(viewPiece);
+//    midiView.viewMusic();
+//    ConsoleView consoleView = new ConsoleView(viewPiece);
+//    consoleView.viewMusic();
   }
 
   private static IPiece testBuildPiece() {

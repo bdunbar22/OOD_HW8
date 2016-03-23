@@ -6,7 +6,11 @@ import cs3500.music.model.*;
  * Created by Sam Letcher on 3/23/2016.
  */
 public class CompositionBuilder implements ICompositionBuilder<IPiece> {
-  Piece piece = new Piece();
+  Piece piece;
+
+  public CompositionBuilder() {
+    this.piece = new Piece();
+  }
 
   public IPiece build() {
     return piece;
