@@ -2,11 +2,8 @@ package cs3500.music.view;
 
 import cs3500.music.model.INote;
 import cs3500.music.model.IPiece;
-import cs3500.music.model.Note;
-import cs3500.music.model.NoteList;
 
 import javax.sound.midi.*;
-import java.util.List;
 
 /**
  * A skeleton for MIDI playback
@@ -71,7 +68,6 @@ public class MidiViewImpl implements IMusicView {
     int pitch = note.getMidiPitch();
     int instrument = note.getInstrument();
     int volume = note.getVolume();
-    System.out.print(volume);
 
     MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument, pitch, volume);
     MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, instrument, pitch, volume);
@@ -94,6 +90,6 @@ public class MidiViewImpl implements IMusicView {
       e.printStackTrace();
     }
     System.out.print("DONE");
-    this.receiver.close(); // Only call this once you're done playing *all* notes
+    this.receiver.close();
   }
 }

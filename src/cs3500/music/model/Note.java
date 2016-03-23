@@ -20,7 +20,6 @@ public final class Note implements INote{
     private int instrument;
     private int volume;
 
-
     public Note(final Pitch pitch, final Octave octave, final int start, final int duration,
       final int instrument, final int volume) {
         if(start < 0) {
@@ -36,7 +35,6 @@ public final class Note implements INote{
         this.instrument = instrument;
         this.volume = volume;
 
-        System.out.print(this.volume);
         //TODO: SET RANGE VALUES FOR VOLUME AND INSTRUMENT also... why is this constructor not
         // being hit?
     }
@@ -178,7 +176,9 @@ public final class Note implements INote{
         return new Note(this.pitch,
                         new Octave(this.octave.getValue()),
                         this.start,
-                        this.duration);
+                        this.duration,
+                        this.instrument,
+                        this.volume);
     }
 
     /**
@@ -224,10 +224,10 @@ public final class Note implements INote{
      */
   public int getMidiPitch() {
         if ((pitch.compareTo(Pitch.A) < 0 && octave.getValue() == 0) || octave.getValue() < 0) {
-            throw new IllegalArgumentException("Error. Pitch too low for Midi use.");
+            return 21;
         }
         if ((pitch.compareTo(Pitch.C) > 0 && octave.getValue() == 8) || octave.getValue() > 8) {
-            throw new IllegalArgumentException("Error. Pitch too high for Midi use.");
+            return 108;
         }
 
         int pitchValue = this.pitch.ordinal() + 1;
