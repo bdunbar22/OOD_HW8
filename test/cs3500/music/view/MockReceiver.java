@@ -20,7 +20,7 @@ public class MockReceiver implements Receiver{
         ShortMessage shortMessage = (ShortMessage) message;
         this.stringToBuild.append("Note:");
 
-        this.stringToBuild.append(" Status=" + shortMessage.getCommand()); //Midi On off
+        this.stringToBuild.append(" Status=" + this.giveStatus(shortMessage)); //Midi On off
         this.stringToBuild.append(" Instrument=" + shortMessage.getChannel()); //Instrument
         this.stringToBuild.append(" Pitch=" + shortMessage.getData1()); //Pitch
         this.stringToBuild.append(" Volume=" + shortMessage.getData2()); //Volume
@@ -36,5 +36,13 @@ public class MockReceiver implements Receiver{
     @Override
     public String toString() {
         return stringToBuild.toString();
+    }
+
+    private String giveStatus(ShortMessage shortMessage) {
+        if(shortMessage.getCommand() == ShortMessage.NOTE_ON) {
+            return "ON";
+        }
+        else
+            return "OFF";
     }
 }
