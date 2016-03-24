@@ -34,9 +34,6 @@ public final class Note implements INote{
         this.duration = duration;
         this.instrument = instrument;
         this.volume = volume;
-
-        //TODO: SET RANGE VALUES FOR VOLUME AND INSTRUMENT also... why is this constructor not
-        // being hit?
     }
 
     /**

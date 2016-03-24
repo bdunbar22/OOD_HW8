@@ -2,64 +2,42 @@ README
 
 Working in collaboration: Ben Dunbar and Sam Letcher
 
-Hello
+Hello,
 
 This is our project submission for homework 6, The Music Editor: Second Movement. It realizes a
 model for representing and editing music. It allows for a number of operations to be made to a
 musical work. It also provides three views to be used on the model.
 
-In this model music is represented as a list of notes. Each note is an object with a pitch, start
-beat, duration and octave. The note class ensures that the start beat >= 0 and the duration is > 0.
-While a song may have no notes at some point during editing, a note would not exist without a
-duration and must start at a positive time in the song in my implementation, the note class ensures
-these invariants. With this idea in mind, the class must be given values when initialized. To ensure
- this only a constructor with all fields is provided. Pitches and Octaves are supported and limited
-according to the pitch enum and octave class as explained next. Songs always start at beat 0 even if
-no notes are played at that beat.
+Class Design:
+Model:
+    INote
+    Note (final) implements INote
+    INoteList                                     (gives basic functionality.)
+    NoteList (final) implements INoteList.
+    IPiece extends INoteList                      (provide more complex functions.)
+    Piece extends NoteList and implements IPiece.
+    Pitch enum, Octave class, Output enum, NoteField enum and Comparators also provided.
+View:
+    IMusicView
+    GuiViewFrame implements IMusicView has a ConcreteGuiViewPanel
+    MidiViewImpl implements IMusicView
+    ConsoleView implements IMusicView
+    MusicViewCreator allows for the creation of different views
+    IViewPiece
+    ViewPiece implements IViewPiece
+Util:
+    MusicReader
+    ICompositionBuilder
+    Composition builder implements ICompositionBuilder
 
-The following pitches are supported: C C♯ D D♯ E F F♯ G G♯ A A♯ B
-This model supports octaves -9 to 99. I made this decision based on the display of music having 5
-characters. A display of a pitch and octave therefor has the full range of C-9 to B99 with a
-character range of 2 characters to 4 characters. (Ex: C1 and A#10) This octave choice meets all
-octave requirements because it allows for the 10 octaves of hearing an average human has, does not
-interfere with the display of music, and will further allow for music to be played in circumstances
-where the music maker may want to go outside of the range of human hearing, for dogs as an example.
+MusicEditor
 
-The pitches were set up as an enum because of the limited and finite number of pitches to represent.
-Octaves were enabled via an octave class that ensures that the octave invariants are met.
+Functionality:
+INote gives the functionality to display a note tone as a string, increment a field of a note, copy
+a note, and determine whether or not a note is starting, continueing to play, or not playing at a
+given beat.
+Note realizes this functionality and is set as final so that it can not be exteneded.
 
-Notes are considered equal (Overridden) if their parameters have the same values. Notes also have
-the functionality to produce copies of themselves and display their pitch and octave combination. If
-given a note to check against in the isStarting function, the note can return whether or not
-it is starting at that pitch, octave & starting beat. Likewise, if a note is given a note to check
-against in the isPersistent function, the note can return if it is continuing to be played at the
-starting beat of the check note and includes a check on the pitch and tone. This makes it possible
-to display music in a logical fashion. Finally, edits can be made to notes and fields can be
-incremented with the increment() function. Two comparators are provided for notes: NoteComparator
-can be used to sort notes by starting beat then octave then pitch; PitchAndOctaveComparator can
-be used to sort notes by octave then pitch to find the tone range in a piece of music.
-
-Creating music from notes is enabled with the INoteList and IPiece interfaces.
-Creating music from notes is realized with the NoteList and Piece classes.
-
-Class Adapter Design:
-INoteList                                     (gives basic functionality.)
-NoteList implements INoteList.
-IPiece extends INoteList                      (provide more complex functions.)
-Piece extends NoteList and implements IPiece.
-
-Piece is a final class and cannot be extended. This adds safety to the design. I added the piece
-interface and class to the project to provide complex functionality but made it separate from the
-note list so that if future edits are made on the project it would be possible to extend the
-basic INoteList in different ways.
-
-NoteList utilizes hidden private methods that are called from all of the public overridden methods.
-This is a safe design and highly desired in the way I modeled music because I want classes that
-extend NoteList to be able to call the functions in note list, but I do not want functions in note
-list to cause unexpected errors for the aforementioned classes. Classes that extend NoteList should
-use the super() call in their constructors.
-
-This design offers the provided functionality:
 From INoteList:
 - add a note
 - add many notes via a List or unspecified number of Note arguments
@@ -70,6 +48,11 @@ From INoteList:
 - Get the number of the last beat that music will be playing in.
   and
 - Get a consolidation map. Great data model for accessing notes that are audible at a given beat.
+NoteList utilizes hidden private methods that are called from all of the public overridden methods.
+This is a safe design and highly desired in the way I modeled music because I want classes that
+extend NoteList to be able to call the functions in note list, but I do not want functions in note
+list to cause unexpected errors for the aforementioned classes. Classes that extend NoteList should
+use the super() call in their constructors.
 
 From IPiece
 (All methods return a new piece of music so the original(s) aren't lost.)
@@ -83,12 +66,62 @@ From IPiece
 - increment a field on every note a given number of times.
 - reverse a piece of music
 - copy a piece of music
+- get the tempo of a piece of music
+- get the timing (length of each measure) for a pice of music.
+Piece is a final class and cannot be extended. This adds safety to the design. I added the piece
+interface and class to the project to provide complex functionality but made it separate from the
+note list so that if future edits are made on the project it would be possible to extend the
+basic INoteList in different ways.
 
-In order to have fast access to the notes at a given beat. The INoteList includes a function that
-will consolidate the data into a Map<Integer, List<INote>> that gives fast access to the list of
-notes playing at any given beat.
+Decisions for VIEWS:
+Decided to make one interface so that all of the views would have the same functionality in the main
+method. Created a MusicViewCreator to allow for views to be returned based on the desired type of
+view.
+
+Each view utilizes a view model (functionally described in IViewPiece) that provides all of the
+functions a view would need to do its job without the functions the view would not ever need. The
+views have this viewPiece as a private field that is sent to the constructor.
+
+IViewPiece provides these functions to the views:
+    -List<INote> getNotes();
+    -List<INote> getNotesInBeat(final int beat);
+    -int getLastBeat();
+    -Map<Integer, List<INote>> getConsolidationMap();
+    -List<Pair<Octave, Pitch>> getToneRange();
+    -String musicOutput();
+    -int getMeasure();
+    -int getBeat();
+    -int getTempo();
+
+Utility decisions:
+We decided to implement the ICompositionBuilder with a CompositionBuilder class that would return an
+IPiece because the IPiece gives all of the functionality to provide small and complex operations on
+a piece of music during creation. This IPiece could then be used to make a IViewPiece to be used by
+the views.
+
+We decided to test our ConsoleView and MidiViewImpl by providing convenience constructors and
+mocking classes.
+In the console view we decided to use an appendable that could be sent an Appendable object to give
+system output during production runs and could be sent an Appendable with a StringBuffer in testing.
+In the MidiViewImpl we sent mock classes for a Synthesizer and Receiver. In the Mock synth we
+decided to use overridden functions for getReceiver (to return our mock reciever) and
+getMicrosecondPosition for testing. The receiver had a private StringBuilder that was updated with
+information from the MidiMessage and StartTime whenever the receiver.send() function was used. At
+the end of the test we were then able to compare the log from the string builder to what we would
+expect that song to give us.
+
+To make the program runnable we used string arguments to the main function to choose a text file to
+run and to choose which view to create using our MusicViewCreator. This was then usable on the
+command line by running java -jar OOD_hw6.jav "<filename>" "<console OR visual OR midi>".
+
+We updated our models from homework 5 to include a tempo member variable in the piece class and to
+provide the consolidation map mentioned above. We also decided to add the instrument and volume
+fields to the note model to better represent notes in real life. Finally, in our music piece model
+we added a measure variable so songs could have different timing like in real life and we added a
+current beat variable so that songs could be played in real time in the future (visual and midi
+views together).
 
 All provided methods have been tested thoroughly.
 
 Best Regards,
-Ben Dunbar
+Ben Dunbar & Sam Letcher

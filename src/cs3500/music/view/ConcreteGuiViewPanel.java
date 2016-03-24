@@ -19,7 +19,7 @@ public class ConcreteGuiViewPanel extends JPanel {
   private IViewPiece viewPiece;
   private static final int xGraphStep = 20;
   private static final int yGraphStep = 20;
-  private static final int lowX = 30;
+  private static final int lowX = 40;
   private static final int lowY = 20;
 
 

@@ -9,30 +9,6 @@ package cs3500.music.model;
  * Created by Ben on 3/21/16.
  */
 public interface INote {
-    int getStart();
-
-    int getDuration();
-
-    Pitch getPitch();
-
-    Octave getOctave();
-
-    int getInstrument();
-
-    int getVolume();
-
-    void setPitch(final Pitch pitch);
-
-    void setOctave(final Octave octave);
-
-    void setStart(final int start);
-
-    void setDuration(final int duration);
-
-    void setInstrument(final int instrument);
-
-    void setVolume(final int volume);
-
     /**
      * Shows the display of a note.
      * <p>
@@ -80,4 +56,28 @@ public interface INote {
      * of check note.
      */
     Boolean isPersisting(INote checkNote);
+
+    int getStart();
+
+    int getDuration();
+
+    Pitch getPitch();
+
+    Octave getOctave();
+
+    int getInstrument();
+
+    int getVolume();
+
+    void setPitch(final Pitch pitch);
+
+    void setOctave(final Octave octave);
+
+    void setStart(final int start);
+
+    void setDuration(final int duration);
+
+    void setInstrument(final int instrument);
+
+    void setVolume(final int volume);
 }

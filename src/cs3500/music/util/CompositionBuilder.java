@@ -16,15 +16,14 @@ public class CompositionBuilder implements ICompositionBuilder<IPiece> {
     return piece;
   }
 
-  //TODO: Test this
   public ICompositionBuilder<IPiece> setTempo(int tempo) {
     piece.setTempo(tempo);
     return this;
   }
-//TODO: TEST THIS
+
   public ICompositionBuilder<IPiece> addNote(int start, int end, int instrument, int pitch, int
     volume) {
-    pitch = pitch - 11;
+    pitch = pitch - 12;
     Octave octave = new Octave(pitch/12);
     Pitch charPitch = Pitch.values()[pitch % 12];
     int duration = end - start;

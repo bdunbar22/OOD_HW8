@@ -22,7 +22,6 @@ public final class Piece extends NoteList implements IPiece {
         this.tempo = 500000;
     }
 
-    //TODO: Test measure and current beat methods and integrate to other methods.
     public void setMeasure(int measure) {
         this.measure = measure;
     }
