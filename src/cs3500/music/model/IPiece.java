@@ -2,10 +2,12 @@ package cs3500.music.model;
 
 /**
  * The interface for a piece of cs3500.music.
- * A piece of cs3500.music is a collection of notes that have a certain tone, start time and duration.
+ * A piece of cs3500.music is a collection of notes that have a certain tone, start time and
+ * duration.
  *
- * A piece of cs3500.music is editable so that notes can be added and removed. It also supports merges of
- * pieces. Pieces can be combined in parallel (both start at the same time) or in serial (one piece
+ * A piece of cs3500.music is editable so that notes can be added and removed. It also supports
+ * merges of pieces. Pieces can be combined in parallel (both start at the same time) or in
+ * serial (one piece
  * is appended to the other). When pieces are combined the originals will remain and a new piece
  * will be returned.
  *
@@ -27,7 +29,8 @@ public interface IPiece extends INoteList{
     IPiece serialMerge(final IPiece pieceToAppend);
 
     /**
-     * Allow for the parallel merge of two pieces of cs3500.music. Copy of all notes in pieceToCombine is
+     * Allow for the parallel merge of two pieces of cs3500.music. Copy of all notes in
+     * pieceToCombine is
      * added to a copy of all of the notes in this piece and the result is returned.
      *
      * @param pieceToCombine will be merged so the new piece plays both at once.
@@ -56,8 +59,9 @@ public interface IPiece extends INoteList{
 
     /**
      * Allow for a song to be played backwards.
-     * This should be implemented so that the piece of cs3500.music can be played exactly in reverse.
-     * The last beat of the song should become beat 0, and going backwards the start beats of the
+     * This should be implemented so that the piece of cs3500.music can be played exactly in
+     * reverse. The last beat of the song should become beat 0, and going backwards the start
+     * beats of the
      * notes should now be where they ended previously.
      *
      * @return the new and improved piece.
@@ -67,8 +71,9 @@ public interface IPiece extends INoteList{
 
     /**
      * Allow for a song to be copied.
-     * This should be implemented so that the piece of cs3500.music returned is a deep copy of the original
-     * all of the notes will be equal but the notes and list of notes will not be references of
+     * This should be implemented so that the piece of cs3500.music returned is a deep copy of the
+     * original all of the notes will be equal but the notes and list of notes will not be
+     * references of
      * each other. When copying an empty piece a new empty piece will be returned.
      *
      * @return the copy.

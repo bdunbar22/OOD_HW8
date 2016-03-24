@@ -4,8 +4,8 @@ import java.util.Comparator;
 
 /**
  * This comparators will allow for notes to be sorted by starting beat and then by the pitch and
- * octave that the note belongs to. This will help in keeping the piece of cs3500.music organized for
- * output.
+ * octave that the note belongs to. This will help in keeping the piece of cs3500.music organized
+ * for output.
  *
  * Sorting priority: Start beat, Octave, Pitch. (Duration is not considered.)
  *

@@ -131,7 +131,8 @@ public class NoteList implements INoteList{
             notesInBeat = this.getNotesInBeat(i);
 
             for(Pair<Octave, Pitch> tone : toneRange) {
-                output += displayForNote(notesInBeat, new Note(tone.getValue(), tone.getKey(), i, 1));
+                output += displayForNote(notesInBeat,
+                  new Note(tone.getValue(), tone.getKey(), i, 1));
             }
             output += "\n";
         }

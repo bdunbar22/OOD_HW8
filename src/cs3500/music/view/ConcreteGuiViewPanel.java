@@ -72,7 +72,7 @@ public class ConcreteGuiViewPanel extends JPanel {
    * Continuing = green (#00FF4F)
    * Starting notes take precedence during display
    *
-   * Use same step spacing as the drawGraph function. Which displays a box outline for each measure.
+   * Use same step spacing as the drawGraph function. Which displays a box outline for each measure
    * The x and y location should be the bottom left coordinate of the rectangle.
    *
    * @param g graphics object

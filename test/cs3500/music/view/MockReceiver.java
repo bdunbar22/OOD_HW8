@@ -7,42 +7,38 @@ import javax.sound.midi.ShortMessage;
 /**
  * Created by Ben on 3/23/16.
  */
-public class MockReceiver implements Receiver{
-    private StringBuilder stringToBuild;
+public class MockReceiver implements Receiver {
+  private StringBuilder stringToBuild;
 
-    public MockReceiver() {
-        this.stringToBuild = new StringBuilder();
-        this.stringToBuild.append("Adding to Midi:\n");
-    }
+  public MockReceiver() {
+    this.stringToBuild = new StringBuilder();
+    this.stringToBuild.append("Adding to Midi:\n");
+  }
 
-    @Override
-    public void send(MidiMessage message, long startTime) {
-        ShortMessage shortMessage = (ShortMessage) message;
-        this.stringToBuild.append("Note:");
+  @Override public void send(MidiMessage message, long startTime) {
+    ShortMessage shortMessage = (ShortMessage) message;
+    this.stringToBuild.append("Note:");
 
-        this.stringToBuild.append(" Status=" + this.giveStatus(shortMessage)); //Midi On off
-        this.stringToBuild.append(" Instrument=" + shortMessage.getChannel()); //Instrument
-        this.stringToBuild.append(" Pitch=" + shortMessage.getData1()); //Pitch
-        this.stringToBuild.append(" Volume=" + shortMessage.getData2()); //Volume
+    this.stringToBuild.append(" Status=" + this.giveStatus(shortMessage)); //Midi On off
+    this.stringToBuild.append(" Instrument=" + shortMessage.getChannel()); //Instrument
+    this.stringToBuild.append(" Pitch=" + shortMessage.getData1()); //Pitch
+    this.stringToBuild.append(" Volume=" + shortMessage.getData2()); //Volume
 
-        this.stringToBuild.append(" Time=" + String.valueOf(startTime) + "\n");
-    }
+    this.stringToBuild.append(" Time=" + String.valueOf(startTime) + "\n");
+  }
 
-    @Override
-    public void close() {
-        this.stringToBuild.append("Closed\n");
-    }
+  @Override public void close() {
+    this.stringToBuild.append("Closed\n");
+  }
 
-    @Override
-    public String toString() {
-        return stringToBuild.toString();
-    }
+  @Override public String toString() {
+    return stringToBuild.toString();
+  }
 
-    private String giveStatus(ShortMessage shortMessage) {
-        if(shortMessage.getCommand() == ShortMessage.NOTE_ON) {
-            return "ON";
-        }
-        else
-            return "OFF";
-    }
+  private String giveStatus(ShortMessage shortMessage) {
+    if (shortMessage.getCommand() == ShortMessage.NOTE_ON) {
+      return "ON";
+    } else
+      return "OFF";
+  }
 }
