@@ -77,6 +77,9 @@ public class MidiViewImplTest {
             receiver.toString());
     }
 
+    /**
+     * Test that Midi is working with the text files
+     */
     @Test
     public void testMaryFile() {
         Synthesizer synthesizer = new MockSynthesizer();
@@ -162,6 +165,12 @@ public class MidiViewImplTest {
             receiver.toString());
     }
 
+    /**
+     * Test parameters to notes
+     * Instrument tested
+     * Volume tested
+     * Pitch tested
+     */
     @Test
     public void testMidiView2() {
         Synthesizer synthesizer = new MockSynthesizer();
