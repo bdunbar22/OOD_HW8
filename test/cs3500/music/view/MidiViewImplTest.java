@@ -165,6 +165,11 @@ public class MidiViewImplTest {
             receiver.toString());
     }
 
+    @Test
+    public void testMidiViewSpecifics() {
+
+    }
+
     IMusicView getMidiViewHelper(Receiver receiver, Synthesizer synth) {
         IPiece piece = getPieceHelper();
         IViewPiece viewPiece = new ViewPiece(piece);
@@ -199,6 +204,31 @@ public class MidiViewImplTest {
         return piece;
     }
 
+    @Test
+    public void testMidiView2() {
+        Synthesizer synthesizer = new MockSynthesizer();
+        Receiver receiver;
+        try {
+            receiver = synthesizer.getReceiver();
+        } catch (MidiUnavailableException e) {
+            receiver = new MockReceiver();
+            System.out.print("Error getting receiver during tests.");
+        }
+        IMusicView midi = getMidiViewHelper2(receiver, synthesizer);
+        midi.viewMusic();
+
+        assertEquals("Adding to Midi:\n"
+          + "Note: Status=144 Instrument=1 Pitch=57 Volume=64 Time=1000000\n"
+          + "Note: Status=128 Instrument=1 Pitch=57 Volume=64 Time=2000000\n"
+          + "Note: Status=144 Instrument=1 Pitch=48 Volume=70 Time=1000000\n"
+          + "Note: Status=128 Instrument=1 Pitch=48 Volume=70 Time=2000000\n"
+          + "Note: Status=144 Instrument=1 Pitch=60 Volume=80 Time=1500000\n"
+          + "Note: Status=128 Instrument=1 Pitch=60 Volume=80 Time=2500000\n"
+          + "Note: Status=144 Instrument=2 Pitch=60 Volume=60 Time=2500000\n"
+          + "Note: Status=128 Instrument=2 Pitch=60 Volume=60 Time=3000000\n" + "Closed\n"
+          , receiver.toString());
+    }
+
 
     IMusicView getMidiViewHelper2(Receiver receiver, Synthesizer synth) {
         IPiece piece = getPieceHelper2();
@@ -209,10 +239,11 @@ public class MidiViewImplTest {
 
     IPiece getPieceHelper2() {
         IPiece piece = new Piece();
-        piece.addNote(new Note(Pitch.A, new Octave(3), 0, 2));
-        piece.addNote(new Note(Pitch.C, new Octave(3), 0, 2));
-        piece.addNote(new Note(Pitch.C, new Octave(4), 1, 2));
-        piece.addNote(new Note(Pitch.C, new Octave(4), 3, 1));
+        piece.addNote(new Note(Pitch.A, new Octave(3), 0, 2, 1, 64));
+        piece.addNote(new Note(Pitch.C, new Octave(3), 0, 2, 1, 70));
+        piece.addNote(new Note(Pitch.C, new Octave(4), 1, 2, 1, 80));
+        piece.addNote(new Note(Pitch.C, new Octave(4), 3, 1, 2, 60));
+        piece.addNote(new Note(Pitch.C, new Octave(4), 3, 1, 2, 90));
         return piece;
     }
 }
