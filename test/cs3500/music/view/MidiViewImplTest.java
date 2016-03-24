@@ -15,9 +15,6 @@ import java.io.FileReader;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Ben on 3/23/16.
- */
 public class MidiViewImplTest {
     /**
      * Test the Midi View using a mock
@@ -166,8 +163,28 @@ public class MidiViewImplTest {
     }
 
     @Test
-    public void testMidiViewSpecifics() {
+    public void testMidiView2() {
+        Synthesizer synthesizer = new MockSynthesizer();
+        Receiver receiver;
+        try {
+            receiver = synthesizer.getReceiver();
+        } catch (MidiUnavailableException e) {
+            receiver = new MockReceiver();
+            System.out.print("Error getting receiver during tests.");
+        }
+        IMusicView midi = getMidiViewHelper2(receiver, synthesizer);
+        midi.viewMusic();
 
+        assertEquals("Adding to Midi:\n"
+            + "Note: Status=ON Instrument=1 Pitch=57 Volume=64 Time=1000000\n"
+            + "Note: Status=OFF Instrument=1 Pitch=57 Volume=64 Time=2000000\n"
+            + "Note: Status=ON Instrument=1 Pitch=48 Volume=70 Time=1000000\n"
+            + "Note: Status=OFF Instrument=1 Pitch=48 Volume=70 Time=2000000\n"
+            + "Note: Status=ON Instrument=1 Pitch=60 Volume=80 Time=1500000\n"
+            + "Note: Status=OFF Instrument=1 Pitch=60 Volume=80 Time=2500000\n"
+            + "Note: Status=ON Instrument=2 Pitch=60 Volume=60 Time=2500000\n"
+            + "Note: Status=OFF Instrument=2 Pitch=60 Volume=60 Time=3000000\n" + "Closed\n"
+          , receiver.toString());
     }
 
     IMusicView getMidiViewHelper(Receiver receiver, Synthesizer synth) {
@@ -203,32 +220,6 @@ public class MidiViewImplTest {
         piece = piece.serialMerge(piece);
         return piece;
     }
-
-    @Test
-    public void testMidiView2() {
-        Synthesizer synthesizer = new MockSynthesizer();
-        Receiver receiver;
-        try {
-            receiver = synthesizer.getReceiver();
-        } catch (MidiUnavailableException e) {
-            receiver = new MockReceiver();
-            System.out.print("Error getting receiver during tests.");
-        }
-        IMusicView midi = getMidiViewHelper2(receiver, synthesizer);
-        midi.viewMusic();
-
-        assertEquals("Adding to Midi:\n"
-          + "Note: Status=144 Instrument=1 Pitch=57 Volume=64 Time=1000000\n"
-          + "Note: Status=128 Instrument=1 Pitch=57 Volume=64 Time=2000000\n"
-          + "Note: Status=144 Instrument=1 Pitch=48 Volume=70 Time=1000000\n"
-          + "Note: Status=128 Instrument=1 Pitch=48 Volume=70 Time=2000000\n"
-          + "Note: Status=144 Instrument=1 Pitch=60 Volume=80 Time=1500000\n"
-          + "Note: Status=128 Instrument=1 Pitch=60 Volume=80 Time=2500000\n"
-          + "Note: Status=144 Instrument=2 Pitch=60 Volume=60 Time=2500000\n"
-          + "Note: Status=128 Instrument=2 Pitch=60 Volume=60 Time=3000000\n" + "Closed\n"
-          , receiver.toString());
-    }
-
 
     IMusicView getMidiViewHelper2(Receiver receiver, Synthesizer synth) {
         IPiece piece = getPieceHelper2();
