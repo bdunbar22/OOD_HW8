@@ -1,5 +1,6 @@
-package cs3500.music.model;
+package cs3500.music.util;
 
+import cs3500.music.model.IPiece;
 import cs3500.music.util.CompositionBuilder;
 import org.junit.Test;
 
