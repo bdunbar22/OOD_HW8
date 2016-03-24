@@ -4,6 +4,11 @@ Working in collaboration: Ben Dunbar and Sam Letcher
 
 Hello,
 
+IMPORTANT!!!
+Configured location of text files in relation to the JAR for our Project:
+"../../../text/" + filename
+filename should include .txt in the command line argument.
+
 This is our project submission for homework 6, The Music Editor: Second Movement. It realizes a
 model for representing and editing music. It allows for a number of operations to be made to a
 musical work. It also provides three views to be used on the model.
