@@ -21,10 +21,11 @@ public class MusicEditor {
      */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
     try {
-      String fileName = "mystery-1.txt";
-      String desiredView = "console";
+      String fileName = "mystery-3.txt";
+      String desiredView = "midi";
       BufferedReader in = new BufferedReader(new FileReader("text/" + fileName));
       IPiece piece = MusicReader.parseFile(in, new CompositionBuilder());
+      //IPiece piece = testBuildPiece();
       IViewPiece viewPiece = new ViewPiece(piece);
 
       IMusicView view = MusicViewCreator.create(desiredView, viewPiece);
@@ -41,8 +42,8 @@ public class MusicEditor {
     piece.addNote(new Note(Pitch.A, new Octave(3), 3, 2, 1, 10));
     piece.addNote(new Note(Pitch.A, new Octave(3), 5, 1));
     piece.addNote(new Note(Pitch.C, new Octave(3), 2, 1));
-    //piece.addNote(new Note(Pitch.D, new Octave(20), 3, 1));
-    piece.addNote(new Note(Pitch.A, new Octave(2), 0, 4));
+    piece.addNote(new Note(Pitch.D, new Octave(20), 3, 1));
+    piece.addNote(new Note(Pitch.A, new Octave(-8), 0, 4));
     piece.addNote(new Note(Pitch.B, new Octave(2), 0, 4));
     piece = piece.serialMerge(piece);
     IPiece slowPiece = piece.changeField(NoteField.DURATION, 1);

@@ -216,22 +216,4 @@ public final class Note implements INote{
         return (this.pitch.hashCode() == checkNote.getPitch().hashCode() &&
             this.octave.getValue() == checkNote.getOctave().getValue());
     }
-
-    /**
-     * Gets the Midi integer value associated with the note's pitch for use in Midi players.
-     *
-     * @return Midi value
-     */
-  public int getMidiPitch() {
-        if ((pitch.compareTo(Pitch.A) < 0 && octave.getValue() == 0) || octave.getValue() < 0) {
-            return 21;
-        }
-        if ((pitch.compareTo(Pitch.C) > 0 && octave.getValue() == 8) || octave.getValue() > 8) {
-            return 108;
-        }
-
-        int pitchValue = this.pitch.ordinal() + 1;
-        int octave = this.octave.getValue();
-        return pitchValue + (octave * 12) + 11;
-    }
 }

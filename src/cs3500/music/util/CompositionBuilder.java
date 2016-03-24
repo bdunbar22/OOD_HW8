@@ -16,6 +16,7 @@ public class CompositionBuilder implements ICompositionBuilder<IPiece> {
     return piece;
   }
 
+  //TODO: Test this
   public ICompositionBuilder<IPiece> setTempo(int tempo) {
     piece.setTempo(tempo);
     return this;

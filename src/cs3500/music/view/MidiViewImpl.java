@@ -2,6 +2,8 @@ package cs3500.music.view;
 
 import cs3500.music.model.INote;
 import cs3500.music.model.IPiece;
+import cs3500.music.model.Octave;
+import cs3500.music.model.Pitch;
 
 import javax.sound.midi.*;
 
@@ -33,6 +35,19 @@ public class MidiViewImpl implements IMusicView {
       e.printStackTrace();
     }
   }
+
+  //Allow for mock classes to be sent for testing
+  public MidiViewImpl(Synthesizer synth, Receiver receiver, IViewPiece viewPiece) {
+    this.synth = synth;
+    this.receiver = receiver;
+    this.viewPiece = viewPiece;
+    try {
+      this.synth.open();
+    } catch (MidiUnavailableException e) {
+      e.printStackTrace();
+    }
+  }
+
   /**
    * Relevant classes and methods from the javax.sound.midi library:
    * <ul>
@@ -69,10 +84,11 @@ public class MidiViewImpl implements IMusicView {
     int tempoModifier = viewPiece.getTempo();
     long startTime = (note.getStart() * tempoModifier) + this.synth.getMicrosecondPosition();
     long endTime = (startTime + (note.getDuration() * tempoModifier));
-    int pitch = note.getMidiPitch();
+    int pitch = this.getMidiPitch(note);
     int instrument = note.getInstrument();
     int volume = note.getVolume();
 
+    //Midi supports pitch values 0 - 127
     MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument, pitch, volume);
     MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, instrument, pitch, volume);
     this.receiver.send(start, startTime);
@@ -94,5 +110,26 @@ public class MidiViewImpl implements IMusicView {
       e.printStackTrace();
     }
     this.receiver.close();
+  }
+
+
+  /**
+   * This function converts the note's pitch and duration to a Midi pitch and duration.
+   * Midi will accept ranges 0 - 127.
+   * If midi pitch out of range then give the closest valid pitch so the song still plays.
+   * @return the number Midi will be able to interpret
+   */
+  private int getMidiPitch(INote note) {
+    Pitch pitch = note.getPitch();
+    Octave octave = note.getOctave();
+
+    int midiPitch = pitch.ordinal() + (octave.getValue() * 12) + 12;
+    if(midiPitch < 0) {
+      midiPitch = 0;
+    }
+    if(midiPitch > 127) {
+      midiPitch = 127;
+    }
+    return midiPitch;
   }
 }
