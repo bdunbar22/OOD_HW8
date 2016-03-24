@@ -4,7 +4,6 @@ import cs3500.music.model.*;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicReader;
 import cs3500.music.view.*;
-import cs3500.music.view.MidiViewImpl;
 
 import javax.sound.midi.InvalidMidiDataException;
 import java.io.BufferedReader;
@@ -15,33 +14,25 @@ import java.io.IOException;
 public class MusicEditor {
   /**
    * Arguments to main should be the text file name and the view to use
-   * @param args
+   *
+   * @param args to determine action
    * @throws IOException
    * @throws InvalidMidiDataException
      */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    String fileName = "mystery-1.txt";
-    String desiredView = "console";
-    BufferedReader in = new BufferedReader(new FileReader("text/" + fileName));
-    IPiece piece = MusicReader.parseFile(in, new CompositionBuilder());
-    IViewPiece viewPiece = new ViewPiece(piece);
-    IMusicView view;
-    switch (desiredView) {
-      case "console":
-        view = new ConsoleView(viewPiece);
-        break;
-      case "visual":
-        view = new GuiViewFrame(viewPiece);
-        break;
-      case "midi":
-        view = new MidiViewImpl(viewPiece);
-        break;
-      default:
-        System.out.print("This view is not supported. Please enter one of the following options:"
-            + " console, visual, midi.");
-        return;
+    try {
+      String fileName = "mystery-1.txt";
+      String desiredView = "console";
+      BufferedReader in = new BufferedReader(new FileReader("text/" + fileName));
+      IPiece piece = MusicReader.parseFile(in, new CompositionBuilder());
+      IViewPiece viewPiece = new ViewPiece(piece);
+
+      IMusicView view = MusicViewCreator.create(desiredView, viewPiece);
+
+      view.viewMusic();
+    } catch (Exception exception) {
+      System.out.print(exception.getMessage());
     }
-    view.viewMusic();
   }
 
   private static IPiece testBuildPiece() {
@@ -59,7 +50,6 @@ public class MusicEditor {
     piece.addNote(new Note(Pitch.FSHARP, new Octave(3), 22, 3));
     piece = piece.serialMerge(piece.reversePiece());
     piece.addNote(new Note(Pitch.GSHARP, new Octave(2), 49, 16));
-    System.out.print(piece.musicOutput());
     return piece;
   }
 
@@ -74,14 +64,6 @@ public class MusicEditor {
     piece = piece2.serialMerge(piece2);
     piece = piece.serialMerge(piece.changeField(NoteField.OCTAVE));
     piece = piece.parallelMerge(piece2.changeField(NoteField.START, 23));
-    return piece;
-  }
-
-  private static IPiece buildPiece(String[] args) {
-    IPiece piece = new Piece();
-    for (String s : args) {
-      System.out.print(s);
-    }
     return piece;
   }
 }
