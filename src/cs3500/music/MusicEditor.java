@@ -21,9 +21,9 @@ public class MusicEditor {
      */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
     try {
-      String fileName = "mystery-3.txt";
-      String desiredView = "midi";
-      BufferedReader in = new BufferedReader(new FileReader("text/" + fileName));
+      String fileName = args[0];
+      String desiredView = args[1];
+      BufferedReader in = new BufferedReader(new FileReader("../../../text/" + fileName));
       IPiece piece = MusicReader.parseFile(in, new CompositionBuilder());
       //IPiece piece = testBuildPiece();
       IViewPiece viewPiece = new ViewPiece(piece);
