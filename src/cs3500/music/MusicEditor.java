@@ -24,23 +24,24 @@ public class MusicEditor {
     String desiredView = "console";
     BufferedReader in = new BufferedReader(new FileReader("text/" + fileName));
     IPiece piece = MusicReader.parseFile(in, new CompositionBuilder());
-
     IViewPiece viewPiece = new ViewPiece(piece);
-    GuiViewFrame view = new GuiViewFrame(viewPiece);
+    IMusicView view;
+    switch (desiredView) {
+      case "console":
+        view = new ConsoleView(viewPiece);
+        break;
+      case "visual":
+        view = new GuiViewFrame(viewPiece);
+        break;
+      case "midi":
+        view = new MidiViewImpl(viewPiece);
+        break;
+      default:
+        System.out.print("This view is not supported. Please enter one of the following options:"
+            + " console, visual, midi.");
+        return;
+    }
     view.viewMusic();
-    MidiViewImpl midiView = new MidiViewImpl(viewPiece);
-    midiView.viewMusic();
-    ConsoleView consoleView = new ConsoleView(viewPiece);
-    consoleView.viewMusic();
-
-//    IPiece piece = testBuildPieceMelody();
-//    IViewPiece viewPiece = new ViewPiece(piece);
-//    GuiViewFrame view = new GuiViewFrame(viewPiece);
-//    view.viewMusic();
-//    MidiViewImpl midiView = new MidiViewImpl(viewPiece);
-//    midiView.viewMusic();
-//    ConsoleView consoleView = new ConsoleView(viewPiece);
-//    consoleView.viewMusic();
   }
 
   private static IPiece testBuildPiece() {
