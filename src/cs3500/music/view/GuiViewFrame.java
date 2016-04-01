@@ -18,7 +18,9 @@ public class GuiViewFrame extends JFrame implements IMusicView {
   public GuiViewFrame(IViewPiece viewPiece) {
     this.displayPanel = new ConcreteGuiViewPanel(viewPiece);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    this.getContentPane().add(displayPanel);
+    JScrollPane scrollPane = new JScrollPane(displayPanel);
+    scrollPane.setPreferredSize(this.getPreferredSize());
+    this.getContentPane().add(scrollPane);
     this.pack();
   }
 

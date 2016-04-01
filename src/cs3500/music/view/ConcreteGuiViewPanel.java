@@ -46,6 +46,8 @@ public class ConcreteGuiViewPanel extends JPanel {
 
     // Draw the current beat with a red line
     this.drawPlaceholder(g);
+
+    this.revalidate();
   }
 
   /**
