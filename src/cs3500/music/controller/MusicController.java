@@ -4,6 +4,7 @@ import cs3500.music.model.*;
 import cs3500.music.view.IGuiView;
 import cs3500.music.view.IMusicView;
 
+import java.io.InvalidClassException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,8 +30,14 @@ public class MusicController implements IMusicController {
      * a view that will accept these handlers.
      */
     private void configureHandlers() {
-        if(!(musicView instanceof IGuiView)) {
-            return;
+        try {
+            if(!(musicView instanceof IGuiView)) {
+                throw new InvalidClassException("In order to have handlers, must also be an "
+                  + "IGuiview");
+            }
+        }
+        catch (InvalidClassException e) {
+            e.printStackTrace();
         }
 
         MouseHandler mousehandler = configureMouseHandler();
