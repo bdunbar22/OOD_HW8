@@ -107,6 +107,7 @@ public class MidiViewImpl implements IMusicView {
         e.printStackTrace();
       }
     }
+    //TODO: Not this.
     try {
       Thread.sleep((viewPiece.getLastBeat()+1) * 1000);
     } catch (InterruptedException e) {
