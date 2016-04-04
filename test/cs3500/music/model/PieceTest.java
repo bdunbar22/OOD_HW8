@@ -132,7 +132,14 @@ public class PieceTest {
     IPiece piece1 = testPieceHelper1();
     IPiece newPiece = piece1.changeField(NoteField.START);
     //newPiece has all diff notes now. piece one should still remain unchanged.
-    assertEquals("", piece1.musicOutput());
+    assertEquals("   C4  C#4   D4  D#4   E4   F4  F#4   G4  G#4   A4  A#4   B4 \n"
+        + "0  X                                                         \n"
+        + "1                                                            \n"
+        + "2                                                            \n"
+        + "3                                                            \n"
+        + "4                                                         X  \n"
+        + "5                 X                                          \n"
+        + "6                 |                                          \n", piece1.musicOutput());
   }
 
   /**

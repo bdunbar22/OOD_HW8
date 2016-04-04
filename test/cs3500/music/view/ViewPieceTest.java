@@ -3,12 +3,10 @@ package cs3500.music.view;
 import cs3500.music.model.*;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -18,10 +16,11 @@ import static org.junit.Assert.assertTrue;
  */
 public class ViewPieceTest {
     /**
-     * Test get notes
+     * Test get notes from view piece
      */
-    @Test public void testGetNotes() {
-        INoteList testList = testNormalListHelper2();
+    @Test
+    public void testGetNotes() {
+        IViewPiece testList = testViewPieceHelper2();
         List<INote> notes = testList.getNotes();
         assertEquals(4, notes.size());
         assertTrue(notes.contains(new Note(Pitch.DSHARP, new Octave(3), 0, 1)));
@@ -31,10 +30,11 @@ public class ViewPieceTest {
     }
 
     /**
-     * Test get notes is not by reference
+     * Test get notes is not by reference for view piece
      */
-    @Test public void testGetNotesNotByRef() {
-        INoteList testList = testNormalListHelper2();
+    @Test
+    public void testGetNotesNotByRef() {
+        IViewPiece testList = testViewPieceHelper2();
         List<INote> changedNotes = testList.getNotes();
         changedNotes.remove(2);
         changedNotes.remove(1);
@@ -51,19 +51,20 @@ public class ViewPieceTest {
     }
 
     /**
-     * Test get notes empty note list
+     * Test get notes when the view piece was created from an empty model.
      */
     @Test public void testGetNotesEmpty() {
-        INoteList test = new NoteList();
-        List<INote> notes = test.getNotes();
+        IPiece test = new Piece();
+        IViewPiece testPiece = new ViewPiece(test);
+        List<INote> notes = testPiece.getNotes();
         assertEquals(0, notes.size());
     }
 
     /**
-     * Test last beat
+     * Test last beat from view piece
      */
     @Test public void testLastBeat() {
-        INoteList testList = testNormalListHelper2();
+        IViewPiece testList = testViewPieceHelper2();
         assertEquals(4, testList.getLastBeat());
     }
 
@@ -72,79 +73,76 @@ public class ViewPieceTest {
      * Should be 0.
      */
     @Test public void testLastBeatShort() {
-        INoteList testList = new NoteList();
-        testList.addNote(new Note(Pitch.C, new Octave(9), 0, 1));
+        IPiece test = new Piece();
+        test.addNote(new Note(Pitch.C, new Octave(9), 0, 1));
+        IViewPiece testList = new ViewPiece(test);
         assertEquals(0, testList.getLastBeat());
-    }
-
-    /**
-     * Test last beat long.
-     */
-    @Test public void testLastBeatLongSong() {
-        INoteList testList = testNormalListHelper2();
-        testList.addNote(new Note(Pitch.C, new Octave(9), 99, 20));
-        assertEquals(118, testList.getLastBeat());
     }
 
     /**
      * Test last beat empty note list
      */
-    @Test public void testEmpty() {
-        INoteList test = new NoteList();
-        assertEquals(0, test.getLastBeat());
+    @Test public void testEmptyLastBeat() {
+        IPiece test = new Piece();
+        IViewPiece testPiece = new ViewPiece(test);
+        assertEquals(0, testPiece.getLastBeat());
     }
 
     /**
-     * Test cs3500.music display of an empty song
+     * Test music display of an empty song
      */
     @Test public void testEmptyDisplay() {
-        INoteList test = new NoteList();
-        assertEquals("There are no musical notes to display.", test.musicOutput());
+        IPiece test = new Piece();
+        IViewPiece testPiece = new ViewPiece(test);
+        assertEquals("There are no musical notes to display.", testPiece.musicOutput());
     }
 
     /**
-     * Test cs3500.music display of an 1 note, 1 duration song.
+     * Test music display of an 1 note, 1 duration song.
      * Song starts and ends at beat 0
      */
     @Test public void testOneNoteDisplay() {
-        INoteList test = new NoteList();
+        IPiece test = new Piece();
         test.addNotes(new Note(Pitch.C, new Octave(5), 0, 1));
-        assertEquals("   C5 \n" + "0  X  \n", test.musicOutput());
+        IViewPiece testPiece = new ViewPiece(test);
+        assertEquals("   C5 \n" + "0  X  \n", testPiece.musicOutput());
     }
 
     /**
-     * Test cs3500.music display of an 1 octave song.
+     * Test music display of an 1 octave song.
      * Song starts and ends at beat 0
      */
     @Test public void testOneOctaveDisplay() {
-        INoteList test = new NoteList();
+        IPiece test = new Piece();
         test.addNotes(new Note(Pitch.C, new Octave(5), 0, 1), new Note(Pitch.F, new Octave(5), 0, 1));
+        IViewPiece testPiece = new ViewPiece(test);
         assertEquals("   C5  C#5   D5  D#5   E5   F5 \n" + "0  X                        X  \n",
-            test.musicOutput());
+            testPiece.musicOutput());
     }
 
     /**
-     * Test cs3500.music display of an 1 octave song.
+     * Test music display of an 1 octave song.
      * Song is more than 1 beat long.
      */
     @Test public void testOneOctaveDisplayLongDuration() {
-        INoteList test = new NoteList();
+        IPiece test = new Piece();
         test.addNotes(new Note(Pitch.C, new Octave(5), 0, 1), new Note(Pitch.F, new Octave(5), 0, 7));
+        IViewPiece testPiece = new ViewPiece(test);
         assertEquals("   C5  C#5   D5  D#5   E5   F5 \n" + "0  X                        X  \n"
                 + "1                           |  \n" + "2                           |  \n"
                 + "3                           |  \n" + "4                           |  \n"
                 + "5                           |  \n" + "6                           |  \n",
-            test.musicOutput());
+            testPiece.musicOutput());
     }
 
     /**
      * Run a test on a normal note list.
      * Lowest tone is C#3
      * Highest tone is B6
-     * Song has cs3500.music in beats 0 - 9
+     * Song has music in beats 0 - 9
      */
     @Test public void testNormalNoteList() {
-        INoteList test = testNormalListHelper();
+        IViewPiece test = testViewPieceHelper();
         assertEquals("  C#3   D3  D#3   E3   F3  F#3   G3  G#3   A3  A#3   B3   C4  C#4   D4  D#4  "
                 + " E4   F4  F#4   G4  G#4   A4  A#4   B4   C5  C#5   D5  D#5   E5   F5  F#5   G5  G#5 "
                 + "  A5  A#5   B5   C6  C#6   D6  D#6   E6   F6  F#6   G6  G#6   A6  A#6   B6 \n"
@@ -182,15 +180,16 @@ public class ViewPieceTest {
     }
 
     /**
-     * Test that the cs3500.music display will display the beat # correctly with larger than 1 digit
+     * Test that the music display will display the beat # correctly with larger than 1 digit
      */
     @Test public void testBeatNumberDisplay() {
-        INoteList testList = new NoteList();
-        testList.addNote(new Note(Pitch.C, new Octave(4), 2, 1000));
+        IPiece test = new Piece();
+        test.addNote(new Note(Pitch.C, new Octave(4), 2, 1000));
         for (int i = 0; i < 250; i++) {
-            testList.addNote(new Note(Pitch.FSHARP, new Octave(3), i * 4, 2));
+            test.addNote(new Note(Pitch.FSHARP, new Octave(3), i * 4, 2));
         }
-        String output = testList.musicOutput();
+        IViewPiece testPiece = new ViewPiece(test);
+        String output = testPiece.musicOutput();
         assertTrue(output.contains("     F#3   G3  G#3   A3  A#3   B3   C4 "));
         assertTrue(output.contains("   2                                X  "));
         assertTrue(output.contains("  12  X                             |  "));
@@ -200,12 +199,13 @@ public class ViewPieceTest {
     }
 
     /**
-     * Test the cs3500.music display with unusual octaves
+     * Test the music display with unusual octaves
      */
     @Test public void testDisplayLowOctaves() {
-        INoteList testList = new NoteList();
-        testList.addNotes(new Note(Pitch.C, new Octave(-9), 0, 5),
+        IPiece test = new Piece();
+        test.addNotes(new Note(Pitch.C, new Octave(-9), 0, 5),
             new Note(Pitch.CSHARP, new Octave(0), 4, 2), new Note(Pitch.F, new Octave(-4), 2, 3));
+        IViewPiece testPiece = new ViewPiece(test);
         assertEquals("  C-9  C#-9 D-9  D#-9 E-9  F-9  F#-9 G-9  G#-9 A-9  A#-9 B-9  C-8  C#-8 D-8  "
             + "D#-8 E-8  F-8  F#-8 G-8  G#-8 A-8  A#-8 B-8  C-7  C#-7 D-7  D#-7 E-7  F-7  F#-7 G-7 "
             + " G#-7 A-7  A#-7 B-7  C-6  C#-6 D-6  D#-6 E-6  F-6  F#-6 G-6  G#-6 A-6  A#-6 B-6  C-5"
@@ -254,15 +254,16 @@ public class ViewPieceTest {
             + "                                                                                    "
             + "                                                                                    "
             + "                                                                                    "
-            + "                                            |  \n", testList.musicOutput());
+            + "                                            |  \n", testPiece.musicOutput());
     }
 
     /**
      * Test getting all the notes at a specific beat.
      */
-    @Test public void testBeatFetch() {
-        INoteList testList = testNormalListHelper3();
-        List<INote> notesInBeat = testList.getNotesInBeat(3);
+    @Test
+    public void testBeatFetch() {
+        IViewPiece testPiece = testViewPieceHelper3();
+        List<INote> notesInBeat = testPiece.getNotesInBeat(3);
         assertTrue(notesInBeat.contains(new Note(Pitch.FSHARP, new Octave(6), 2, 4)));
         assertTrue(notesInBeat.contains(new Note(Pitch.ASHARP, new Octave(3), 3, 2)));
         assertTrue(notesInBeat.contains(new Note(Pitch.DSHARP, new Octave(3), 1, 4)));
@@ -273,8 +274,9 @@ public class ViewPieceTest {
     /**
      * Test overlapping notes
      */
-    @Test public void testOverlapAllowed() {
-        INoteList testList = testNormalListHelper3();
+    @Test
+    public void testOverlapAllowed() {
+        IViewPiece testList = testViewPieceHelper3();
         List<INote> notes = testList.getNotes();
         assertTrue(notes.contains(new Note(Pitch.FSHARP, new Octave(6), 1, 3)));
         assertTrue(notes.contains(new Note(Pitch.FSHARP, new Octave(6), 2, 4)));
@@ -283,8 +285,9 @@ public class ViewPieceTest {
     /**
      * Test the consolidation map
      */
-    @Test public void testConsolitationMap() {
-        INoteList testList = testNormalListHelper5();
+    @Test
+    public void testConsolitationMap() {
+        IViewPiece testList = testViewPieceHelper5();
         Map<Integer, List<INote>> data = testList.getConsolidationMap();
         assertEquals(7, data.size());
         //Playing at beat 0
@@ -341,58 +344,58 @@ public class ViewPieceTest {
         assertTrue(data.get(6).contains(new Note(Pitch.D, new Octave(3), 4, 3)));
     }
 
-    private INoteList testNormalListHelper() {
-        INoteList testList = new NoteList();
-        testList.addNote(new Note(Pitch.A, new Octave(3), 0, 1));
-        testList.addNote(new Note(Pitch.A, new Octave(4), 1, 2));
-        testList.addNote(new Note(Pitch.B, new Octave(6), 2, 1));
-        testList.addNote(new Note(Pitch.A, new Octave(3), 3, 2));
-        testList.addNote(new Note(Pitch.CSHARP, new Octave(3), 4, 2));
-        testList.addNote(new Note(Pitch.G, new Octave(5), 4, 1));
-        testList.addNote(new Note(Pitch.FSHARP, new Octave(3), 4, 3));
-        testList.addNote(new Note(Pitch.A, new Octave(4), 5, 1));
-        testList.addNote(new Note(Pitch.B, new Octave(4), 6, 4));
-        testList.addNote(new Note(Pitch.A, new Octave(3), 7, 1));
-        testList.addNote(new Note(Pitch.E, new Octave(3), 7, 2));
-        return testList;
+    private IViewPiece testViewPieceHelper() {
+        IPiece test = new Piece();
+        test.addNote(new Note(Pitch.A, new Octave(3), 0, 1));
+        test.addNote(new Note(Pitch.A, new Octave(4), 1, 2));
+        test.addNote(new Note(Pitch.B, new Octave(6), 2, 1));
+        test.addNote(new Note(Pitch.A, new Octave(3), 3, 2));
+        test.addNote(new Note(Pitch.CSHARP, new Octave(3), 4, 2));
+        test.addNote(new Note(Pitch.G, new Octave(5), 4, 1));
+        test.addNote(new Note(Pitch.FSHARP, new Octave(3), 4, 3));
+        test.addNote(new Note(Pitch.A, new Octave(4), 5, 1));
+        test.addNote(new Note(Pitch.B, new Octave(4), 6, 4));
+        test.addNote(new Note(Pitch.A, new Octave(3), 7, 1));
+        test.addNote(new Note(Pitch.E, new Octave(3), 7, 2));
+        return new ViewPiece(test);
     }
 
-    private INoteList testNormalListHelper2() {
-        INoteList testList = new NoteList();
-        testList.addNote(new Note(Pitch.DSHARP, new Octave(3), 0, 1));
-        testList.addNote(new Note(Pitch.CSHARP, new Octave(4), 1, 2));
-        testList.addNote(new Note(Pitch.FSHARP, new Octave(6), 2, 1));
-        testList.addNote(new Note(Pitch.ASHARP, new Octave(3), 3, 2));
-        return testList;
+    private IViewPiece testViewPieceHelper2() {
+        IPiece test = new Piece();
+        test.addNote(new Note(Pitch.DSHARP, new Octave(3), 0, 1));
+        test.addNote(new Note(Pitch.CSHARP, new Octave(4), 1, 2));
+        test.addNote(new Note(Pitch.FSHARP, new Octave(6), 2, 1));
+        test.addNote(new Note(Pitch.ASHARP, new Octave(3), 3, 2));
+        return new ViewPiece(test);
     }
 
-    private INoteList testNormalListHelper3() {
-        INoteList testList = new NoteList();
-        testList.addNote(new Note(Pitch.DSHARP, new Octave(3), 0, 3));
-        testList.addNote(new Note(Pitch.CSHARP, new Octave(4), 1, 2));
-        testList.addNote(new Note(Pitch.FSHARP, new Octave(6), 2, 4));
-        testList.addNote(new Note(Pitch.ASHARP, new Octave(3), 3, 2));
-        testList.addNote(new Note(Pitch.DSHARP, new Octave(3), 1, 4));
-        testList.addNote(new Note(Pitch.CSHARP, new Octave(4), 4, 3));
-        testList.addNote(new Note(Pitch.FSHARP, new Octave(6), 1, 3));
-        testList.addNote(new Note(Pitch.ASHARP, new Octave(3), 2, 2));
-        return testList;
+    private IViewPiece testViewPieceHelper3() {
+        IPiece test = new Piece();
+        test.addNote(new Note(Pitch.DSHARP, new Octave(3), 0, 3));
+        test.addNote(new Note(Pitch.CSHARP, new Octave(4), 1, 2));
+        test.addNote(new Note(Pitch.FSHARP, new Octave(6), 2, 4));
+        test.addNote(new Note(Pitch.ASHARP, new Octave(3), 3, 2));
+        test.addNote(new Note(Pitch.DSHARP, new Octave(3), 1, 4));
+        test.addNote(new Note(Pitch.CSHARP, new Octave(4), 4, 3));
+        test.addNote(new Note(Pitch.FSHARP, new Octave(6), 1, 3));
+        test.addNote(new Note(Pitch.ASHARP, new Octave(3), 2, 2));
+        return new ViewPiece(test);
     }
 
-    private INoteList testNormalListHelper5() {
-        INoteList testList = new NoteList();
-        testList.addNote(new Note(Pitch.DSHARP, new Octave(2), 0, 3));
-        testList.addNote(new Note(Pitch.CSHARP, new Octave(3), 1, 2));
-        testList.addNote(new Note(Pitch.FSHARP, new Octave(2), 2, 4));
-        testList.addNote(new Note(Pitch.ASHARP, new Octave(2), 3, 2));
-        testList.addNote(new Note(Pitch.DSHARP, new Octave(2), 1, 4));
-        testList.addNote(new Note(Pitch.CSHARP, new Octave(3), 4, 3));
-        testList.addNote(new Note(Pitch.FSHARP, new Octave(2), 1, 3));
-        testList.addNote(new Note(Pitch.ASHARP, new Octave(3), 2, 2));
-        testList.addNote(new Note(Pitch.B, new Octave(2), 1, 4));
-        testList.addNote(new Note(Pitch.D, new Octave(3), 4, 3));
-        testList.addNote(new Note(Pitch.C, new Octave(2), 1, 3));
-        testList.addNote(new Note(Pitch.E, new Octave(3), 2, 2));
-        return testList;
+    private IViewPiece testViewPieceHelper5() {
+        IPiece test = new Piece();
+        test.addNote(new Note(Pitch.DSHARP, new Octave(2), 0, 3));
+        test.addNote(new Note(Pitch.CSHARP, new Octave(3), 1, 2));
+        test.addNote(new Note(Pitch.FSHARP, new Octave(2), 2, 4));
+        test.addNote(new Note(Pitch.ASHARP, new Octave(2), 3, 2));
+        test.addNote(new Note(Pitch.DSHARP, new Octave(2), 1, 4));
+        test.addNote(new Note(Pitch.CSHARP, new Octave(3), 4, 3));
+        test.addNote(new Note(Pitch.FSHARP, new Octave(2), 1, 3));
+        test.addNote(new Note(Pitch.ASHARP, new Octave(3), 2, 2));
+        test.addNote(new Note(Pitch.B, new Octave(2), 1, 4));
+        test.addNote(new Note(Pitch.D, new Octave(3), 4, 3));
+        test.addNote(new Note(Pitch.C, new Octave(2), 1, 3));
+        test.addNote(new Note(Pitch.E, new Octave(3), 2, 2));
+        return new ViewPiece(test);
     }
 }
