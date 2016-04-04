@@ -1,7 +1,5 @@
 package cs3500.music.view;
 
-import cs3500.music.model.IPiece;
-
 import javax.swing.*;
 import java.awt.*;
 
