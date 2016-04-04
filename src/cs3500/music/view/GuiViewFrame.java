@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * A skeleton Frame (i.e., a window) in Swing
  */
-public class GuiViewFrame extends JFrame implements IMusicView {
+public class GuiViewFrame extends JFrame implements IGuiView {
 
   private final JPanel displayPanel; // You may want to refine this to a subtype of JPanel
 
@@ -24,10 +24,12 @@ public class GuiViewFrame extends JFrame implements IMusicView {
     this.pack();
   }
 
+  @Override
   public void initialize(){
     this.setVisible(true);
   }
 
+  @Override
   public Dimension getPreferredSize(){
     return new Dimension(1500, 600);
   }
