@@ -49,10 +49,12 @@ From INoteList:
 - change a note
 - remove a note
 - determine if the music contains a note (using overridden equals of Note class)
-- Get the notes in a list of music (Returns a deep copied list for security)
+- Get Notes (copy of notes for security)
+- Get Notes in Beat
 - Get the number of the last beat that music will be playing in.
   and
 - Get a consolidation map. Great data model for accessing notes that are audible at a given beat.
+
 NoteList utilizes hidden private methods that are called from all of the public overridden methods.
 This is a safe design and highly desired in the way I modeled music because I want classes that
 extend NoteList to be able to call the functions in note list, but I do not want functions in note

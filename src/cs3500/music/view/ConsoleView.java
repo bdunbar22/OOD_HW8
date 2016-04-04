@@ -21,6 +21,9 @@ public class ConsoleView implements IMusicView {
         this.appendable = appendable;
     }
 
+    /**
+     * Display music via text using an appendable object.
+     */
     public void viewMusic() {
         try {
             appendable.append(viewPiece.musicOutput());

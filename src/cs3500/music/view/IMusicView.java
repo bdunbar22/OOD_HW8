@@ -7,7 +7,8 @@ package cs3500.music.view;
  */
 public interface IMusicView {
     /**
-     * Start display of music
+     * Start display of music, this can be text, a gui, audible music, or any other view
+     * representation that is valid.
      */
     void viewMusic();
 }

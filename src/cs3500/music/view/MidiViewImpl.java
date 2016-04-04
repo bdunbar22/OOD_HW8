@@ -95,6 +95,9 @@ public class MidiViewImpl implements IMusicView {
     this.receiver.send(stop, endTime);
   }
 
+  /**
+   * An audible representation of music is given in this view.
+   */
   @Override
   public void viewMusic() {
     for (INote note : viewPiece.getNotes()) {

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A dummy view that simply draws a string 
+ * A view that draws a graphical representation of a piece of music.
  */
 public class ConcreteGuiViewPanel extends JPanel {
   private IViewPiece viewPiece;
@@ -27,6 +27,10 @@ public class ConcreteGuiViewPanel extends JPanel {
     this.viewPiece = viewPiece;
   }
 
+  /**
+   * Displays the piece of music in a graphical format in a jpanel using graphics methods.
+   * @param g graphics object
+   */
   @Override
   public void paintComponent(Graphics g){
     // Handle the default painting

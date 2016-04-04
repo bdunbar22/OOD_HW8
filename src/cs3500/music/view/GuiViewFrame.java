@@ -22,6 +22,9 @@ public class GuiViewFrame extends JFrame implements IGuiView {
     this.pack();
   }
 
+  /**
+   * Make the frame visible
+   */
   @Override
   public void initialize(){
     this.setVisible(true);
@@ -32,6 +35,9 @@ public class GuiViewFrame extends JFrame implements IGuiView {
     return new Dimension(1500, 600);
   }
 
+  /**
+   * Show the graphical representation of the piece of music by making the frame visible.
+   */
   @Override
   public void viewMusic() {
     this.initialize();

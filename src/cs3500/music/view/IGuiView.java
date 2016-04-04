@@ -1,7 +1,7 @@
 package cs3500.music.view;
 
 /**
- * Interface for use explicitly by the GuiView
+ * Interface for use by the GuiView
  */
 public interface IGuiView extends IMusicView {
   /**
