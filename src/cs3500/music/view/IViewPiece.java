@@ -25,7 +25,6 @@ public interface IViewPiece {
 
     /**
      * Get a copied list of all of the notes that will be making sound at a given beat.
-     *
      */
     List<INote> getNotesInBeat(final int beat);
 

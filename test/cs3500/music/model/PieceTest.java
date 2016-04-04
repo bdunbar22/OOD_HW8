@@ -127,6 +127,7 @@ public class PieceTest {
   /**
    * Test change field doesn't affect original
    */
+  @Test
   public void testChangeFieldSecure() {
     IPiece piece1 = testPieceHelper1();
     IPiece newPiece = piece1.changeField(NoteField.START);
@@ -138,7 +139,8 @@ public class PieceTest {
    * Test change field multiple.
    * Uses change field (single). Just make sure multiple works.
    */
-  @Test public void testChangeFieldMultiple() {
+  @Test
+  public void testChangeFieldMultiple() {
     IPiece piece1 = testPieceHelper2();
     IPiece newPiece = piece1.changeField(NoteField.OCTAVE, 5);
     assertTrue(newPiece.getNotes().contains(new Note(Pitch.F, new Octave(8), 0, 6)));

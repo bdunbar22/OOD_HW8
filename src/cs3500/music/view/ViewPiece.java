@@ -11,9 +11,11 @@ import java.util.Map;
  */
 public class ViewPiece implements IViewPiece {
     private IPiece piece;
+    private Map<Integer, List<INote>> map;
 
     public ViewPiece(IPiece piece) {
         this.piece = piece;
+        this.map = piece.getConsolidationMap();
     }
 
     @Override
@@ -23,7 +25,7 @@ public class ViewPiece implements IViewPiece {
 
     @Override
     public List<INote> getNotesInBeat(final int beat) {
-        return piece.getNotesInBeat(beat);
+        return map.get(beat);
     }
 
     @Override
@@ -33,7 +35,7 @@ public class ViewPiece implements IViewPiece {
 
     @Override
     public Map<Integer, List<INote>> getConsolidationMap() {
-        return piece.getConsolidationMap();
+        return map;
     }
 
     @Override

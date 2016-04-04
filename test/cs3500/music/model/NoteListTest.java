@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 /**
  * Test the NoteList functionality. The note list implements the INoteList interface.
- * <p>
+ *
  * Created by Ben on 3/2/16.
  */
 public class NoteListTest {
