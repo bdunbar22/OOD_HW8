@@ -4,11 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * A skeleton Frame (i.e., a window) in Swing
+ * A frame to display a gui for a piece of music. This will be implemented so that the frame
+ * contains a scrollable object with a panel inside of it. The panel contains the graphics to
+ * display the piece.
  */
 public class GuiViewFrame extends JFrame implements IGuiView {
 
-  private final JPanel displayPanel; // You may want to refine this to a subtype of JPanel
+  private final JPanel displayPanel;
 
   /**
    * Creates new GuiView

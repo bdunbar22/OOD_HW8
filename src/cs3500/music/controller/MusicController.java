@@ -21,7 +21,13 @@ public class MusicController implements IMusicController {
     public MusicController(IPiece piece, IMusicView musicView) {
         this.piece = piece;
         this.musicView = musicView;
-        configureHandlers();
+        try{
+            configureHandlers();
+        }
+        catch (InvalidClassException e) {
+            //Do nothing. Could not add handlers to an IMusicView that was not also an
+            //IGuiView
+        }
     }
 
     /**
@@ -29,15 +35,10 @@ public class MusicController implements IMusicController {
      * This will only happen if the view is an instance of the IGuiView interface, meaning it it
      * a view that will accept these handlers.
      */
-    private void configureHandlers() {
-        try {
-            if(!(musicView instanceof IGuiView)) {
-                throw new InvalidClassException("In order to have handlers, must also be an "
-                  + "IGuiview");
-            }
-        }
-        catch (InvalidClassException e) {
-            e.printStackTrace();
+    private void configureHandlers() throws InvalidClassException {
+        if(!(musicView instanceof IGuiView)) {
+            throw new InvalidClassException("In order to have handlers, must also be an "
+              + "IGuiview");
         }
 
         MouseHandler mousehandler = configureMouseHandler();
