@@ -27,6 +27,14 @@ public class ConcreteGuiViewPanel extends JPanel {
   }
 
   /**
+   * Setter for the view piece to allow for updates
+   * @param viewPiece to set
+   */
+  public void resetViewPiece(IViewPiece viewPiece) {
+    this.viewPiece = viewPiece;
+  }
+
+  /**
    * Displays the piece of music in a graphical format in a jpanel using graphics methods.
    * @param g graphics object
    */

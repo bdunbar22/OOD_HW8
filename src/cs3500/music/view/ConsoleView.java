@@ -1,5 +1,6 @@
 package cs3500.music.view;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.PrintStream;
 
@@ -8,7 +9,7 @@ import java.io.PrintStream;
  * Created by Ben on 3/21/16.
  */
 public class ConsoleView implements IMusicView {
-    private final IViewPiece viewPiece;
+    private IViewPiece viewPiece;
     private final Appendable appendable;
 
     public ConsoleView(IViewPiece viewPiece) {
@@ -31,5 +32,13 @@ public class ConsoleView implements IMusicView {
         catch (IOException e) {
             System.out.print("Error creating console output.");
         }
+    }
+
+    /**
+     * Update the view piece being used by the console view.
+     */
+    @Override
+    public void update(IViewPiece viewPiece) {
+        this.viewPiece = viewPiece;
     }
 }

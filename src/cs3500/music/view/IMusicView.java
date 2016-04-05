@@ -11,4 +11,10 @@ public interface IMusicView {
      * representation that is valid.
      */
     void viewMusic();
+
+    /**
+     * Allows for the view to be updated with a new view piece so that if the model changes the
+     * model then the new corresponding view piece can be sent to the view
+     */
+    void update(IViewPiece viewPiece);
 }

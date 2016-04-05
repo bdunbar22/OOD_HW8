@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public class GuiViewFrame extends JFrame implements IGuiView {
 
-  private final JPanel displayPanel;
+  private JPanel displayPanel;
 
   /**
    * Creates new GuiView
@@ -43,5 +43,18 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   @Override
   public void viewMusic() {
     this.initialize();
+  }
+
+  /**
+   * Update the view piece being used by the display panel
+   */
+  @Override
+  public void update(IViewPiece viewPiece) {
+    this.displayPanel = new ConcreteGuiViewPanel(viewPiece);
+    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    this.displayPanel.setPreferredSize(this.getPreferredSize());
+    JScrollPane scrollPane = new JScrollPane(displayPanel);
+    this.getContentPane().add(scrollPane);
+    this.pack();
   }
 }

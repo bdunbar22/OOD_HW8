@@ -49,6 +49,14 @@ public class MidiViewImpl implements IMusicView {
   }
 
   /**
+   * Update the view piece being used by the midi player
+   */
+  @Override
+  public void update(IViewPiece viewPiece) {
+    this.viewPiece = viewPiece;
+  }
+
+  /**
    * Relevant classes and methods from the javax.sound.midi library:
    * <ul>
    *  <li>{@link MidiSystem#getSynthesizer()}</li>

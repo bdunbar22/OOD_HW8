@@ -3,7 +3,10 @@ package cs3500.music.controller;
 import cs3500.music.model.*;
 import cs3500.music.view.IGuiView;
 import cs3500.music.view.IMusicView;
+import cs3500.music.view.IViewPiece;
+import cs3500.music.view.ViewPiece;
 
+import java.awt.event.KeyEvent;
 import java.io.InvalidClassException;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +61,7 @@ public class MusicController implements IMusicController {
         Map<Integer, Runnable> keyPresses = new HashMap<>();
         Map<Integer, Runnable> keyReleases = new HashMap<>();
 
-        //TODO: see notes
+        keyPresses.put(KeyEvent.VK_C, new AddANote());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -67,7 +70,6 @@ public class MusicController implements IMusicController {
 
         return keyboardHandler;
     }
-
 
     /**
      * Creates a mouse handler that implements mouse listener for the view.
@@ -90,6 +92,21 @@ public class MusicController implements IMusicController {
 
         INote note = new Note(Pitch.A, new Octave(2), 0, 1, 4, 2);
         piece.addNote(note);
+    }
+
+    //Adding a runnable class to the controller so that it can perform actions on the model and
+    //This adds a note because when the key is pressed the runnable's run method is called.
+    //In the method the model is updated, then the new viewPiece is make and the view is
+    // updated with the new viewPiece. At which time the music can be redisplayed with the new
+    // changes visible.
+    class AddANote implements Runnable {
+        public void run() {
+            INote note = new Note(Pitch.FSHARP, new Octave(5), 1, 3);
+            piece.addNote(note);
+            IViewPiece updatedViewPiece = new ViewPiece(piece);
+            musicView.update(updatedViewPiece);
+            musicView.viewMusic();
+        }
     }
 
     @Override

@@ -26,4 +26,13 @@ public class CompositeView implements IMusicView {
         guiViewFrame.viewMusic();
         midiViewImpl.viewMusic();
     }
+
+    /**
+     * Update the view piece being used by the member views.
+     */
+    @Override
+    public void update(IViewPiece viewPiece) {
+        guiViewFrame.update(viewPiece);
+        midiViewImpl.update(viewPiece);
+    }
 }
