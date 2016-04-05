@@ -50,7 +50,23 @@ public class ConcreteGuiViewPanel extends JPanel {
     // Draw the current beat with a red line
     this.drawPlaceholder(g);
 
+    this.setPreferredSize(this.getPreferredSize());
     this.revalidate();
+  }
+
+  /**
+   * Give the size of the panel based on the space the contents take up.
+   *
+   * @return dimension for size.
+   */
+  @Override
+  public Dimension getPreferredSize(){
+    final int measure = viewPiece.getMeasure();
+    final int songLength = viewPiece.getLastBeat();
+    //High X depends on whether the song ends at a measure start or not.
+    int highX = lowX + (measure*(songLength/measure) + measure) * xGraphStep;
+    int highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
+    return new Dimension(highX, highY);
   }
 
   /**

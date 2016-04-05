@@ -18,8 +18,8 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   public GuiViewFrame(IViewPiece viewPiece) {
     this.displayPanel = new ConcreteGuiViewPanel(viewPiece);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    this.displayPanel.setPreferredSize(this.getPreferredSize());
     JScrollPane scrollPane = new JScrollPane(displayPanel);
-    scrollPane.setPreferredSize(this.getPreferredSize());
     this.getContentPane().add(scrollPane);
     this.pack();
   }
