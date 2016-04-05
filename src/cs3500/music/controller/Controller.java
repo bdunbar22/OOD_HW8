@@ -33,6 +33,11 @@ public class Controller implements IController{
         }
     }
 
+    @Override
+    public void setView() {
+        musicView.viewMusic();
+    }
+
     /**
      * This method will allow for a key board handler and a mouse handler to be added to the view.
      * This will only happen if the view is an instance of the IGuiView interface, meaning it it
@@ -80,10 +85,6 @@ public class Controller implements IController{
         MouseHandler mouseHandler = new MouseHandler();
 
         return mouseHandler;
-    }
-
-    public void setView() {
-        //TODO: create
     }
 
     /**

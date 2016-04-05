@@ -31,7 +31,7 @@ public class MusicEditor {
 
       IMusicView view = MusicViewCreator.create(desiredView, viewPiece);
       IController controller = new Controller(piece, view);
-      view.viewMusic();
+      controller.setView();
     } catch (Exception exception) {
       System.out.print(exception.getMessage());
     }
