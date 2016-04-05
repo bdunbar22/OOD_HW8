@@ -9,16 +9,18 @@ import java.awt.*;
  * display the piece.
  */
 public class GuiViewFrame extends JFrame implements IGuiView {
-
-  private JPanel displayPanel;
+  //Required to use GuiView because JScrollPane must take a Component, which is a class NOT an
+  //interface. So while GuiViewPanel is implementing the interface IGuiViewPanel, the class name
+  //was required to be the type in order for JScrollPane code to compile.
+  private GuiViewPanel displayPanel;
 
   /**
    * Creates new GuiView
    */
   public GuiViewFrame(IViewPiece viewPiece) {
-    this.displayPanel = new ConcreteGuiViewPanel(viewPiece);
-    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    this.displayPanel = new GuiViewPanel(viewPiece);
     this.displayPanel.setPreferredSize(this.getPreferredSize());
+    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     JScrollPane scrollPane = new JScrollPane(displayPanel);
     this.getContentPane().add(scrollPane);
     this.pack();
@@ -50,11 +52,6 @@ public class GuiViewFrame extends JFrame implements IGuiView {
    */
   @Override
   public void update(IViewPiece viewPiece) {
-    this.displayPanel = new ConcreteGuiViewPanel(viewPiece);
-    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    this.displayPanel.setPreferredSize(this.getPreferredSize());
-    JScrollPane scrollPane = new JScrollPane(displayPanel);
-    this.getContentPane().add(scrollPane);
-    this.pack();
+    this.displayPanel.resetViewPiece(viewPiece);
   }
 }

@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * Created by Ben on 4/4/16.
  */
-public class Controller {
+public class Controller implements IController{
     private IPiece piece;
     private IMusicView musicView;
 

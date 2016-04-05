@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Implement the IViewPiece to provide a complete view model to be used by any view classes.
+ *
  * Created by Ben on 3/23/16.
  */
 public class ViewPiece implements IViewPiece {

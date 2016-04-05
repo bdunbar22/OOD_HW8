@@ -1,6 +1,7 @@
 package cs3500.music;
 
 import cs3500.music.controller.Controller;
+import cs3500.music.controller.IController;
 import cs3500.music.model.*;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicReader;
@@ -29,7 +30,7 @@ public class MusicEditor {
       IViewPiece viewPiece = new ViewPiece(piece);
 
       IMusicView view = MusicViewCreator.create(desiredView, viewPiece);
-      Controller controller = new Controller(piece, view);
+      IController controller = new Controller(piece, view);
       view.viewMusic();
     } catch (Exception exception) {
       System.out.print(exception.getMessage());

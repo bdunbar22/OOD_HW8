@@ -15,14 +15,14 @@ import java.util.Map;
 /**
  * A view that draws a graphical representation of a piece of music.
  */
-public class ConcreteGuiViewPanel extends JPanel {
+public class GuiViewPanel extends JPanel implements IGuiViewPanel {
   private IViewPiece viewPiece;
   private static final int xGraphStep = 20;
   private static final int yGraphStep = 20;
   private static final int lowX = 40;
   private static final int lowY = 20;
 
-  public ConcreteGuiViewPanel(IViewPiece viewPiece) {
+  public GuiViewPanel(IViewPiece viewPiece) {
     this.viewPiece = viewPiece;
   }
 
@@ -32,6 +32,8 @@ public class ConcreteGuiViewPanel extends JPanel {
    */
   public void resetViewPiece(IViewPiece viewPiece) {
     this.viewPiece = viewPiece;
+    this.repaint();
+    this.revalidate();
   }
 
   /**
@@ -40,9 +42,6 @@ public class ConcreteGuiViewPanel extends JPanel {
    */
   @Override
   public void paintComponent(Graphics g){
-    // Start by clearing the existing drawing.
-    this.removeAll();
-
     // Handle the default painting
     super.paintComponent(g);
 
