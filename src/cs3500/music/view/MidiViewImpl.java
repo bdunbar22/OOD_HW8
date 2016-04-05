@@ -131,7 +131,6 @@ public class MidiViewImpl implements IMusicView {
     }
   }
 
-
   /**
    * This function converts the note's pitch and duration to a Midi pitch and duration.
    * Midi will accept ranges 0 - 127.

@@ -143,6 +143,10 @@ public class MusicController implements IMusicController {
 
     @Override
     public void scroll() {
-        //TODO: create
+//        JScrollBar vertical = scrollPane.getVerticalScrollBar();
+//        InputMap im = vertical.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+//        im.put(KeyStroke.getKeyStroke("DOWN"), "positiveUnitIncrement");
+//        im.put(KeyStroke.getKeyStroke("UP"), "negativeUnitIncrement");
+
     }
 }
