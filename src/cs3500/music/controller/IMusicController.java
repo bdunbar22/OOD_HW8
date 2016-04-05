@@ -17,11 +17,6 @@ public interface IMusicController {
     /**
      * Add a note to the model. Length should also be allowed to be variable.
      */
-    void addNote();
-
-    /**
-     * Add a note to the model. Length should also be allowed to be variable.
-     */
     void addNotes();
 
     /**
@@ -49,11 +44,6 @@ public interface IMusicController {
      * This should allow for a note to be removed from a piece.
      */
     void deleteNote();
-
-    /**
-     * This should reverse all of the notes in the piece.
-     */
-    void reversePiece();
 
     /**
      * Jump to start or end of composition with the home or end keys.

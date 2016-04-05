@@ -62,6 +62,7 @@ public class MusicController implements IMusicController {
         Map<Integer, Runnable> keyReleases = new HashMap<>();
 
         keyPresses.put(KeyEvent.VK_C, new AddANote());
+        keyPresses.put(KeyEvent.VK_R, new ReversePiece());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -86,19 +87,11 @@ public class MusicController implements IMusicController {
         //TODO: create
     }
 
-    @Override
-    public void addNote() {
-        //TODO: create
-
-        INote note = new Note(Pitch.A, new Octave(2), 0, 1, 4, 2);
-        piece.addNote(note);
-    }
-
-    //Adding a runnable class to the controller so that it can perform actions on the model and
-    //This adds a note because when the key is pressed the runnable's run method is called.
-    //In the method the model is updated, then the new viewPiece is make and the view is
-    // updated with the new viewPiece. At which time the music can be redisplayed with the new
-    // changes visible.
+    /**
+     * A runnable class that will allow for a note to be added to the piece of music in
+     * question. The note pitch, octave and start beat will be determined based on the location
+     * of a mouse click. The volume will be configurable.
+     */
     class AddANote implements Runnable {
         public void run() {
             INote note = new Note(Pitch.FSHARP, new Octave(5), 1, 3);
@@ -142,9 +135,16 @@ public class MusicController implements IMusicController {
         //TODO: create
     }
 
-    @Override
-    public void reversePiece() {
-        //TODO: create
+    /**
+     * A runnable class that will allow the piece to be reversed when the 'r' key it typed.
+     */
+    class ReversePiece implements Runnable {
+        public void run() {
+            piece = piece.reversePiece();
+            IViewPiece updatedViewPiece = new ViewPiece(piece);
+            musicView.update(updatedViewPiece);
+            musicView.viewMusic();
+        }
     }
 
     @Override

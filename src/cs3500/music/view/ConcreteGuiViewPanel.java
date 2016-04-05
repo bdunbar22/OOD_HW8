@@ -40,6 +40,9 @@ public class ConcreteGuiViewPanel extends JPanel {
    */
   @Override
   public void paintComponent(Graphics g){
+    // Start by clearing the existing drawing.
+    this.removeAll();
+
     // Handle the default painting
     super.paintComponent(g);
 
