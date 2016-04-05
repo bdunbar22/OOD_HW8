@@ -12,16 +12,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Implement the IMusicController to allow for edits to be made to a piece of music via the
+ * Allow for edits to be made to a piece of music via the
  * GUI view. Has a model that will be edited and a view that will be updated.
  *
  * Created by Ben on 4/4/16.
  */
-public class MusicController implements IMusicController {
+public class Controller {
     private IPiece piece;
     private IMusicView musicView;
 
-    public MusicController(IPiece piece, IMusicView musicView) {
+    public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
         this.musicView = musicView;
         try{
@@ -82,7 +82,6 @@ public class MusicController implements IMusicController {
         return mouseHandler;
     }
 
-    @Override
     public void setView() {
         //TODO: create
     }
@@ -102,7 +101,6 @@ public class MusicController implements IMusicController {
         }
     }
 
-    @Override
     public void addNotes() {
         //TODO: create
 
@@ -110,27 +108,22 @@ public class MusicController implements IMusicController {
         piece.addNotes(note);
     }
 
-    @Override
     public void moveNote() {
         //TODO: create
     }
 
-    @Override
     public void moveNotes() {
         //TODO: create
     }
 
-    @Override
     public void editNote() {
         //TODO: create
     }
 
-    @Override
     public void editNotes() {
         //TODO: create
     }
 
-    @Override
     public void deleteNote() {
         //TODO: create
     }
@@ -147,7 +140,6 @@ public class MusicController implements IMusicController {
         }
     }
 
-    @Override
     public void viewExtrema() {
         //TODO: create
         /*
@@ -158,7 +150,6 @@ public class MusicController implements IMusicController {
          */
     }
 
-    @Override
     public void scroll() {
 //        JScrollBar vertical = scrollPane.getVerticalScrollBar();
 //        InputMap im = vertical.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
