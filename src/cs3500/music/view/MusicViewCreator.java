@@ -5,7 +5,7 @@ package cs3500.music.view;
  */
 public class MusicViewCreator {
     public MusicViewCreator() {
-        //Empty. just needed for create and enum.
+        //Empty constructor. Method provided is static
     }
 
     public static IMusicView create(String viewType, IViewPiece piece) {
@@ -16,9 +16,11 @@ public class MusicViewCreator {
                 return new GuiViewFrame(piece);
             case "midi":
                 return new MidiViewImpl(piece);
+            case "composite":
+                return new CompositeView(piece);
             default:
                 throw new IllegalArgumentException("This view type is not supported. Please choose"
-                    + "one of the following: \"console\", \"visual\", \"midi\"");
+                    + "one of the following: \"console\", \"visual\", \"midi\", \"composite\"");
         }
     }
 }

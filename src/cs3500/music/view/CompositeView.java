@@ -23,7 +23,7 @@ public class CompositeView implements IMusicView {
      */
     @Override
     public void viewMusic() {
-        midiViewImpl.viewMusic();
         guiViewFrame.viewMusic();
+        midiViewImpl.viewMusic();
     }
 }
