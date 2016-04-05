@@ -133,6 +133,12 @@ public class MusicController implements IMusicController {
     @Override
     public void viewExtrema() {
         //TODO: create
+        /*
+        public void scrollRectToVisible(Rectangle aRect)
+        Forwards the scrollRectToVisible() message to the JComponent's parent. Components that can service the request, such as JViewport, override this method and perform the scrolling.
+        Parameters:
+        aRect - the visible Rectangle
+         */
     }
 
     @Override
