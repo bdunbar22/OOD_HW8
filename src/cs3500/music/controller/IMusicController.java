@@ -8,7 +8,6 @@ package cs3500.music.controller;
  * Created by Ben on 3/30/16.
  */
 public interface IMusicController {
-
     /**
      * Display the view according to the model.
      */
@@ -23,7 +22,6 @@ public interface IMusicController {
      * This should allow a note to be moved to a different starting beat/pitch/octave.
      */
     void moveNote();
-
 
     /**
      * This should allow a note to be moved to a different starting beat/pitch/octave.
