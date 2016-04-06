@@ -135,6 +135,17 @@ public class Controller implements IController{
         musicView.viewMusic();
     }
 
+    /**
+     * Delete the given note
+     * @param note to delete
+     */
+    private void deleteNote(INote note) {
+        piece.removeNote(note);
+        IViewPiece updatedViewPiece = new ViewPiece(piece);
+        musicView.updateViewPiece(updatedViewPiece);
+        musicView.viewMusic();
+    }
+
     private boolean checkForNote(final int x, final int y) {
         return getNote(x, y) != null;
     }
@@ -208,26 +219,22 @@ public class Controller implements IController{
         }
 
         @Override public void mousePressed (MouseEvent e){
-            switch (e.getButton()) {
-                case MouseEvent.BUTTON1:
-                    mousePoint = e.getPoint();
-                    noteFound = checkForNote(e.getX(), e.getY());
-                    break;
-            }
+            mousePoint = e.getPoint();
+            noteFound = checkForNote(e.getX(), e.getY());
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
             switch(e.getButton()) {
                 case MouseEvent.BUTTON1:
-                    if (noteFound == false) {
-                        int dx = e.getX() - mousePoint.x;
-                        addNote(mousePoint.x, mousePoint.y, dx);
-                    }
-                    else {
-                        INote n = getNote(mousePoint.x, mousePoint.y);
-                        deleteNote(mousePoint.x, mousePoint.y);
-                        addNote(e.getX(), e.getY(), (n.getDuration() -1) * 20);
+                    int dx = e.getX() - mousePoint.x;
+                    addNote(mousePoint.x, mousePoint.y, dx);
+                    break;
+                case MouseEvent.BUTTON3:
+                    if (noteFound) {
+                        INote note = getNote(mousePoint.x, mousePoint.y);
+                        deleteNote(note);
+                        addNote(e.getX(), e.getY(), (note.getDuration() -1) * 20);
                     }
                     break;
             }
