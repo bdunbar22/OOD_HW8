@@ -109,15 +109,13 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   @Override
   public void scrollToEnd() {
     Rectangle r = displayPanel.getFullRectangle();
-    scrollPane.scrollRectToVisible(r);
+    displayPanel.scrollRectToVisible(r);
   }
 
   @Override
   public void scrollToStart() {
-    Rectangle r = new Rectangle(10,10, 1500, 600);
-    scrollPane.scrollRectToVisible(r);
-    this.getContentPane().add(scrollPane);
-    this.pack();
+    Rectangle r = new Rectangle(0,0);
+    displayPanel.scrollRectToVisible(r);
   }
 
   @Override

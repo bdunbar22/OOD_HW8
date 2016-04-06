@@ -51,7 +51,7 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
   }
 
   public Rectangle getFullRectangle() {
-    return new Rectangle(highX, highY);
+    return new Rectangle(highX, 0, 1500, 600);
   }
 
   /**
