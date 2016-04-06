@@ -6,11 +6,14 @@ import cs3500.music.view.IMusicView;
 import cs3500.music.view.IViewPiece;
 import cs3500.music.view.ViewPiece;
 
+import javax.sound.midi.InvalidMidiDataException;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.InvalidClassException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Allow for edits to be made to a piece of music via the
@@ -21,10 +24,20 @@ import java.util.Map;
 public class Controller implements IController{
     private IPiece piece;
     private IMusicView musicView;
+    private Timer timer;
+    private boolean playing;
 
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
         this.musicView = musicView;
+        this.timer = new Timer();
+        this.playing = false;
+        //TODO: get music play working.
+        //TODO: this music play should only apply during composite views. because we will want to
+        //TODO: view each beat at a time based on timer. Other views we only want to view music
+        //TODO: once.
+        //toggleMusicPLay();
+        //piece.setBeat(piece.getBeat() + 1); for each display.
         try{
             configureHandlers();
         }
@@ -34,6 +47,9 @@ public class Controller implements IController{
         }
     }
 
+    /**
+     * Start displaying music.
+     */
     @Override
     public void start() {
         musicView.viewMusic();
@@ -102,32 +118,15 @@ public class Controller implements IController{
         musicView.viewMusic();
     }
 
-    public void addNotes() {
-        //TODO: create
-    }
-
-    public void moveNote() {
-        //TODO: create
-    }
-
-    public void moveNotes() {
-        //TODO: create
-    }
-
-    public void editNote() {
-        //TODO: create
-    }
-
-    public void editNotes() {
-        //TODO: create
-    }
-
     /**
      * If possible will delete the chosen note from the piece.
      * @param x coordinate in view.
      * @param y coordinate in view.
      */
     private void deleteNote(final int x, final int y) {
+        if(!checkForNote(x, y)) {
+            return;
+        }
         INote deleteNote = getNote(x, y);
         piece.removeNote(deleteNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
@@ -140,10 +139,15 @@ public class Controller implements IController{
      * @param note to delete
      */
     private void deleteNote(INote note) {
-        piece.removeNote(note);
-        IViewPiece updatedViewPiece = new ViewPiece(piece);
-        musicView.updateViewPiece(updatedViewPiece);
-        musicView.viewMusic();
+        try {
+            piece.removeNote(note);
+            IViewPiece updatedViewPiece = new ViewPiece(piece);
+            musicView.updateViewPiece(updatedViewPiece);
+            musicView.viewMusic();
+        }
+        catch (IllegalArgumentException e) {
+            //Note wasn't present, do nothing.
+        }
     }
 
     private boolean checkForNote(final int x, final int y) {
@@ -218,26 +222,30 @@ public class Controller implements IController{
             }
         }
 
-        @Override public void mousePressed (MouseEvent e){
+        @Override
+        public void mousePressed (MouseEvent e){
             mousePoint = e.getPoint();
             noteFound = checkForNote(e.getX(), e.getY());
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            switch(e.getButton()) {
-                case MouseEvent.BUTTON1:
-                    int dx = e.getX() - mousePoint.x;
-                    addNote(mousePoint.x, mousePoint.y, dx);
-                    break;
-                case MouseEvent.BUTTON3:
-                    if (noteFound) {
-                        INote note = getNote(mousePoint.x, mousePoint.y);
-                        deleteNote(note);
-                        addNote(e.getX(), e.getY(), (note.getDuration() -1) * 20);
-                    }
-                    break;
+            try {
+                switch(e.getButton()) {
+                    case MouseEvent.BUTTON1:
+                        int dx = e.getX() - mousePoint.x;
+                        addNote(mousePoint.x, mousePoint.y, dx);
+                        break;
+                    case MouseEvent.BUTTON3:
+                        if (noteFound) {
+                            INote note = getNote(mousePoint.x, mousePoint.y);
+                            deleteNote(note);
+                            addNote(e.getX(), e.getY(), (note.getDuration() -1) * 20);
+                        }
+                        break;
+                }
             }
+            catch (Exception exc) { /*Do nothing.*/ }
         }
 
         @Override
@@ -250,6 +258,40 @@ public class Controller implements IController{
         public void mouseExited(MouseEvent e) {
             // Nothing should be done, this is just mouse leaving the part of the screen while
             // hovering.
+        }
+    }
+
+    class timerTask extends TimerTask {
+        private Controller controller;
+        public timerTask(Controller controller){
+            this.controller = controller;
+        }
+        @Override
+        public void run() {
+            controller.start();
+            if(checkSongEnd()){
+                this.cancel();
+            }
+        }
+    }
+
+    public boolean checkSongEnd(){
+        return (piece.getBeat() >= piece.getLastBeat());
+    }
+
+    /**
+     * This should be called when the space bar is hit to start and stop play of music.
+     */
+    private void toggleMusicPLay(){
+        if(playing){
+            timer.cancel();
+            playing = false;
+            timer = new Timer();
+        }
+        else {
+            playing = true;
+            int Delay = (piece.getTempo()/1000);
+            timer.schedule(new timerTask(this), 0, Delay);
         }
     }
 }
