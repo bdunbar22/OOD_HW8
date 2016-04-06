@@ -124,17 +124,13 @@ public class MidiViewImpl implements IMusicView {
 
   public void viewMusicPerBeat(final int currentBeat) {
     for (INote note : viewPiece.getNotesInBeat(currentBeat)) {
-      if (note.getStart() == currentBeat){
+      if (note.getStart() == currentBeat) {
         try {
           playNote(note);
-        }
-        catch (InvalidMidiDataException e) {
+        } catch (InvalidMidiDataException e) {
           e.printStackTrace();
         }
       }
-    }
-    if (currentBeat >= viewPiece.getLastBeat()) {
-      this.receiver.close();
     }
   }
 

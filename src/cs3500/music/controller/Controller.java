@@ -53,6 +53,22 @@ public class Controller implements IController{
         configureTiming();
     }
 
+    //Convenience constructor to get mock handlers into views
+    public Controller(IPiece piece, IMusicView musicView, MouseHandler mockMouse,
+        KeyboardHandler mockKeyboard) throws InvalidClassException {
+        this.piece = piece;
+        this.playing = false;
+        this.currentBeat = 0;
+        if(!(musicView instanceof IGuiView)) {
+            throw new InvalidClassException("In order to have handlers, must also be an "
+                + "IGuiview");
+        }
+        IGuiView view = (IGuiView)musicView;
+        view.addMouseListener(mockMouse);
+        view.addKeyListener(mockKeyboard);
+        this.musicView = view;
+    }
+
     /**
      * Start displaying music.
      */
