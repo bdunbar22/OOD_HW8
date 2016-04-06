@@ -7,14 +7,14 @@ import cs3500.music.model.Pitch;
 import javax.sound.midi.*;
 
 /**
- * A skeleton for MIDI playback
+ * Created by Sam Letcher on 4/5/2016.
  */
-public class MidiViewImpl implements IMusicView {
+public class MidiViewPerBeat implements IMusicView {
   private final Synthesizer synth;
   private final Receiver receiver;
   private IViewPiece viewPiece;
 
-  public MidiViewImpl(IViewPiece viewPiece) {
+  public MidiViewPerBeat(IViewPiece viewPiece) {
     this.viewPiece = viewPiece;
     Synthesizer trySynth;
     Receiver tryReceive;
@@ -36,7 +36,7 @@ public class MidiViewImpl implements IMusicView {
   }
 
   //Allow for mock classes to be sent for testing
-  public MidiViewImpl(Synthesizer synth, Receiver receiver, IViewPiece viewPiece) {
+  public MidiViewPerBeat(Synthesizer synth, Receiver receiver, IViewPiece viewPiece) {
     this.synth = synth;
     this.receiver = receiver;
     this.viewPiece = viewPiece;
@@ -56,36 +56,12 @@ public class MidiViewImpl implements IMusicView {
   }
 
   /**
-   * Relevant classes and methods from the javax.sound.midi library:
-   * <ul>
-   *  <li>{@link MidiSystem#getSynthesizer()}</li>
-   *  <li>{@link Synthesizer}
-   *    <ul>
-   *      <li>{@link Synthesizer#open()}</li>
-   *      <li>{@link Synthesizer#getReceiver()}</li>
-   *      <li>{@link Synthesizer#getChannels()}</li>
-   *    </ul>
-   *  </li>
-   *  <li>{@link Receiver}
-   *    <ul>
-   *      <li>{@link Receiver#send(MidiMessage, long)}</li>
-   *      <li>{@link Receiver#close()}</li>
-   *    </ul>
-   *  </li>
-   *  <li>{@link MidiMessage}</li>
-   *  <li>{@link ShortMessage}</li>
-   *  <li>{@link MidiChannel}
-   *    <ul>
-   *      <li>{@link MidiChannel#getProgram()}</li>
-   *      <li>{@link MidiChannel#programChange(int)}</li>
-   *    </ul>
-   *  </li>
-   * </ul>
-   * @see <a href="https://en.wikipedia.org/wiki/General_MIDI">
-   *   https://en.wikipedia.org/wiki/General_MIDI
-   *   </a>
+   * Plays a note
+   *
+   * @param note note to be played, has information for the midi player
+   * @throws InvalidMidiDataException Thrown if the midi data passed by Note does not have the
+   * proper fields
    */
-
   public void playNote(INote note) throws InvalidMidiDataException {
     //Standard Midi tempo is 50000. We will just use the tempo from the piece
     int tempoModifier = viewPiece.getTempo();
@@ -107,22 +83,6 @@ public class MidiViewImpl implements IMusicView {
    */
   @Override
   public void viewMusic() {
-    for (INote note : viewPiece.getNotes()) {
-      try {
-        playNote(note);
-      } catch (InvalidMidiDataException e) {
-        e.printStackTrace();
-      }
-    }
-    try {
-      Thread.sleep((viewPiece.getLastBeat()+1) * 1000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    this.receiver.close();
-  }
-
-  public void viewMusicPerBeat() {
     for (INote note : viewPiece.getNotesInBeat(viewPiece.getBeat())) {
       if (note.getStart() == viewPiece.getBeat()){
         try {

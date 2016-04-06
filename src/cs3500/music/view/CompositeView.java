@@ -1,8 +1,13 @@
 package cs3500.music.view;
 
 
+import cs3500.music.model.INote;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import javax.swing.Timer;
 
 /**
  * A view that implements the IGuiView and allows for the composite display of the Midi and
@@ -13,12 +18,14 @@ import java.awt.event.MouseListener;
  * Created by Ben on 4/4/16.
  */
 public class CompositeView implements IGuiView {
-    IMusicView midiViewImpl;
+    IMusicView midiViewPerBeat;
     IGuiView guiViewFrame;
+    IViewPiece viewPiece;
 
     public CompositeView(IViewPiece viewPiece) {
-        midiViewImpl = new MidiViewImpl(viewPiece);
+        midiViewPerBeat = new MidiViewPerBeat(viewPiece);
         guiViewFrame = new GuiViewFrame(viewPiece);
+        this.viewPiece = viewPiece;
     }
 
     /**
@@ -29,7 +36,7 @@ public class CompositeView implements IGuiView {
     @Override
     public void viewMusic() {
         guiViewFrame.viewMusic();
-        midiViewImpl.viewMusic();
+        midiViewPerBeat.viewMusic();
     }
 
     /**
@@ -38,7 +45,7 @@ public class CompositeView implements IGuiView {
     @Override
     public void update(IViewPiece viewPiece) {
         guiViewFrame.update(viewPiece);
-        midiViewImpl.update(viewPiece);
+        midiViewPerBeat.update(viewPiece);
     }
 
     /**
