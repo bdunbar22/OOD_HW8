@@ -1,8 +1,9 @@
 package cs3500.music.view;
 
+import cs3500.music.model.INote;
+
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import javax.swing.Timer;
 
 /**
  * A view that implements the IGuiView and allows for the composite display of the Midi and
@@ -72,8 +73,17 @@ public class CompositeView implements IGuiView {
     /**
      * Allow composite view to give the get note from location by using the gui views method.
      */
-    @Override public INote getNoteFromLocation(int x, int y) {
+    @Override
+    public INote getNoteFromLocation(int x, int y) {
         return guiViewFrame.getNoteFromLocation(x, y);
+    }
+
+    /**
+     * Allow composite view to make the note from location by using the gui views method.
+     */
+    @Override
+    public INote makeNoteFromLocation(int x, int y) {
+        return guiViewFrame.makeNoteFromLocation(x, y);
     }
 
     @Override

@@ -44,6 +44,20 @@ public interface IGuiView extends IMusicView {
 
   /**
    * Based on the x and y coordinates provided this function will return the note chosen.
-   */
+   * @param x location
+   * @param y location
+   * @return note
+     */
   INote getNoteFromLocation(final int x, final int y);
+
+  /**
+   * Based on the x and y coordinates provided this function make a note with the correct
+   * parameters based on the song being displayed.
+   *
+   * @param x location
+   * @param y location
+   * @return note
+   */
+  INote makeNoteFromLocation(final int x, final int y);
 }
+

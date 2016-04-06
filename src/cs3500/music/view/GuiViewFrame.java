@@ -78,6 +78,19 @@ public class GuiViewFrame extends JFrame implements IGuiView {
     return displayPanel.getNoteFromLocation(x, y);
   }
 
+
+  /**
+   * Make a note from the given location.
+   *
+   * @param x location
+   * @param y location
+   * @return note object made.
+   */
+  @Override
+  public INote makeNoteFromLocation(int x, int y) {
+    return displayPanel.makeNoteFromLocation(x, y);
+  }
+
   @Override
   public void scrollToEnd() {
     Rectangle r = displayPanel.getFullRectangle();

@@ -96,8 +96,9 @@ public class Controller implements IController{
      * of a mouse click. The volume will be configurable.
      */
     private void addNote(int x, int y) {
-        INote note = new Note(Pitch.FSHARP, new Octave(5), 1, 3);
-        piece.addNote(note);
+        IGuiView view = (IGuiView)musicView;
+        INote deleteNote = view.makeNoteFromLocation(x, y);
+        piece.addNote(deleteNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
         musicView.update(updatedViewPiece);
         musicView.viewMusic();
@@ -105,9 +106,6 @@ public class Controller implements IController{
 
     public void addNotes() {
         //TODO: create
-
-        INote note = new Note(Pitch.A, new Octave(2), 0, 1, 4, 2);
-        piece.addNotes(note);
     }
 
     public void moveNote() {
@@ -197,8 +195,10 @@ public class Controller implements IController{
             switch (e.getButton()) {
                 case MouseEvent.BUTTON3:
                     deleteNote(e.getX(), e.getY());
+                    break;
                 case MouseEvent.BUTTON1:
-                    addNote(e.getY(),e.getY());
+                    addNote(e.getX(),e.getY());
+                    break;
             }
         }
 
