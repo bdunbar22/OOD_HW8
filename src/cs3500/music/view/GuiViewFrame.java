@@ -24,8 +24,7 @@ public class GuiViewFrame extends JFrame implements IGuiView {
     this.displayPanel = new GuiViewPanel(viewPiece);
     this.displayPanel.setPreferredSize(this.getPreferredSize());
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    JScrollPane scrollPane = new JScrollPane(displayPanel);
-    this.scrollPane = scrollPane;
+    this.scrollPane = new JScrollPane(displayPanel);
     this.getContentPane().add(scrollPane);
     this.pack();
   }
@@ -67,7 +66,9 @@ public class GuiViewFrame extends JFrame implements IGuiView {
 
   @Override
   public void scrollToStart() {
-    Rectangle r = new Rectangle(0,0);
+    Rectangle r = new Rectangle(10,10);
     scrollPane.scrollRectToVisible(r);
+    this.getContentPane().add(scrollPane);
+    this.pack();
   }
 }
