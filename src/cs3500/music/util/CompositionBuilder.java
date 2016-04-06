@@ -2,8 +2,10 @@ package cs3500.music.util;
 
 import cs3500.music.model.*;
 
-//TODO: comments
 /**
+ * Allows for a composition to be created using a few functions offered by the model.
+ * This makes it possible to read in text files to make songs.
+ *
  * Created by Sam Letcher on 3/23/2016.
  */
 public class CompositionBuilder implements ICompositionBuilder<IPiece> {
