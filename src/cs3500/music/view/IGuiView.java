@@ -1,5 +1,7 @@
 package cs3500.music.view;
 
+import cs3500.music.model.INote;
+
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
@@ -25,7 +27,8 @@ public interface IGuiView extends IMusicView {
    * This is to force the view to have a method to set up mouse events.
    * the name is chosen based on the method signature to add a mouse listener in Java Swing.
    *
-   * GuiViewFrame can easily have this if it extends JFrame
+   * GuiViewFrame can easily have this if it extends JFrame, but it should add the mouse
+   * listener to the panel.
    */
   void addMouseListener(MouseListener listener);
 
@@ -38,4 +41,9 @@ public interface IGuiView extends IMusicView {
    * Scrolls the viewport to the start of the piece
    */
   void scrollToStart();
+
+  /**
+   * Based on the x and y coordinates provided this function will return the note chosen.
+   */
+  INote getNoteFromLocation(final int x, final int y);
 }

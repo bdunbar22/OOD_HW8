@@ -1,5 +1,7 @@
 package cs3500.music.view;
 
+import cs3500.music.model.INote;
+
 import javax.accessibility.Accessible;
 
 /**
@@ -14,4 +16,9 @@ public interface IGuiViewPanel extends Accessible {
      * @param viewPiece to place.
      */
     void resetViewPiece(IViewPiece viewPiece);
+
+    /**
+     * Based on the x and y coordinates provided this function will return the note chosen.
+     */
+    INote getNoteFromLocation(final int x, final int y);
 }

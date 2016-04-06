@@ -7,6 +7,8 @@ import cs3500.music.view.IViewPiece;
 import cs3500.music.view.ViewPiece;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.InvalidClassException;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +37,7 @@ public class Controller implements IController{
     }
 
     @Override
-    public void setView() {
+    public void start() {
         musicView.viewMusic();
     }
 
@@ -67,7 +69,6 @@ public class Controller implements IController{
         Map<Integer, Runnable> keyPresses = new HashMap<>();
         Map<Integer, Runnable> keyReleases = new HashMap<>();
 
-        keyPresses.put(KeyEvent.VK_C, new AddANote());
         keyPresses.put(KeyEvent.VK_R, new ReversePiece());
         keyPresses.put(KeyEvent.VK_END, new viewExtremaEnd());
         keyPresses.put(KeyEvent.VK_HOME, new viewExtremaStart());
@@ -86,7 +87,6 @@ public class Controller implements IController{
      */
     private MouseHandler configureMouseHandler() {
         MouseHandler mouseHandler = new MouseHandler();
-
         return mouseHandler;
     }
 
@@ -95,14 +95,12 @@ public class Controller implements IController{
      * question. The note pitch, octave and start beat will be determined based on the location
      * of a mouse click. The volume will be configurable.
      */
-    class AddANote implements Runnable {
-        public void run() {
-            INote note = new Note(Pitch.FSHARP, new Octave(5), 1, 3);
-            piece.addNote(note);
-            IViewPiece updatedViewPiece = new ViewPiece(piece);
-            musicView.update(updatedViewPiece);
-            musicView.viewMusic();
-        }
+    private void addNote(int x, int y) {
+        INote note = new Note(Pitch.FSHARP, new Octave(5), 1, 3);
+        piece.addNote(note);
+        IViewPiece updatedViewPiece = new ViewPiece(piece);
+        musicView.update(updatedViewPiece);
+        musicView.viewMusic();
     }
 
     public void addNotes() {
@@ -128,8 +126,18 @@ public class Controller implements IController{
         //TODO: create
     }
 
-    public void deleteNote() {
-        //TODO: create
+    /**
+     * If possible will delete the chosen note from the piece.
+     * @param x coordinate in view.
+     * @param y coordinate in view.
+     */
+    private void deleteNote(final int x, final int y) {
+        IGuiView view = (IGuiView)musicView;
+        INote deleteNote = view.getNoteFromLocation(x, y);
+        piece.removeNote(deleteNote);
+        IViewPiece updatedViewPiece = new ViewPiece(piece);
+        musicView.update(updatedViewPiece);
+        musicView.viewMusic();
     }
 
     /**
@@ -163,6 +171,59 @@ public class Controller implements IController{
             IGuiView view = (IGuiView)musicView;
             view.scrollToStart();
             musicView = view;
+        }
+    }
+
+    /**
+     * Allow for mouse events to cause edits to the model via controller functions.
+     */
+    class MouseHandler implements MouseListener {
+        /**
+         * Empty default constructor
+         */
+        public MouseHandler() {
+        }
+
+        /**
+         * handle when mouse is clicked. Left click will add a note and right click will delete
+         * a note.
+         *
+         * @param e mouse event
+         */
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            //Right click will delete note
+            //Left click will add a note
+            switch (e.getButton()) {
+                case MouseEvent.BUTTON3:
+                    deleteNote(e.getX(), e.getY());
+                case MouseEvent.BUTTON1:
+                    addNote(e.getY(),e.getY());
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            //TODO: this
+            int i = 5;
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            //TODO: this
+            int i = 5;
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // Nothing should be done, this is just mouse entering the part of the screen while
+            // hovering.
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // Nothing should be done, this is just mouse leaving the part of the screen while
+            // hovering.
         }
     }
 }

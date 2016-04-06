@@ -2,8 +2,11 @@ package cs3500.music.view;
 
 import org.w3c.dom.css.Rect;
 
+import cs3500.music.model.INote;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 
 /**
  * A frame to display a gui for a piece of music. This will be implemented so that the frame
@@ -56,6 +59,23 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   @Override
   public void update(IViewPiece viewPiece) {
     this.displayPanel.resetViewPiece(viewPiece);
+  }
+
+  @Override
+  public void addMouseListener(MouseListener listener) {
+    this.displayPanel.addMouseListener(listener);
+  }
+
+  /**
+   * Return a note from the given location.
+   *
+   * @param x location
+   * @param y location
+   * @return note object if found.
+     */
+  @Override
+  public INote getNoteFromLocation(int x, int y) {
+    return displayPanel.getNoteFromLocation(x, y);
   }
 
   @Override
