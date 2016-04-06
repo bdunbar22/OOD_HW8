@@ -14,12 +14,12 @@ import java.awt.event.MouseListener;
  * Created by Ben on 4/4/16.
  */
 public class CompositeView implements IGuiView {
-    IMusicView midiViewPerBeat;
+    MidiViewImpl midiView;
     IGuiView guiViewFrame;
     IViewPiece viewPiece;
 
     public CompositeView(IViewPiece viewPiece) {
-        midiViewPerBeat = new MidiViewImpl(viewPiece);
+        midiView = new MidiViewImpl(viewPiece);
         guiViewFrame = new GuiViewFrame(viewPiece);
         this.viewPiece = viewPiece;
     }
@@ -32,7 +32,7 @@ public class CompositeView implements IGuiView {
     @Override
     public void viewMusic() {
         guiViewFrame.viewMusic();
-        midiViewPerBeat.viewMusic();
+        midiView.viewMusicPerBeat();
     }
 
     /**
@@ -41,7 +41,7 @@ public class CompositeView implements IGuiView {
     @Override
     public void updateViewPiece(IViewPiece viewPiece) {
         guiViewFrame.updateViewPiece(viewPiece);
-        midiViewPerBeat.updateViewPiece(viewPiece);
+        midiView.updateViewPiece(viewPiece);
     }
 
     /**
