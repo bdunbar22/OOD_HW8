@@ -6,7 +6,6 @@ import cs3500.music.view.IMusicView;
 import cs3500.music.view.IViewPiece;
 import cs3500.music.view.ViewPiece;
 
-import javax.sound.midi.InvalidMidiDataException;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.InvalidClassException;
@@ -14,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.RunnableFuture;
 
 /**
  * Allow for edits to be made to a piece of music via the
@@ -28,6 +26,8 @@ public class Controller implements IController{
     private Timer timer;
     private boolean playing;
     private boolean moveToggle = false;
+    private boolean copyToggle = false;
+    private INote currentNote;
 
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
@@ -88,7 +88,8 @@ public class Controller implements IController{
         keyPresses.put(KeyEvent.VK_R, new ReversePiece());
         keyPresses.put(KeyEvent.VK_END, new viewExtremaEnd());
         keyPresses.put(KeyEvent.VK_HOME, new viewExtremaStart());
-        keyPresses.put(KeyEvent.VK_M, new toggleMove());
+        keyPresses.put(KeyEvent.VK_M, new moveToggle());
+        keyPresses.put(KeyEvent.VK_C, new copyToggle());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -218,11 +219,22 @@ public class Controller implements IController{
      * When false (default) left click will add a note
      * When true left click will move existing notes.
      */
-    class toggleMove implements Runnable {
+    class moveToggle implements Runnable {
         public void run() {
             moveToggle = !moveToggle;
+            copyToggle = false;
         }
     }
+
+  /**
+   *
+   */
+    class copyToggle implements  Runnable {
+      @Override public void run() {
+          copyToggle = !copyToggle;
+          moveToggle = false;
+      }
+  }
 
     /**
      * A runnable class which changes the view to the end of the piece
@@ -279,6 +291,12 @@ public class Controller implements IController{
         public void mousePressed (MouseEvent e){
             mousePoint = e.getPoint();
             noteFound = checkForNote(e.getX(), e.getY());
+            if (noteFound) {
+                currentNote = getNote(e.getX(), e.getY());
+            }
+            else {
+                currentNote = null;
+            }
         }
 
         @Override
@@ -286,13 +304,21 @@ public class Controller implements IController{
             try {
                 switch (e.getButton()) {
                     case MouseEvent.BUTTON1:
-                        if (!moveToggle) {
+                        if (!moveToggle && !copyToggle) {
                             int dx = e.getX() - mousePoint.x;
                             addNote(mousePoint.x, mousePoint.y, dx);
-                        } else {
+                        } else if (copyToggle) {
                             if (noteFound) {
-                                INote oldNote = getNote(mousePoint.x, mousePoint.y);
-                                moveNote(oldNote, e.getPoint());
+                                addNote(
+                                  e.getX(),
+                                  e.getY(),
+                                  (currentNote.getDuration() -1 ) * 20,
+                                  currentNote.getInstrument(),
+                                  currentNote.getVolume());
+                            }
+                        } else if (moveToggle) {
+                            if (noteFound) {
+                                moveNote(currentNote, e.getPoint());
                             }
                         }
                         break;
