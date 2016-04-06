@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.RunnableFuture;
 
 /**
  * Allow for edits to be made to a piece of music via the
@@ -32,8 +33,7 @@ public class Controller implements IController{
     private IMusicView musicView;
     private Timer timer;
     private boolean playing;
-    private boolean moveToggle = false;
-    private boolean copyToggle = false;
+    private Toggle toggle = Toggle.ADD;
     private INote currentNote;
 
     public Controller(IPiece piece, IMusicView musicView) {
@@ -97,6 +97,7 @@ public class Controller implements IController{
         keyPresses.put(KeyEvent.VK_HOME, new viewExtremaStart());
         keyPresses.put(KeyEvent.VK_M, new moveToggle());
         keyPresses.put(KeyEvent.VK_C, new copyToggle());
+        keyPresses.put(KeyEvent.VK_A, new addToggle());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -230,26 +231,35 @@ public class Controller implements IController{
     }
 
 
+  /**
+   * Sets toggle to ADD - allowing the user to add notes
+   */
+  class addToggle implements Runnable {
+        @Override public void run() {
+            toggle = Toggle.ADD;
+        }
+    }
     /**
-     * Toggles moveToggle on and off when the "M" key is pressed.
-     *
-     * When false (default) left click will add a note
-     * When true left click will move existing notes.
+     * Sets the toggle to ADD if it is MOVE, and to MOVE otherwise
      */
     class moveToggle implements Runnable {
         public void run() {
-            moveToggle = !moveToggle;
-            copyToggle = false;
+            if (toggle == Toggle.MOVE)
+                toggle = Toggle.ADD;
+            else
+                toggle = toggle.MOVE;
         }
     }
 
   /**
-   *
+   * Sets the toggle to ADD if it is COPY, and to COPY otherwise
    */
     class copyToggle implements  Runnable {
       @Override public void run() {
-          copyToggle = !copyToggle;
-          moveToggle = false;
+          if (toggle == Toggle.COPY)
+              toggle = Toggle.ADD;
+          else
+              toggle = Toggle.COPY;
       }
   }
 
@@ -321,22 +331,26 @@ public class Controller implements IController{
             try {
                 switch (e.getButton()) {
                     case MouseEvent.BUTTON1:
-                        if (!moveToggle && !copyToggle) {
-                            int dx = e.getX() - mousePoint.x;
-                            addNote(mousePoint.x, mousePoint.y, dx);
-                        } else if (copyToggle) {
-                            if (noteFound) {
-                                addNote(
-                                  e.getX(),
-                                  e.getY(),
-                                  (currentNote.getDuration() -1 ) * 20,
-                                  currentNote.getInstrument(),
-                                  currentNote.getVolume());
-                            }
-                        } else if (moveToggle) {
-                            if (noteFound) {
-                                moveNote(currentNote, e.getPoint());
-                            }
+                        switch (toggle) {
+                            case ADD:
+                                int dx = e.getX() - mousePoint.x;
+                                addNote(mousePoint.x, mousePoint.y, dx);
+                                break;
+                            case COPY:
+                                if (noteFound) {
+                                    addNote(
+                                      e.getX(),
+                                      e.getY(),
+                                      (currentNote.getDuration() -1 ) * 20,
+                                      currentNote.getInstrument(),
+                                      currentNote.getVolume());
+                                }
+                                break;
+                            case MOVE:
+                                if (noteFound) {
+                                    moveNote(currentNote, e.getPoint());
+                                }
+                                break;
                         }
                         break;
                 }
@@ -393,5 +407,9 @@ public class Controller implements IController{
             int Delay = (piece.getTempo()/1000);
             timer.schedule(new timerTask(this), 0, Delay);
         }
+    }
+
+    private enum Toggle {
+        ADD, COPY, MOVE
     }
 }
