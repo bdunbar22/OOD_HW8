@@ -95,6 +95,26 @@ public class CompositeView implements IGuiView {
     public void scrollToEnd() { guiViewFrame.scrollToEnd(); }
 
     @Override
+    public void scrollUp() {
+        guiViewFrame.scrollUp();
+    }
+
+    @Override
+    public void scrollRight() {
+        guiViewFrame.scrollRight();
+    }
+
+    @Override
+    public void scrollDown() {
+        guiViewFrame.scrollDown();
+    }
+
+    @Override
+    public void scrollLeft() {
+        guiViewFrame.scrollLeft();
+    }
+
+    @Override
     public void playBeat(final int currentBeat) {
         this.guiViewFrame.playBeat(currentBeat);
         this.midiView.viewMusicPerBeat(currentBeat);

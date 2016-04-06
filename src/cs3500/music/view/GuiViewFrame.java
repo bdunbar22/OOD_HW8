@@ -1,7 +1,5 @@
 package cs3500.music.view;
 
-import org.w3c.dom.css.Rect;
-
 import cs3500.music.model.INote;
 
 import javax.swing.*;
@@ -121,5 +119,33 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   @Override
   public void playBeat(final int currentBeat) {
     this.displayPanel.updateBeat(currentBeat);
+  }
+
+  @Override
+  public void scrollUp() {
+    Rectangle r = displayPanel.getVisibleRect();
+    r.translate(0, -30);
+    displayPanel.scrollRectToVisible(r);
+  }
+
+  @Override
+  public void scrollRight() {
+    Rectangle r = displayPanel.getVisibleRect();
+    r.translate(30, 0);
+    displayPanel.scrollRectToVisible(r);
+  }
+
+  @Override
+  public void scrollDown() {
+    Rectangle r = displayPanel.getVisibleRect();
+    r.translate(0, 30);
+    displayPanel.scrollRectToVisible(r);
+  }
+
+  @Override
+  public void scrollLeft() {
+    Rectangle r = displayPanel.getVisibleRect();
+    r.translate(-30, 0);
+    displayPanel.scrollRectToVisible(r);
   }
 }

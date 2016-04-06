@@ -125,6 +125,10 @@ public class Controller implements IController{
         keyPresses.put(KeyEvent.VK_A, new addToggle());
         keyPresses.put(KeyEvent.VK_SPACE, new StopAndPlay());
         keyPresses.put(KeyEvent.VK_B, new Restart());
+        keyPresses.put(KeyEvent.VK_UP, new scrollUp());
+        keyPresses.put(KeyEvent.VK_DOWN, new scrollDown());
+        keyPresses.put(KeyEvent.VK_RIGHT, new scrollRight());
+        keyPresses.put(KeyEvent.VK_LEFT, new scrollLeft());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -321,6 +325,50 @@ public class Controller implements IController{
           else
               toggle = Toggle.COPY;
       }
+    }
+
+    /**
+     * A runnable class to allow scrolling up.
+     */
+    class scrollUp implements Runnable {
+        public void run() {
+            IGuiView view = (IGuiView)musicView;
+            view.scrollUp();
+            musicView = view;
+        }
+    }
+
+    /**
+     * A runnable class to allow scrolling down.
+     */
+    class scrollDown implements Runnable {
+        public void run() {
+            IGuiView view = (IGuiView)musicView;
+            view.scrollDown();
+            musicView = view;
+        }
+    }
+
+    /**
+     * A runnable class to allow scrolling right.
+     */
+    class scrollRight implements Runnable {
+        public void run() {
+            IGuiView view = (IGuiView)musicView;
+            view.scrollRight();
+            musicView = view;
+        }
+    }
+
+    /**
+     * A runnable class to allow scrolling left.
+     */
+    class scrollLeft implements Runnable {
+        public void run() {
+            IGuiView view = (IGuiView)musicView;
+            view.scrollLeft();
+            musicView = view;
+        }
     }
 
     /**
