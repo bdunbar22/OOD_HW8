@@ -36,7 +36,7 @@ public class Controller implements IController{
     private Toggle toggle = Toggle.ADD;
     private int currentBeat;
 
-    private static final int TEMPO_TO_PERIOD = 10000;
+    private static final int TEMPO_TO_PERIOD = 1000;
 
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
@@ -107,6 +107,7 @@ public class Controller implements IController{
         keyPresses.put(KeyEvent.VK_M, new moveToggle());
         keyPresses.put(KeyEvent.VK_C, new copyToggle());
         keyPresses.put(KeyEvent.VK_A, new addToggle());
+        keyPresses.put(KeyEvent.VK_SPACE, new StopAndPlay());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -141,6 +142,15 @@ public class Controller implements IController{
         }
         catch (InvalidClassException e) {
             //Do nothing. Only need timing in some cases.
+        }
+    }
+
+    /**
+     * Pause and play the song when space bar is hit.
+     */
+    class StopAndPlay implements Runnable {
+        public void run() {
+            toggleMusicPLay();
         }
     }
 
