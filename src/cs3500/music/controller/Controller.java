@@ -1,10 +1,7 @@
 package cs3500.music.controller;
 
 import cs3500.music.model.*;
-import cs3500.music.view.IGuiView;
-import cs3500.music.view.IMusicView;
-import cs3500.music.view.IViewPiece;
-import cs3500.music.view.ViewPiece;
+import cs3500.music.view.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -21,9 +18,12 @@ import java.util.concurrent.RunnableFuture;
  *
  * <h1>Functionality:</h1>
  * <p>Right click - delete a note</p>
- * <p>Left drag - create a note, starts at start pressed location, length based on drag length</p>
- * <p>TOGGLE 'm' and Left drag now moves notes.</p>
- * <i>Pressing 'm' enters move note mode until 'm' is pressed again.</i>
+ * <p>TOGGLE 'a', 'm', 'c' for operation modes.</p>
+ * <p>A = Add (default)</p>
+ * <p>M = Move </p>
+ * <p>C = Copy </p>
+ * <i>Pressing the key will enter the operation mode. Pressing a different key will switch
+ * modes. Starts at Add mode.</i>
  * <p>Press 'r' reverses the song.</p>
  *
  * Created by Ben on 4/4/16.
@@ -36,18 +36,13 @@ public class Controller implements IController{
     private Toggle toggle = Toggle.ADD;
     private int currentBeat;
 
+    private static final int TEMPO_TO_PERIOD = 10000;
+
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
         this.musicView = musicView;
-        this.timer = new Timer();
         this.playing = false;
         this.currentBeat = 0;
-        //TODO: get music play working.
-        //TODO: this music play should only apply during composite views. because we will want to
-        //TODO: view each beat at a time based on timer. Other views we only want to view music
-        //TODO: once.
-        //toggleMusicPLay();
-        //piece.setBeat(piece.getBeat() + 1); for each display.
         try{
             configureHandlers();
         }
@@ -55,6 +50,7 @@ public class Controller implements IController{
             //Do nothing. Could not add handlers to an IMusicView that was not also an
             //IGuiView
         }
+        configureTiming();
     }
 
     /**
@@ -63,6 +59,16 @@ public class Controller implements IController{
     @Override
     public void start() {
         musicView.viewMusic();
+    }
+
+    /**
+     * For cases when timing is needed. Update the current beat and then have the views
+     * respond so that the music plays and the gui has a moving bar.
+     */
+    private void updateEachBeat() {
+        currentBeat++;
+        IGuiView view = (IGuiView)musicView;
+        view.playBeat(currentBeat);
     }
 
     /**
@@ -117,6 +123,25 @@ public class Controller implements IController{
     private MouseHandler configureMouseHandler() {
         MouseHandler mouseHandler = new MouseHandler(new mouseHelper());
         return mouseHandler;
+    }
+
+    /**
+     * When timing is required make timing available.
+     */
+    private void configureTiming() {
+        try{
+            if(!(musicView instanceof CompositeView)) {
+                throw new InvalidClassException("Only composite view requires timing to be "
+                    + "added");
+            }
+            this.timer = new Timer();
+            playing = true;
+            int period = piece.getTempo()/TEMPO_TO_PERIOD;
+            timer.schedule(new timerTask(this), 0, period);
+        }
+        catch (InvalidClassException e) {
+            //Do nothing. Only need timing in some cases.
+        }
     }
 
     /**
@@ -335,7 +360,7 @@ public class Controller implements IController{
         }
         @Override
         public void run() {
-            controller.start();
+            controller.updateEachBeat();
             if(checkSongEnd()){
                 this.cancel();
             }
@@ -361,8 +386,8 @@ public class Controller implements IController{
         }
         else {
             playing = true;
-            int Delay = (piece.getTempo()/1000);
-            timer.schedule(new timerTask(this), 0, Delay);
+            int period = piece.getTempo()/TEMPO_TO_PERIOD;
+            timer.schedule(new timerTask(this), 0, period);
         }
     }
 

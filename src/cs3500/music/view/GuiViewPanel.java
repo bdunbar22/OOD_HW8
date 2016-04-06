@@ -41,6 +41,15 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
     this.revalidate();
   }
 
+  /**
+   * Update the beat and display.
+   */
+  public void updateBeat(final int currentBeat) {
+    this.currentBeat = currentBeat;
+    this.repaint();
+    this.revalidate();
+  }
+
   public Rectangle getFullRectangle() {
     return new Rectangle(highX, highY);
   }

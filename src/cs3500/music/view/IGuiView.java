@@ -59,5 +59,12 @@ public interface IGuiView extends IMusicView {
    * @return note
    */
   INote makeNoteFromLocation(final int x, final int y, final int length);
+
+  /**
+   * Display music according to given beat.
+   *
+   * @param currentBeat to view for
+   */
+  void playBeat(final int currentBeat);
 }
 

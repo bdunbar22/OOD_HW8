@@ -17,11 +17,13 @@ public class CompositeView implements IGuiView {
     MidiViewImpl midiView;
     IGuiView guiViewFrame;
     IViewPiece viewPiece;
+    int startBeat;
 
     public CompositeView(IViewPiece viewPiece) {
         midiView = new MidiViewImpl(viewPiece);
         guiViewFrame = new GuiViewFrame(viewPiece);
         this.viewPiece = viewPiece;
+        this.startBeat = 0;
     }
 
     /**
@@ -32,7 +34,7 @@ public class CompositeView implements IGuiView {
     @Override
     public void viewMusic() {
         guiViewFrame.viewMusic();
-        midiView.viewMusicPerBeat();
+        midiView.viewMusicPerBeat(startBeat);
     }
 
     /**
@@ -91,4 +93,10 @@ public class CompositeView implements IGuiView {
 
     @Override
     public void scrollToEnd() { guiViewFrame.scrollToEnd(); }
+
+    @Override
+    public void playBeat(final int currentBeat) {
+        this.guiViewFrame.playBeat(currentBeat);
+        this.midiView.viewMusicPerBeat(currentBeat);
+    }
 }

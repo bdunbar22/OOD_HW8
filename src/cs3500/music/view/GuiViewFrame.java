@@ -71,8 +71,9 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   }
 
   /**
+   * Add the mouse listener to the panel.
    *
-   * @param listener
+   * @param listener to add
    */
 
   @Override
@@ -117,5 +118,10 @@ public class GuiViewFrame extends JFrame implements IGuiView {
     scrollPane.scrollRectToVisible(r);
     this.getContentPane().add(scrollPane);
     this.pack();
+  }
+
+  @Override
+  public void playBeat(final int currentBeat) {
+    this.displayPanel.updateBeat(currentBeat);
   }
 }
