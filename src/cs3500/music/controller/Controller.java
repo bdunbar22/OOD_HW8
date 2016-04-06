@@ -6,13 +6,11 @@ import cs3500.music.view.IMusicView;
 import cs3500.music.view.IViewPiece;
 import cs3500.music.view.ViewPiece;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.InvalidClassException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.RunnableFuture;
 
 /**
  * Allow for edits to be made to a piece of music via the
@@ -95,12 +93,12 @@ public class Controller implements IController{
      * question. The note pitch, octave and start beat will be determined based on the location
      * of a mouse click. The volume will be configurable.
      */
-    private void addNote(int x, int y) {
+    private void addNote(int x, int y, int length) {
         IGuiView view = (IGuiView)musicView;
-        INote deleteNote = view.makeNoteFromLocation(x, y);
-        piece.addNote(deleteNote);
+        INote addNote = view.makeNoteFromLocation(x, y, length);
+        piece.addNote(addNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
-        musicView.update(updatedViewPiece);
+        musicView.updateViewPiece(updatedViewPiece);
         musicView.viewMusic();
     }
 
@@ -134,7 +132,7 @@ public class Controller implements IController{
         INote deleteNote = view.getNoteFromLocation(x, y);
         piece.removeNote(deleteNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
-        musicView.update(updatedViewPiece);
+        musicView.updateViewPiece(updatedViewPiece);
         musicView.viewMusic();
     }
 
@@ -145,7 +143,7 @@ public class Controller implements IController{
         public void run() {
             piece = piece.reversePiece();
             IViewPiece updatedViewPiece = new ViewPiece(piece);
-            musicView.update(updatedViewPiece);
+            musicView.updateViewPiece(updatedViewPiece);
             musicView.viewMusic();
         }
     }
@@ -175,7 +173,8 @@ public class Controller implements IController{
     /**
      * Allow for mouse events to cause edits to the model via controller functions.
      */
-    class MouseHandler implements MouseListener {
+    class MouseHandler implements MouseListener, MouseMotionListener {
+        private Point mousePoint;
         /**
          * Empty default constructor
          */
@@ -196,22 +195,28 @@ public class Controller implements IController{
                 case MouseEvent.BUTTON3:
                     deleteNote(e.getX(), e.getY());
                     break;
+            }
+        }
+
+        @Override public void mousePressed (MouseEvent e){
+            switch (e.getButton()) {
                 case MouseEvent.BUTTON1:
-                    addNote(e.getX(),e.getY());
+                    mousePoint = e.getPoint();
                     break;
             }
         }
 
-        @Override
-        public void mousePressed(MouseEvent e) {
-            //TODO: this
-            int i = 5;
+        @Override public void mouseDragged (MouseEvent e){
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            //TODO: this
-            int i = 5;
+            switch(e.getButton()) {
+                case MouseEvent.BUTTON1:
+                    int dx = e.getX() - mousePoint.x;
+                    addNote(mousePoint.x, mousePoint.y, dx);
+                    break;
+            }
         }
 
         @Override
@@ -224,6 +229,11 @@ public class Controller implements IController{
         public void mouseExited(MouseEvent e) {
             // Nothing should be done, this is just mouse leaving the part of the screen while
             // hovering.
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // Nothing should be done, this is just the mouse moving around the screen
         }
     }
 }

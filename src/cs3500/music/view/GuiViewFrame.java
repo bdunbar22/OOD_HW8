@@ -32,6 +32,15 @@ public class GuiViewFrame extends JFrame implements IGuiView {
     this.pack();
   }
 
+  public GuiViewFrame(IViewPiece viewPiece, JScrollPane scrollPane) {
+    this.displayPanel = new GuiViewPanel(viewPiece);
+    this.displayPanel.setPreferredSize(this.getPreferredSize());
+    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    this.scrollPane = scrollPane;
+    this.getContentPane().add(scrollPane);
+    this.pack();
+  }
+
   /**
    * Make the frame visible
    */
@@ -57,9 +66,14 @@ public class GuiViewFrame extends JFrame implements IGuiView {
    * Update the view piece being used by the display panel
    */
   @Override
-  public void update(IViewPiece viewPiece) {
+  public void updateViewPiece(IViewPiece viewPiece) {
     this.displayPanel.resetViewPiece(viewPiece);
   }
+
+  /**
+   *
+   * @param listener
+   */
 
   @Override
   public void addMouseListener(MouseListener listener) {
@@ -87,8 +101,8 @@ public class GuiViewFrame extends JFrame implements IGuiView {
    * @return note object made.
    */
   @Override
-  public INote makeNoteFromLocation(int x, int y) {
-    return displayPanel.makeNoteFromLocation(x, y);
+  public INote makeNoteFromLocation(int x, int y, int length) {
+    return displayPanel.makeNoteFromLocation(x, y, length);
   }
 
   @Override

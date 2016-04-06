@@ -34,5 +34,5 @@ public interface IGuiViewPanel extends Accessible {
      * @param y location
      * @return note
      */
-    INote makeNoteFromLocation(final int x, final int y);
+    INote makeNoteFromLocation(final int x, final int y, final int length);
 }

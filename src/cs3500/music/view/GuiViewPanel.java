@@ -270,17 +270,18 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
    * @return note created
    */
   @Override
-  public INote makeNoteFromLocation(int a, int b) {
+  public INote makeNoteFromLocation(int a, int b, int length) {
     final List<Pair<Octave, Pitch>> toneRange = viewPiece.getToneRange();
     //take floor of the reversed algorithm to get starting beat.
     int startBeat = (a - lowX)/xGraphStep;
+    int duration = length/xGraphStep + 1;
 
     for(int j = 0; j < toneRange.size(); j++) {
       Pair<Octave, Pitch> tone = toneRange.get(j);
       int y1 = lowY + (toneRange.size() - 1 - j) * yGraphStep;
       int y2 = y1 + yGraphStep;
       if(b > y1 && b < y2) {
-        return new Note(tone.getValue(), tone.getKey(), startBeat, 4);
+        return new Note(tone.getValue(), tone.getKey(), startBeat, duration);
       }
     }
     return null;

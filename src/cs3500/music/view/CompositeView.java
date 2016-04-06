@@ -26,7 +26,7 @@ public class CompositeView implements IGuiView {
 
     /**
      * An audible representation of music is given in this view. This should play based on the
-     * current beat of the song. The controller can update the song and then view music at the
+     * current beat of the song. The controller can updateViewPiece the song and then view music at the
      * next beat again.
      */
     @Override
@@ -39,9 +39,9 @@ public class CompositeView implements IGuiView {
      * Update the view piece being used by the member views.
      */
     @Override
-    public void update(IViewPiece viewPiece) {
-        guiViewFrame.update(viewPiece);
-        midiViewPerBeat.update(viewPiece);
+    public void updateViewPiece(IViewPiece viewPiece) {
+        guiViewFrame.updateViewPiece(viewPiece);
+        midiViewPerBeat.updateViewPiece(viewPiece);
     }
 
     /**
@@ -82,8 +82,8 @@ public class CompositeView implements IGuiView {
      * Allow composite view to make the note from location by using the gui views method.
      */
     @Override
-    public INote makeNoteFromLocation(int x, int y) {
-        return guiViewFrame.makeNoteFromLocation(x, y);
+    public INote makeNoteFromLocation(int x, int y, int length) {
+        return guiViewFrame.makeNoteFromLocation(x, y, length);
     }
 
     @Override

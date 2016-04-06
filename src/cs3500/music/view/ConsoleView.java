@@ -37,7 +37,7 @@ public class ConsoleView implements IMusicView {
      * Update the view piece being used by the console view.
      */
     @Override
-    public void update(IViewPiece viewPiece) {
+    public void updateViewPiece(IViewPiece viewPiece) {
         this.viewPiece = viewPiece;
     }
 }
