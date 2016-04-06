@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- * A helper to read cs3500.music data and construct a cs3500.music composition from it.
+ * A helper to read music data and construct a cs3500.music composition from it.
  */
 public class MusicReader {
   /**
