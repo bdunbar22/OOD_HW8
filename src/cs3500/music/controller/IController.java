@@ -9,5 +9,5 @@ public interface IController {
     /**
      * Start the display of the view(s) to start the program.
      */
-    void setView();
+    void start();
 }

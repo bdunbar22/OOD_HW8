@@ -25,7 +25,8 @@ public interface IGuiView extends IMusicView {
    * This is to force the view to have a method to set up mouse events.
    * the name is chosen based on the method signature to add a mouse listener in Java Swing.
    *
-   * GuiViewFrame can easily have this if it extends JFrame
+   * GuiViewFrame can easily have this if it extends JFrame, but it should add the mouse
+   * listener to the panel.
    */
   void addMouseListener(MouseListener listener);
 }

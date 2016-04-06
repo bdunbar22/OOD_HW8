@@ -20,6 +20,9 @@ public class ViewPiece implements IViewPiece {
         this.map = piece.getConsolidationMap();
     }
 
+    //TODO: If only using get notes in beat keep private variable consolidation map so that
+    //getNotesInBeat is still a fast function for playing music back.
+
     @Override
     public List<INote> getNotes() {
         return piece.getNotes();

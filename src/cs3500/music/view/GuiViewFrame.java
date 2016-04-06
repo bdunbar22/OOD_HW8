@@ -2,6 +2,7 @@ package cs3500.music.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 
 /**
  * A frame to display a gui for a piece of music. This will be implemented so that the frame
@@ -53,5 +54,10 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   @Override
   public void update(IViewPiece viewPiece) {
     this.displayPanel.resetViewPiece(viewPiece);
+  }
+
+  @Override
+  public void addMouseListener(MouseListener listener) {
+    this.displayPanel.addMouseListener(listener);
   }
 }
