@@ -1,5 +1,7 @@
 package cs3500.music.view;
 
+import cs3500.music.model.INote;
+
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
@@ -29,4 +31,9 @@ public interface IGuiView extends IMusicView {
    * listener to the panel.
    */
   void addMouseListener(MouseListener listener);
+
+  /**
+   * Based on the x and y coordinates provided this function will return the note chosen.
+   */
+  INote getNoteFromLocation(final int x, final int y);
 }

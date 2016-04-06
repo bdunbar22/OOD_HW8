@@ -1,5 +1,7 @@
 package cs3500.music.view;
 
+import cs3500.music.model.INote;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
@@ -59,5 +61,17 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   @Override
   public void addMouseListener(MouseListener listener) {
     this.displayPanel.addMouseListener(listener);
+  }
+
+  /**
+   * Return a note from the given location.
+   *
+   * @param x location
+   * @param y location
+   * @return note object if found.
+     */
+  @Override
+  public INote getNoteFromLocation(int x, int y) {
+    return displayPanel.getNoteFromLocation(x, y);
   }
 }

@@ -211,4 +211,47 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
     g.setColor(Color.decode("#FF0017"));
     g2.drawLine(x, lowY, x, highY);
   }
+
+  /**
+   * Given a location return the note at that location.
+   * Notes starting at the given location take precedence.
+   *
+   * @param a x-coordinate
+   * @param b y-coordinate
+   * @return note found
+     */
+  @Override
+  public INote getNoteFromLocation(int a, int b) {
+    final List<Pair<Octave, Pitch>> toneRange = viewPiece.getToneRange();
+    final Map<Integer, List<INote>> data = viewPiece.getConsolidationMap();
+    List<INote> notesInBeat = new ArrayList<>();
+
+    for(int i = 0; i <= viewPiece.getLastBeat(); i++) {
+      notesInBeat = data.get(i);
+      for(int j = 0; j < toneRange.size(); j++) {
+        Pair<Octave, Pitch> tone = toneRange.get(j);
+        int x = lowX + i * xGraphStep;
+        int y = lowY + (toneRange.size() - 1 - j) * yGraphStep;
+
+        //Return the top note starting at the given beat.
+        for(INote note : notesInBeat) {
+          if(note.isStarting(new Note(tone.getValue(), tone.getKey(), i, 1))) {
+            if((a > x && a < x + xGraphStep) && (b > y && b < y + yGraphStep)) {
+              return note;
+            }
+          }
+        }
+
+        //return the top note that is continuing.
+        for(INote note : notesInBeat) {
+          if(note.isPersisting(new Note(tone.getValue(), tone.getKey(), i, 1))) {
+            if((a > x && a < x + xGraphStep) && (b > y && b < y + yGraphStep)) {
+              return note;
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
 }

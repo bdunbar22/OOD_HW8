@@ -73,4 +73,11 @@ public class CompositeView implements IGuiView {
     public void initialize(){
         guiViewFrame.initialize();
     }
+
+    /**
+     * Allow composite view to give the get note from location by using the gui views method.
+     */
+    @Override public INote getNoteFromLocation(int x, int y) {
+        return guiViewFrame.getNoteFromLocation(x, y);
+    }
 }

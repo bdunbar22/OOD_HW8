@@ -68,7 +68,6 @@ public class Controller implements IController{
         Map<Integer, Runnable> keyPresses = new HashMap<>();
         Map<Integer, Runnable> keyReleases = new HashMap<>();
 
-        keyPresses.put(KeyEvent.VK_C, new AddANote());
         keyPresses.put(KeyEvent.VK_R, new ReversePiece());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
@@ -85,7 +84,6 @@ public class Controller implements IController{
      */
     private MouseHandler configureMouseHandler() {
         MouseHandler mouseHandler = new MouseHandler();
-
         return mouseHandler;
     }
 
@@ -94,14 +92,12 @@ public class Controller implements IController{
      * question. The note pitch, octave and start beat will be determined based on the location
      * of a mouse click. The volume will be configurable.
      */
-    class AddANote implements Runnable {
-        public void run() {
-            INote note = new Note(Pitch.FSHARP, new Octave(5), 1, 3);
-            piece.addNote(note);
-            IViewPiece updatedViewPiece = new ViewPiece(piece);
-            musicView.update(updatedViewPiece);
-            musicView.viewMusic();
-        }
+    private void addNote(int x, int y) {
+        INote note = new Note(Pitch.FSHARP, new Octave(5), 1, 3);
+        piece.addNote(note);
+        IViewPiece updatedViewPiece = new ViewPiece(piece);
+        musicView.update(updatedViewPiece);
+        musicView.viewMusic();
     }
 
     public void addNotes() {
@@ -127,8 +123,18 @@ public class Controller implements IController{
         //TODO: create
     }
 
-    public void deleteNote() {
-        //TODO: create
+    /**
+     * If possible will delete the chosen note from the piece.
+     * @param x coordinate in view.
+     * @param y coordinate in view.
+     */
+    private void deleteNote(final int x, final int y) {
+        IGuiView view = (IGuiView)musicView;
+        INote deleteNote = view.getNoteFromLocation(x, y);
+        piece.removeNote(deleteNote);
+        IViewPiece updatedViewPiece = new ViewPiece(piece);
+        musicView.update(updatedViewPiece);
+        musicView.viewMusic();
     }
 
     /**
@@ -164,9 +170,7 @@ public class Controller implements IController{
     /**
      * Allow for mouse events to cause edits to the model via controller functions.
      */
-    public class MouseHandler implements MouseListener {
-        private Map<Integer, Runnable> buttonMap;
-
+    class MouseHandler implements MouseListener {
         /**
          * Empty default constructor
          */
@@ -174,20 +178,21 @@ public class Controller implements IController{
         }
 
         /**
-         * Set the map for key type events. Key typed events in Java Swing are characters
-         */
-        public void setButtonMap(Map<Integer, Runnable> map) {
-            buttonMap = map;
-        }
-
-        /**
-         * handle when mouse is clicked.
+         * handle when mouse is clicked. Left click will add a note and right click will delete
+         * a note.
+         *
          * @param e mouse event
          */
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (buttonMap.containsKey(e.getButton()))
-                buttonMap.get(e.getButton()).run();
+            //Right click will delete note
+            //Left click will add a note
+            switch (e.getButton()) {
+                case MouseEvent.BUTTON3:
+                    deleteNote(e.getX(), e.getY());
+                case MouseEvent.BUTTON1:
+                    addNote(e.getY(),e.getY());
+            }
         }
 
         @Override
