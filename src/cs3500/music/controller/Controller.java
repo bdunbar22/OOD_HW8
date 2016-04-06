@@ -162,7 +162,10 @@ public class Controller implements IController{
         }
     }
 
-    class Restart implements Runnable {
+  /**
+   * Sets the currentBeat back to the start.
+   */
+  class Restart implements Runnable {
         @Override public void run() {
             currentBeat = 0;
         }
