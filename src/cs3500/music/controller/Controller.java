@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.io.InvalidClassException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.RunnableFuture;
 
 /**
  * Allow for edits to be made to a piece of music via the
@@ -21,6 +22,7 @@ import java.util.Map;
 public class Controller implements IController{
     private IPiece piece;
     private IMusicView musicView;
+    private boolean moveToggle = false;
 
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
@@ -70,6 +72,7 @@ public class Controller implements IController{
         keyPresses.put(KeyEvent.VK_R, new ReversePiece());
         keyPresses.put(KeyEvent.VK_END, new viewExtremaEnd());
         keyPresses.put(KeyEvent.VK_HOME, new viewExtremaStart());
+        keyPresses.put(KeyEvent.VK_M, new toggleMove());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -102,16 +105,33 @@ public class Controller implements IController{
         musicView.viewMusic();
     }
 
-    public void addNotes() {
-        //TODO: create
+  /**
+   * Add a new note by passing params
+   * @param x location
+   * @param y location
+   * @param length duration of the note's sustain
+   * @param instrument instrument
+   * @param volume volume
+   */
+    private void addNote(int x, int y, int length, int instrument, int volume) {
+        IGuiView view = (IGuiView)musicView;
+        INote addNote = view.makeNoteFromLocation(x, y, length);
+        addNote.setInstrument(instrument);
+        addNote.setVolume(volume);
+        piece.addNote(addNote);
+        IViewPiece updatedViewPiece = new ViewPiece(piece);
+        musicView.updateViewPiece(updatedViewPiece);
+        musicView.viewMusic();
     }
 
-    public void moveNote() {
-        //TODO: create
-    }
-
-    public void moveNotes() {
-        //TODO: create
+    public void moveNote(INote note, Point newPos) {
+        addNote(
+          (int)newPos.getX(),
+          (int)newPos.getY(),
+          (note.getDuration() - 1) * 20,
+          note.getInstrument(),
+          note.getVolume());
+        deleteNote(note);
     }
 
     public void editNote() {
@@ -164,6 +184,19 @@ public class Controller implements IController{
             IViewPiece updatedViewPiece = new ViewPiece(piece);
             musicView.updateViewPiece(updatedViewPiece);
             musicView.viewMusic();
+        }
+    }
+
+
+    /**
+     * Toggles moveToggle on and off when the "M" key is pressed.
+     *
+     * When false (default) left click will add a note
+     * When true left click will move existing notes.
+     */
+    class toggleMove implements Runnable {
+        public void run() {
+            moveToggle = !moveToggle;
         }
     }
 
@@ -227,14 +260,15 @@ public class Controller implements IController{
         public void mouseReleased(MouseEvent e) {
             switch(e.getButton()) {
                 case MouseEvent.BUTTON1:
-                    int dx = e.getX() - mousePoint.x;
-                    addNote(mousePoint.x, mousePoint.y, dx);
-                    break;
-                case MouseEvent.BUTTON3:
-                    if (noteFound) {
-                        INote note = getNote(mousePoint.x, mousePoint.y);
-                        deleteNote(note);
-                        addNote(e.getX(), e.getY(), (note.getDuration() -1) * 20);
+                    if (!moveToggle) {
+                        int dx = e.getX() - mousePoint.x;
+                        addNote(mousePoint.x, mousePoint.y, dx);
+                    }
+                    else {
+                        if (noteFound) {
+                            INote oldNote = getNote(mousePoint.x, mousePoint.y);
+                            moveNote(oldNote, e.getPoint());
+                        }
                     }
                     break;
             }
@@ -248,8 +282,7 @@ public class Controller implements IController{
 
         @Override
         public void mouseExited(MouseEvent e) {
-            // Nothing should be done, this is just mouse leaving the part of the screen while
-            // hovering.
+
         }
     }
 }
