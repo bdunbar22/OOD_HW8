@@ -108,6 +108,7 @@ public class Controller implements IController{
         keyPresses.put(KeyEvent.VK_C, new copyToggle());
         keyPresses.put(KeyEvent.VK_A, new addToggle());
         keyPresses.put(KeyEvent.VK_SPACE, new StopAndPlay());
+        keyPresses.put(KeyEvent.VK_B, new Restart());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -142,6 +143,12 @@ public class Controller implements IController{
         }
         catch (InvalidClassException e) {
             //Do nothing. Only need timing in some cases.
+        }
+    }
+
+    class Restart implements Runnable {
+        @Override public void run() {
+            currentBeat = 0;
         }
     }
 
