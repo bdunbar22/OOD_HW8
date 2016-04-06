@@ -15,6 +15,7 @@ public class MouseHandler implements MouseListener {
     private Point mousePoint;
     private boolean noteFound;
     private MouseHandlerHelper mouseHandlerHelper;
+    private INote currentNote;
 
     /**
      * Empty default constructor
@@ -44,6 +45,12 @@ public class MouseHandler implements MouseListener {
     public void mousePressed (MouseEvent e){
         mousePoint = e.getPoint();
         noteFound = mouseHandlerHelper.checkForNoteFromMouse(e.getX(), e.getY());
+        if (noteFound) {
+            currentNote = mouseHandlerHelper.getNoteFromMouse(e.getX(), e.getY());
+        }
+        else {
+            currentNote = null;
+        }
     }
 
     @Override
@@ -51,14 +58,26 @@ public class MouseHandler implements MouseListener {
         try {
             switch (e.getButton()) {
                 case MouseEvent.BUTTON1:
-                    if (!mouseHandlerHelper.getMoveToggleFromMouse()) {
-                        int dx = e.getX() - mousePoint.x;
-                        mouseHandlerHelper.addNoteFromMouse(mousePoint.x, mousePoint.y, dx);
-                    } else {
-                        if (noteFound) {
-                            INote oldNote = mouseHandlerHelper.getNoteFromMouse(mousePoint.x, mousePoint.y);
-                            mouseHandlerHelper.moveNoteFromMouse(oldNote, e.getPoint());
-                        }
+                    switch (mouseHandlerHelper.getMoveToggleFromMouse()) {
+                        case ADD:
+                            int dx = e.getX() - mousePoint.x;
+                            mouseHandlerHelper.addNoteFromMouse(mousePoint.x, mousePoint.y, dx);
+                            break;
+                        case COPY:
+                            if (noteFound) {
+                                mouseHandlerHelper.addNoteFromMouse(
+                                    e.getX(),
+                                    e.getY(),
+                                    (currentNote.getDuration() -1 ) * 20,
+                                    currentNote.getInstrument(),
+                                    currentNote.getVolume());
+                            }
+                            break;
+                        case MOVE:
+                            if (noteFound) {
+                                mouseHandlerHelper.moveNoteFromMouse(currentNote, e.getPoint());
+                            }
+                            break;
                     }
                     break;
             }

@@ -34,7 +34,6 @@ public class Controller implements IController{
     private Timer timer;
     private boolean playing;
     private Toggle toggle = Toggle.ADD;
-    private INote currentNote;
 
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
@@ -301,6 +300,10 @@ public class Controller implements IController{
             addNote(x, y, dx);
         }
 
+        public void addNoteFromMouse(int x, int y, int length, int instrument, int volume) {
+            addNote(x, y, length, instrument, volume);
+        }
+
         public void moveNoteFromMouse(INote old, Point point) {
             moveNote(old, point);
         }
@@ -309,8 +312,8 @@ public class Controller implements IController{
             return getNote(x, y);
         }
 
-        public boolean getMoveToggleFromMouse() {
-            return moveToggle;
+        public Toggle getMoveToggleFromMouse() {
+            return toggle;
         }
     }
 
@@ -352,7 +355,7 @@ public class Controller implements IController{
         }
     }
 
-    private enum Toggle {
+    public enum Toggle {
         ADD, COPY, MOVE
     }
 }

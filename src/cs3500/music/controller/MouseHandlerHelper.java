@@ -18,9 +18,11 @@ public interface MouseHandlerHelper {
 
     void addNoteFromMouse(int x, int y, int dx);
 
+    void addNoteFromMouse(int x, int y, int dx, int instrument, int volume);
+
     void moveNoteFromMouse(INote old, Point point);
 
     INote getNoteFromMouse(int x, int y);
 
-    boolean getMoveToggleFromMouse();
+    Controller.Toggle getMoveToggleFromMouse();
 }
