@@ -18,6 +18,13 @@ import java.util.TimerTask;
  * Allow for edits to be made to a piece of music via the
  * GUI view. Has a model that will be edited and a view that will be updated.
  *
+ * <h1>Functionality:</h1>
+ * <p>Right click - delete a note</p>
+ * <p>Left drag - create a note, starts at start pressed location, length based on drag length</p>
+ * <p>TOGGLE 'm' and Left drag now moves notes.</p>
+ * <i>Pressing 'm' enters move note mode until 'm' is pressed again.</i>
+ * <p>Press 'r' reverses the song.</p>
+ *
  * Created by Ben on 4/4/16.
  */
 public class Controller implements IController{
@@ -141,7 +148,12 @@ public class Controller implements IController{
         musicView.viewMusic();
     }
 
-    public void moveNote(INote note, Point newPos) {
+    /**
+     * Move a note to a different starting beat, pitch and octave.
+     * @param note that is being moved
+     * @param newPos to move to on view
+     */
+    private void moveNote(INote note, Point newPos) {
         addNote(
           (int)newPos.getX(),
           (int)newPos.getY(),
@@ -149,14 +161,6 @@ public class Controller implements IController{
           note.getInstrument(),
           note.getVolume());
         deleteNote(note);
-    }
-
-    public void editNote() {
-        //TODO: create
-    }
-
-    public void editNotes() {
-        //TODO: create
     }
 
     /**
@@ -191,10 +195,23 @@ public class Controller implements IController{
         }
     }
 
+    /**
+     * Determine if getting a note will work.
+     * @param x location
+     * @param y location
+     * @return boolean if note will be retrieved correctly.
+     */
     private boolean checkForNote(final int x, final int y) {
         return getNote(x, y) != null;
     }
 
+    /**
+     * Retrieves the note that was clicked on in the GUI.
+     *
+     * @param x mouse location
+     * @param y mouse location
+     * @return note that was found
+     */
     private INote getNote(final int x, final int y) {
         IGuiView view = (IGuiView)musicView;
         return view.getNoteFromLocation(x, y);
@@ -354,7 +371,11 @@ public class Controller implements IController{
         }
     }
 
-    public boolean checkSongEnd(){
+    /**
+     * Determine if the song is over.
+     * @return true if song is over.
+     */
+    private boolean checkSongEnd(){
         return (piece.getBeat() >= piece.getLastBeat());
     }
 
