@@ -73,4 +73,10 @@ public class CompositeView implements IGuiView {
     public void initialize(){
         guiViewFrame.initialize();
     }
+
+    @Override
+    public void scrollToStart() { guiViewFrame.scrollToStart(); }
+
+    @Override
+    public void scrollToEnd() { guiViewFrame.scrollToEnd(); }
 }

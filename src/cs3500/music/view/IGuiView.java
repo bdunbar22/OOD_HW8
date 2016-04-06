@@ -28,4 +28,14 @@ public interface IGuiView extends IMusicView {
    * GuiViewFrame can easily have this if it extends JFrame
    */
   void addMouseListener(MouseListener listener);
+
+  /**
+   * Scrolls the viewport to the end of the piece
+   */
+  void scrollToEnd();
+
+  /**
+   * Scrolls the viewport to the start of the piece
+   */
+  void scrollToStart();
 }

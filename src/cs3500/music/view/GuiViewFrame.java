@@ -1,5 +1,7 @@
 package cs3500.music.view;
 
+import org.w3c.dom.css.Rect;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,6 +15,7 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   //interface. So while GuiViewPanel is implementing the interface IGuiViewPanel, the class name
   //was required to be the type in order for JScrollPane code to compile.
   private GuiViewPanel displayPanel;
+  private JScrollPane scrollPane;
 
   /**
    * Creates new GuiView
@@ -22,6 +25,7 @@ public class GuiViewFrame extends JFrame implements IGuiView {
     this.displayPanel.setPreferredSize(this.getPreferredSize());
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     JScrollPane scrollPane = new JScrollPane(displayPanel);
+    this.scrollPane = scrollPane;
     this.getContentPane().add(scrollPane);
     this.pack();
   }
@@ -53,5 +57,17 @@ public class GuiViewFrame extends JFrame implements IGuiView {
   @Override
   public void update(IViewPiece viewPiece) {
     this.displayPanel.resetViewPiece(viewPiece);
+  }
+
+  @Override
+  public void scrollToEnd() {
+    Rectangle r = displayPanel.getFullRectangle();
+    scrollPane.scrollRectToVisible(r);
+  }
+
+  @Override
+  public void scrollToStart() {
+    Rectangle r = new Rectangle(0,0);
+    scrollPane.scrollRectToVisible(r);
   }
 }

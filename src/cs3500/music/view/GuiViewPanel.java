@@ -7,6 +7,7 @@ import cs3500.music.model.Pitch;
 import javafx.util.Pair;
 
 import javax.swing.*;
+import javax.swing.text.Position;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
   private static final int yGraphStep = 20;
   private static final int lowX = 40;
   private static final int lowY = 20;
+  private static int highX = 40;
+  private static int highY = 40;
 
   public GuiViewPanel(IViewPiece viewPiece) {
     this.viewPiece = viewPiece;
@@ -34,6 +37,10 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
     this.viewPiece = viewPiece;
     this.repaint();
     this.revalidate();
+  }
+
+  public Rectangle getFullRectangle() {
+    return new Rectangle(highX, highY);
   }
 
   /**
@@ -74,8 +81,8 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
     final int measure = viewPiece.getMeasure();
     final int songLength = viewPiece.getLastBeat();
     //High X depends on whether the song ends at a measure start or not.
-    int highX = lowX + (measure*(songLength/measure) + measure) * xGraphStep;
-    int highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
+    highX = lowX + (measure*(songLength/measure) + measure) * xGraphStep;
+    highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
     return new Dimension(highX, highY);
   }
 
@@ -163,9 +170,9 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
     final int measure = viewPiece.getMeasure();
 
     //High X depends on whether the song ends at a measure start or not.
-    int highX = lowX + (measure*(songLength/measure) + measure) * xGraphStep;
+    highX = lowX + (measure*(songLength/measure) + measure) * xGraphStep;
 
-    int highY = 20 + toneCount * yGraphStep;
+    highY = 20 + toneCount * yGraphStep;
 
     //Measure headers. Display every 4th measure up till the end of the song
     for(int i = 0; i <= songLength; i += 4 * measure) {
@@ -204,7 +211,7 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
   private void drawPlaceholder(Graphics g) {
     int beat = viewPiece.getBeat();
     int x = lowX + 1 + beat * xGraphStep;
-    int highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
+    highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
 
     Graphics2D g2 = (Graphics2D) g;
     g2.setStroke(new BasicStroke(2));

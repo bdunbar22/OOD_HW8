@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.InvalidClassException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.RunnableFuture;
 
 /**
  * Allow for edits to be made to a piece of music via the
@@ -68,6 +69,8 @@ public class Controller implements IController{
 
         keyPresses.put(KeyEvent.VK_C, new AddANote());
         keyPresses.put(KeyEvent.VK_R, new ReversePiece());
+        keyPresses.put(KeyEvent.VK_END, new viewExtremaEnd());
+        keyPresses.put(KeyEvent.VK_HOME, new viewExtremaStart());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -141,21 +144,25 @@ public class Controller implements IController{
         }
     }
 
-    public void viewExtrema() {
-        //TODO: create
-        /*
-        public void scrollRectToVisible(Rectangle aRect)
-        Forwards the scrollRectToVisible() message to the JComponent's parent. Components that can service the request, such as JViewport, override this method and perform the scrolling.
-        Parameters:
-        aRect - the visible Rectangle
-         */
+    /**
+     * A runnable class which changes the view to the end of the piece
+     */
+    class viewExtremaEnd implements Runnable {
+        public void run() {
+            IGuiView view = (IGuiView)musicView;
+            view.scrollToEnd();
+            musicView = view;
+        }
     }
 
-    public void scroll() {
-//        JScrollBar vertical = scrollPane.getVerticalScrollBar();
-//        InputMap im = vertical.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-//        im.put(KeyStroke.getKeyStroke("DOWN"), "positiveUnitIncrement");
-//        im.put(KeyStroke.getKeyStroke("UP"), "negativeUnitIncrement");
-
+    /**
+     * A runnable class which changes the view to the start of the piece
+     */
+    class viewExtremaStart implements Runnable {
+        public void run() {
+            IGuiView view = (IGuiView)musicView;
+            view.scrollToStart();
+            musicView = view;
+        }
     }
 }
