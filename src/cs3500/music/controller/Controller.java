@@ -110,7 +110,7 @@ public class Controller implements IController{
      * This handler can be added to the view if the view is of the IGuiView type.
      */
     private MouseHandler configureMouseHandler() {
-        MouseHandler mouseHandler = new MouseHandler();
+        MouseHandler mouseHandler = new MouseHandler(new mouseHelper());
         return mouseHandler;
     }
 
@@ -264,70 +264,31 @@ public class Controller implements IController{
     }
 
     /**
-     * Allow for mouse events to cause edits to the model via controller functions.
+     * Provide the mouse handler with necessary functions from the controller.
      */
-    class MouseHandler implements MouseListener {
-        private Point mousePoint;
-        private boolean noteFound;
-        /**
-         * Empty default constructor
-         */
-        public MouseHandler() {
+    class mouseHelper implements MouseHandlerHelper {
+        public void deleteNoteFromMouse(int x, int y) {
+            deleteNote(x, y);
         }
 
-        /**
-         * handle when mouse is clicked. Left click will add a note and right click will delete
-         * a note.
-         *
-         * @param e mouse event
-         */
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            //Right click will delete note
-            //Left click will add a note
-            switch (e.getButton()) {
-                case MouseEvent.BUTTON3:
-                    deleteNote(e.getX(), e.getY());
-                    break;
-            }
+        public boolean checkForNoteFromMouse(int x, int y) {
+            return checkForNote(x, y);
         }
 
-        @Override
-        public void mousePressed (MouseEvent e){
-            mousePoint = e.getPoint();
-            noteFound = checkForNote(e.getX(), e.getY());
+        public void addNoteFromMouse(int x, int y, int dx) {
+            addNote(x, y, dx);
         }
 
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            try {
-                switch (e.getButton()) {
-                    case MouseEvent.BUTTON1:
-                        if (!moveToggle) {
-                            int dx = e.getX() - mousePoint.x;
-                            addNote(mousePoint.x, mousePoint.y, dx);
-                        } else {
-                            if (noteFound) {
-                                INote oldNote = getNote(mousePoint.x, mousePoint.y);
-                                moveNote(oldNote, e.getPoint());
-                            }
-                        }
-                        break;
-                }
-            }
-            catch (Exception exc) { /*Do nothing.*/ }
+        public void moveNoteFromMouse(INote old, Point point) {
+            moveNote(old, point);
         }
 
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            // Nothing should be done, this is just mouse entering the part of the screen while
-            // hovering.
+        public INote getNoteFromMouse(int x, int y) {
+            return getNote(x, y);
         }
 
-        @Override
-        public void mouseExited(MouseEvent e) {
-            // Nothing should be done, this is just mouse leaving the part of the screen while
-            // hovering.
+        public boolean getMoveToggleFromMouse() {
+            return moveToggle;
         }
     }
 
