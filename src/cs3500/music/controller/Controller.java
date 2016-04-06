@@ -129,14 +129,14 @@ public class Controller implements IController{
         musicView.viewMusic();
     }
 
-  /**
-   * Add a new note by passing params
-   * @param x location
-   * @param y location
-   * @param length duration of the note's sustain
-   * @param instrument instrument
-   * @param volume volume
-   */
+    /**
+     * Add a new note by passing params
+     * @param x location
+     * @param y location
+     * @param length duration of the note's sustain
+     * @param instrument instrument
+     * @param volume volume
+    */
     private void addNote(int x, int y, int length, int instrument, int volume) {
         IGuiView view = (IGuiView)musicView;
         INote addNote = view.makeNoteFromLocation(x, y, length);
@@ -230,14 +230,15 @@ public class Controller implements IController{
     }
 
 
-  /**
-   * Sets toggle to ADD - allowing the user to add notes
-   */
-  class addToggle implements Runnable {
+    /**
+     * Sets toggle to ADD - allowing the user to add notes
+     */
+    class addToggle implements Runnable {
         @Override public void run() {
             toggle = Toggle.ADD;
         }
     }
+
     /**
      * Sets the toggle to ADD if it is MOVE, and to MOVE otherwise
      */
@@ -250,9 +251,9 @@ public class Controller implements IController{
         }
     }
 
-  /**
-   * Sets the toggle to ADD if it is COPY, and to COPY otherwise
-   */
+    /**
+     * Sets the toggle to ADD if it is COPY, and to COPY otherwise
+     */
     class copyToggle implements  Runnable {
       @Override public void run() {
           if (toggle == Toggle.COPY)
@@ -260,7 +261,7 @@ public class Controller implements IController{
           else
               toggle = Toggle.COPY;
       }
-  }
+    }
 
     /**
      * A runnable class which changes the view to the end of the piece
@@ -288,35 +289,46 @@ public class Controller implements IController{
      * Provide the mouse handler with necessary functions from the controller.
      */
     class mouseHelper implements MouseHandlerHelper {
+        //provide use of controller's deleteNote
         public void deleteNoteFromMouse(int x, int y) {
             deleteNote(x, y);
         }
 
+        //provide use of controller's checkForNote
         public boolean checkForNoteFromMouse(int x, int y) {
             return checkForNote(x, y);
         }
 
+        //provide use of controller's addNote(x,y,length value)
         public void addNoteFromMouse(int x, int y, int dx) {
             addNote(x, y, dx);
         }
 
+        //provide use of controller's add note with all fields.
         public void addNoteFromMouse(int x, int y, int length, int instrument, int volume) {
             addNote(x, y, length, instrument, volume);
         }
 
+        //provide use of controller's  move note
         public void moveNoteFromMouse(INote old, Point point) {
             moveNote(old, point);
         }
 
+        //provide use of controller's get note
         public INote getNoteFromMouse(int x, int y) {
             return getNote(x, y);
         }
 
+        ////provide use of controller's toggle status.
         public Toggle getMoveToggleFromMouse() {
             return toggle;
         }
     }
 
+
+    /**
+     * Timer for the controller.
+     */
     class timerTask extends TimerTask {
         private Controller controller;
         public timerTask(Controller controller){
@@ -355,6 +367,10 @@ public class Controller implements IController{
         }
     }
 
+    /**
+     * Enum to determine the operating mode of the controller, whether it is currently adding,
+     * moving or copying notes.
+     */
     public enum Toggle {
         ADD, COPY, MOVE
     }

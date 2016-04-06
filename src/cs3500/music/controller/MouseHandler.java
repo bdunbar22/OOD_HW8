@@ -25,8 +25,7 @@ public class MouseHandler implements MouseListener {
     }
 
     /**
-     * handle when mouse is clicked. Left click will add a note and right click will delete
-     * a note.
+     * handle when mouse is clicked. Right button clicks delete notes.
      *
      * @param e mouse event
      */
@@ -41,6 +40,12 @@ public class MouseHandler implements MouseListener {
         }
     }
 
+    /**
+     * Handle when the mouse is pressed. The location of the press is stored and if possible
+     * the note on the gui that was pressed is stored.
+     *
+     * @param e mouse event
+     */
     @Override
     public void mousePressed (MouseEvent e){
         mousePoint = e.getPoint();
@@ -53,6 +58,14 @@ public class MouseHandler implements MouseListener {
         }
     }
 
+    /**
+     * Handle when mouse is released.
+     * Depending on the operating mode of the controller a note should either be created, moved
+     * or copying into a new
+     * location.
+     *
+     * @param e mouse event
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         try {
