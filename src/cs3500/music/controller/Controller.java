@@ -161,11 +161,9 @@ public class Controller implements IController{
 
     }
 
-    **
-        * Allow for mouse events to cause edits to the model via controller functions.
-    *
-        * Created by Ben on 4/4/16.
-        */
+    /**
+     * Allow for mouse events to cause edits to the model via controller functions.
+     */
     public class MouseHandler implements MouseListener {
         private Map<Integer, Runnable> buttonMap;
 
