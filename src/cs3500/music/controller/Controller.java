@@ -6,7 +6,6 @@ import cs3500.music.view.IMusicView;
 import cs3500.music.view.IViewPiece;
 import cs3500.music.view.ViewPiece;
 
-import javax.sound.midi.InvalidMidiDataException;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.InvalidClassException;
@@ -34,7 +33,8 @@ public class Controller implements IController{
     private IMusicView musicView;
     private Timer timer;
     private boolean playing;
-    private boolean moveToggle = false;
+    private Toggle toggle = Toggle.ADD;
+    private INote currentNote;
 
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
@@ -95,7 +95,9 @@ public class Controller implements IController{
         keyPresses.put(KeyEvent.VK_R, new ReversePiece());
         keyPresses.put(KeyEvent.VK_END, new viewExtremaEnd());
         keyPresses.put(KeyEvent.VK_HOME, new viewExtremaStart());
-        keyPresses.put(KeyEvent.VK_M, new toggleMove());
+        keyPresses.put(KeyEvent.VK_M, new moveToggle());
+        keyPresses.put(KeyEvent.VK_C, new copyToggle());
+        keyPresses.put(KeyEvent.VK_A, new addToggle());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -229,17 +231,37 @@ public class Controller implements IController{
     }
 
 
-    /**
-     * Toggles moveToggle on and off when the "M" key is pressed.
-     *
-     * When false (default) left click will add a note
-     * When true left click will move existing notes.
-     */
-    class toggleMove implements Runnable {
-        public void run() {
-            moveToggle = !moveToggle;
+  /**
+   * Sets toggle to ADD - allowing the user to add notes
+   */
+  class addToggle implements Runnable {
+        @Override public void run() {
+            toggle = Toggle.ADD;
         }
     }
+    /**
+     * Sets the toggle to ADD if it is MOVE, and to MOVE otherwise
+     */
+    class moveToggle implements Runnable {
+        public void run() {
+            if (toggle == Toggle.MOVE)
+                toggle = Toggle.ADD;
+            else
+                toggle = toggle.MOVE;
+        }
+    }
+
+  /**
+   * Sets the toggle to ADD if it is COPY, and to COPY otherwise
+   */
+    class copyToggle implements  Runnable {
+      @Override public void run() {
+          if (toggle == Toggle.COPY)
+              toggle = Toggle.ADD;
+          else
+              toggle = Toggle.COPY;
+      }
+  }
 
     /**
      * A runnable class which changes the view to the end of the piece
@@ -328,5 +350,9 @@ public class Controller implements IController{
             int Delay = (piece.getTempo()/1000);
             timer.schedule(new timerTask(this), 0, Delay);
         }
+    }
+
+    private enum Toggle {
+        ADD, COPY, MOVE
     }
 }
