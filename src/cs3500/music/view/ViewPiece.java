@@ -57,8 +57,5 @@ public class ViewPiece implements IViewPiece {
     public int getMeasure() { return piece.getMeasure(); }
 
     @Override
-    public int getBeat() { return piece.getBeat(); }
-
-    @Override
     public int getTempo() { return piece.getTempo(); }
 }

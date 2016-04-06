@@ -92,18 +92,6 @@ public interface IPiece extends INoteList{
     int getMeasure();
 
     /**
-     * Set the current beat of a piece of music. Default starts at 0 because the song has
-     * not started
-     * @param beat to go to
-     */
-    void setBeat(int beat);
-
-    /**
-     * Get the beat of the song that the piece is currently at
-     */
-    int getBeat();
-
-    /**
      * Every song should have a tempo.
      *
      * @param tempo to set

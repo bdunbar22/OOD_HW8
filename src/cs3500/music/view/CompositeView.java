@@ -19,7 +19,7 @@ public class CompositeView implements IGuiView {
     IViewPiece viewPiece;
 
     public CompositeView(IViewPiece viewPiece) {
-        midiViewPerBeat = new MidiViewPerBeat(viewPiece);
+        midiViewPerBeat = new MidiViewImpl(viewPiece);
         guiViewFrame = new GuiViewFrame(viewPiece);
         this.viewPiece = viewPiece;
     }

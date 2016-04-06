@@ -34,12 +34,14 @@ public class Controller implements IController{
     private Timer timer;
     private boolean playing;
     private Toggle toggle = Toggle.ADD;
+    private int currentBeat;
 
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
         this.musicView = musicView;
         this.timer = new Timer();
         this.playing = false;
+        this.currentBeat = 0;
         //TODO: get music play working.
         //TODO: this music play should only apply during composite views. because we will want to
         //TODO: view each beat at a time based on timer. Other views we only want to view music
@@ -93,7 +95,9 @@ public class Controller implements IController{
 
         keyPresses.put(KeyEvent.VK_R, new ReversePiece());
         keyPresses.put(KeyEvent.VK_END, new viewExtremaEnd());
+        keyPresses.put(KeyEvent.VK_BRACERIGHT, new viewExtremaEnd());
         keyPresses.put(KeyEvent.VK_HOME, new viewExtremaStart());
+        keyPresses.put(KeyEvent.VK_BRACELEFT, new viewExtremaStart());
         keyPresses.put(KeyEvent.VK_M, new moveToggle());
         keyPresses.put(KeyEvent.VK_C, new copyToggle());
         keyPresses.put(KeyEvent.VK_A, new addToggle());
@@ -126,7 +130,6 @@ public class Controller implements IController{
         piece.addNote(addNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
         musicView.updateViewPiece(updatedViewPiece);
-        musicView.viewMusic();
     }
 
     /**
@@ -145,7 +148,6 @@ public class Controller implements IController{
         piece.addNote(addNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
         musicView.updateViewPiece(updatedViewPiece);
-        musicView.viewMusic();
     }
 
     /**
@@ -176,7 +178,6 @@ public class Controller implements IController{
         piece.removeNote(deleteNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
         musicView.updateViewPiece(updatedViewPiece);
-        musicView.viewMusic();
     }
 
     /**
@@ -188,7 +189,6 @@ public class Controller implements IController{
             piece.removeNote(note);
             IViewPiece updatedViewPiece = new ViewPiece(piece);
             musicView.updateViewPiece(updatedViewPiece);
-            musicView.viewMusic();
         }
         catch (IllegalArgumentException e) {
             //Note wasn't present, do nothing.
@@ -225,7 +225,6 @@ public class Controller implements IController{
             piece = piece.reversePiece();
             IViewPiece updatedViewPiece = new ViewPiece(piece);
             musicView.updateViewPiece(updatedViewPiece);
-            musicView.viewMusic();
         }
     }
 
@@ -348,7 +347,7 @@ public class Controller implements IController{
      * @return true if song is over.
      */
     private boolean checkSongEnd(){
-        return (piece.getBeat() >= piece.getLastBeat());
+        return (currentBeat >= piece.getLastBeat());
     }
 
     /**

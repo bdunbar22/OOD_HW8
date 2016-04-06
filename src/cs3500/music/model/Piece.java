@@ -104,7 +104,6 @@ public final class Piece extends NoteList implements IPiece {
         IPiece copy = new Piece();
         List<INote> notes = this.getNotes();
         copy.addNotes(notes);
-        copy.setBeat(this.getBeat());
         copy.setMeasure(this.getMeasure());
         copy.setTempo(this.getTempo());
         return copy;

@@ -13,9 +13,11 @@ public class MidiViewImpl implements IMusicView {
   private final Synthesizer synth;
   private final Receiver receiver;
   private IViewPiece viewPiece;
+  private int currentBeat;
 
   public MidiViewImpl(IViewPiece viewPiece) {
     this.viewPiece = viewPiece;
+    this.currentBeat = 0;
     Synthesizer trySynth;
     Receiver tryReceive;
     try {
@@ -123,8 +125,8 @@ public class MidiViewImpl implements IMusicView {
   }
 
   public void viewMusicPerBeat() {
-    for (INote note : viewPiece.getNotesInBeat(viewPiece.getBeat())) {
-      if (note.getStart() == viewPiece.getBeat()){
+    for (INote note : viewPiece.getNotesInBeat(currentBeat)) {
+      if (note.getStart() == currentBeat){
         try {
           playNote(note);
         }
@@ -133,7 +135,7 @@ public class MidiViewImpl implements IMusicView {
         }
       }
     }
-    if (viewPiece.getBeat() == viewPiece.getLastBeat()) {
+    if (currentBeat >= viewPiece.getLastBeat()) {
       this.receiver.close();
     }
   }

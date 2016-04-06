@@ -39,5 +39,6 @@ public class ConsoleView implements IMusicView {
     @Override
     public void updateViewPiece(IViewPiece viewPiece) {
         this.viewPiece = viewPiece;
+        this.viewMusic();
     }
 }

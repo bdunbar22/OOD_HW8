@@ -14,7 +14,10 @@ public interface IMusicView {
 
     /**
      * Allows for the view to be updated with a new view piece so that if the model changes the
-     * model then the new corresponding view piece can be sent to the view
+     * model then the new corresponding view piece can be sent to the view. After update
+     * refresh the view accordingly.
+     *
+     * @param viewPiece new model view to update with.
      */
     void updateViewPiece(IViewPiece viewPiece);
 }

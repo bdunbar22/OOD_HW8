@@ -24,9 +24,11 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
   private static final int lowY = 20;
   private static int highX = 40;
   private static int highY = 40;
+  private int currentBeat;
 
   public GuiViewPanel(IViewPiece viewPiece) {
     this.viewPiece = viewPiece;
+    this.currentBeat = 0;
   }
 
   /**
@@ -209,8 +211,7 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
   }
 
   private void drawPlaceholder(Graphics g) {
-    int beat = viewPiece.getBeat();
-    int x = lowX + 1 + beat * xGraphStep;
+    int x = lowX + 1 + currentBeat * xGraphStep;
     highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
 
     Graphics2D g2 = (Graphics2D) g;
