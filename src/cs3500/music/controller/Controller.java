@@ -101,9 +101,9 @@ public class Controller implements IController{
 
         keyPresses.put(KeyEvent.VK_R, new ReversePiece());
         keyPresses.put(KeyEvent.VK_END, new viewExtremaEnd());
-        keyPresses.put(KeyEvent.VK_BRACERIGHT, new viewExtremaEnd());
+        keyPresses.put(KeyEvent.VK_0, new viewExtremaEnd());
         keyPresses.put(KeyEvent.VK_HOME, new viewExtremaStart());
-        keyPresses.put(KeyEvent.VK_BRACELEFT, new viewExtremaStart());
+        keyPresses.put(KeyEvent.VK_1, new viewExtremaStart());
         keyPresses.put(KeyEvent.VK_M, new moveToggle());
         keyPresses.put(KeyEvent.VK_C, new copyToggle());
         keyPresses.put(KeyEvent.VK_A, new addToggle());
