@@ -128,12 +128,20 @@ public class Controller implements IController{
      * @param y coordinate in view.
      */
     private void deleteNote(final int x, final int y) {
-        IGuiView view = (IGuiView)musicView;
-        INote deleteNote = view.getNoteFromLocation(x, y);
+        INote deleteNote = getNote(x, y);
         piece.removeNote(deleteNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
         musicView.updateViewPiece(updatedViewPiece);
         musicView.viewMusic();
+    }
+
+    private boolean checkForNote(final int x, final int y) {
+        return getNote(x, y) != null;
+    }
+
+    private INote getNote(final int x, final int y) {
+        IGuiView view = (IGuiView)musicView;
+        return view.getNoteFromLocation(x, y);
     }
 
     /**
@@ -173,8 +181,9 @@ public class Controller implements IController{
     /**
      * Allow for mouse events to cause edits to the model via controller functions.
      */
-    class MouseHandler implements MouseListener, MouseMotionListener {
+    class MouseHandler implements MouseListener {
         private Point mousePoint;
+        private boolean noteFound;
         /**
          * Empty default constructor
          */
@@ -202,19 +211,24 @@ public class Controller implements IController{
             switch (e.getButton()) {
                 case MouseEvent.BUTTON1:
                     mousePoint = e.getPoint();
+                    noteFound = checkForNote(e.getX(), e.getY());
                     break;
             }
-        }
-
-        @Override public void mouseDragged (MouseEvent e){
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
             switch(e.getButton()) {
                 case MouseEvent.BUTTON1:
-                    int dx = e.getX() - mousePoint.x;
-                    addNote(mousePoint.x, mousePoint.y, dx);
+                    if (noteFound == false) {
+                        int dx = e.getX() - mousePoint.x;
+                        addNote(mousePoint.x, mousePoint.y, dx);
+                    }
+                    else {
+                        INote n = getNote(mousePoint.x, mousePoint.y);
+                        deleteNote(mousePoint.x, mousePoint.y);
+                        addNote(e.getX(), e.getY(), (n.getDuration() -1) * 20);
+                    }
                     break;
             }
         }
@@ -229,11 +243,6 @@ public class Controller implements IController{
         public void mouseExited(MouseEvent e) {
             // Nothing should be done, this is just mouse leaving the part of the screen while
             // hovering.
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            // Nothing should be done, this is just the mouse moving around the screen
         }
     }
 }
