@@ -2,12 +2,15 @@ package cs3500.music.Controller;
 
 import cs3500.music.controller.Controller;
 import cs3500.music.controller.IController;
+import cs3500.music.controller.KeyboardHandler;
 import cs3500.music.model.*;
 import cs3500.music.view.IMusicView;
 import cs3500.music.view.IViewPiece;
 import cs3500.music.view.MusicViewCreator;
 import cs3500.music.view.ViewPiece;
 import org.junit.Test;
+
+import java.awt.event.KeyEvent;
 
 import static org.junit.Assert.assertEquals;
 /**
@@ -17,6 +20,7 @@ public class ControllerTest {
   @Test
   public void controllerTest() {
     Controller test = getControllerViewHelper();
+    KeyboardHandler mockKeyboard = new KeyboardHandler();
     test.start();
   }
 
