@@ -553,6 +553,7 @@ public class Controller implements IController{
         return (currentBeat >= piece.getLastBeat());
     }
 
+
     /**
      * This should be called when the space bar is hit to start and stop play of music.
      */

@@ -165,8 +165,12 @@ public class NoteList implements INoteList{
         return data;
     }
 
+    //For empty song return 0
     private int _getLastBeat() {
         int lastBeat = 0;
+        if(notes.size() < 1) {
+            return lastBeat;
+        }
         for(INote note : notes) {
             if(note.getStart() + note.getDuration() - 1 > lastBeat) {
                 lastBeat = note.getStart() + note.getDuration() - 1;

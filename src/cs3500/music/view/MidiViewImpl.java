@@ -69,7 +69,7 @@ public class MidiViewImpl implements IMusicView {
       1000;
     long endTime = (startTime + (note.getDuration() * tempoModifier));
     int pitch = this.getMidiPitch(note);
-    int instrument = note.getInstrument();
+    int instrument = note.getInstrument() - 1;
     int volume = note.getVolume();
 
     //Midi supports pitch values 0 - 127
