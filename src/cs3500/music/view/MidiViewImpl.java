@@ -106,7 +106,7 @@ public class MidiViewImpl implements IMusicView {
           try {
             playNote(note);
           } catch (InvalidMidiDataException e) {
-            e.printStackTrace();
+            //Channel could be out of range for some pieces.
           }
         }
       }
