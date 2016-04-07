@@ -27,6 +27,10 @@ import java.util.concurrent.RunnableFuture;
  * <i>Pressing the key will enter the operation mode. Pressing a different key will switch
  * modes. Starts at Add mode.</i>
  * <p>Press 'r' reverses the song.</p>
+ * <p>Press 'b' to go back to the start</p>
+ * <p>Press arrow keys to scroll</p>
+ * <p>Press home and end to get to start and end of piece for viewing</p>
+ * <p>Press 1 and 0 also goes to start and end of piece for viewing</p>
  *
  * Created by Ben on 4/4/16.
  */
