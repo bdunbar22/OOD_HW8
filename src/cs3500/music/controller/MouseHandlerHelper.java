@@ -73,4 +73,10 @@ public interface MouseHandlerHelper {
      * @return mode of operation enum
      */
     Controller.Toggle getMoveToggleFromMouse();
+
+    /**
+     * Allow for notes to be added by specifying location
+     * @param dx length
+     */
+    void addNoteLocationNeeded(int dx);
 }

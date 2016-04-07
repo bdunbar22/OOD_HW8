@@ -84,6 +84,7 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
 
   /**
    * Give the size of the panel based on the space the contents take up.
+   * Provide some extra space to add notes outside of the current range.
    *
    * @return dimension for size.
    */
@@ -285,6 +286,9 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
     //take floor of the reversed algorithm to get starting beat.
     int startBeat = (a - lowX)/xGraphStep;
     int duration = length/xGraphStep + 1;
+    if(toneRange.size() == 0) {
+      return new Note(Pitch.C, new Octave(4), startBeat, duration);
+    }
 
     for(int j = 0; j < toneRange.size(); j++) {
       Pair<Octave, Pitch> tone = toneRange.get(j);
