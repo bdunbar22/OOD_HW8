@@ -193,6 +193,9 @@ public class NoteList implements INoteList{
      * This list should contain all of the tones between the extremes.
      */
     private List<Pair<Octave, Pitch>> _getToneRange() {
+        if(notes.size() == 0) {
+            return Arrays.asList(new Pair<>(new Octave(4), Pitch.C));
+        }
         Collections.sort(this.notes, new PitchAndOctaveComparator());
         //Identify the range.
         Pitch lowPitch = this.notes.get(0).getPitch();
@@ -208,7 +211,6 @@ public class NoteList implements INoteList{
         //Add (possibly partial) first octave
         for(Pitch i = lowPitch; i.compareTo(Pitch.values()[Pitch.values().length - 1]) < 0;
             i = i.nextPitch()) {
-
             range.add(new Pair<>(new Octave(lowOctave.getValue()), i));
         }
         //Add last pitch (next pitch would wrap so the highest should be added outside of loop)

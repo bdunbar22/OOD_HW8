@@ -48,13 +48,18 @@ public class MouseHandler implements MouseListener {
      */
     @Override
     public void mousePressed (MouseEvent e){
-        mousePoint = e.getPoint();
-        noteFound = mouseHandlerHelper.checkForNoteFromMouse(e.getX(), e.getY());
-        if (noteFound) {
-            currentNote = mouseHandlerHelper.getNoteFromMouse(e.getX(), e.getY());
+        try {
+            mousePoint = e.getPoint();
+            noteFound = mouseHandlerHelper.checkForNoteFromMouse(e.getX(), e.getY());
+            if (noteFound) {
+                currentNote = mouseHandlerHelper.getNoteFromMouse(e.getX(), e.getY());
+            }
+            else {
+                currentNote = null;
+            }
         }
-        else {
-            currentNote = null;
+        catch (Exception exc) {
+            //Do nothing if unusual input doesn't work.
         }
     }
 

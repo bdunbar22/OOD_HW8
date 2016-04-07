@@ -60,26 +60,34 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
    */
   @Override
   public void paintComponent(Graphics g){
-    // Handle the default painting
-    super.paintComponent(g);
+    try{
+      // Handle the default painting
+      super.paintComponent(g);
 
-    // Set background color
-    this.setBackground(Color.decode("#EEEEEE"));
+      // Set background color
+      this.setBackground(Color.decode("#EEEEEE"));
 
-    // Add tone labels
-    this.drawTones(g);
+      // Add tone labels
+      this.drawTones(g);
 
-    // Add beats
-    this.drawBeats(g);
+      // Add beats
+      this.drawBeats(g);
 
-    // Add the background graph
-    this.drawGraph(g);
+      // Add the background graph
+      this.drawGraph(g);
 
-    // Draw the current beat with a red line
-    this.drawPlaceholder(g);
+      // Draw the current beat with a red line
+      this.drawPlaceholder(g);
 
-    this.setPreferredSize(this.getPreferredSize());
-    this.revalidate();
+      this.setPreferredSize(this.getPreferredSize());
+
+      // Move the window to make sure the red marker bar is still visible
+      this.moveWindowForBar();
+      this.revalidate();
+    }
+    catch(Exception exc) {
+      //Don't paint for a certain iteration if not possible.
+    }
   }
 
   /**
@@ -90,12 +98,18 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
    */
   @Override
   public Dimension getPreferredSize(){
-    final int measure = viewPiece.getMeasure();
-    final int songLength = viewPiece.getLastBeat();
-    //High X depends on whether the song ends at a measure start or not.
-    highX = lowX + (measure*(songLength/measure) + measure) * xGraphStep;
-    highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
-    return new Dimension(highX, highY);
+      try {
+        final int measure = viewPiece.getMeasure();
+        final int songLength = viewPiece.getLastBeat();
+        //High X depends on whether the song ends at a measure start or not.
+        highX = lowX + (measure * (songLength / measure) + measure) * xGraphStep;
+        highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
+        return new Dimension(highX, highY);
+      }
+      catch (Exception exc) {
+        //empty songs can cause errors.
+        return new Dimension(1500, 600);
+      }
   }
 
   /**
@@ -220,6 +234,10 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
     g2.drawLine(lowX, highY, highX, highY);
   }
 
+  /**
+   * Draw the bar showing where the song is being played at now.
+   * @param g to draw with.
+   */
   private void drawPlaceholder(Graphics g) {
     int x = lowX + 1 + currentBeat * xGraphStep;
     highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
@@ -228,6 +246,21 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
     g2.setStroke(new BasicStroke(2));
     g.setColor(Color.decode("#FF0017"));
     g2.drawLine(x, lowY, x, highY);
+  }
+
+  /**
+   * Ensure that the placeholder bar is in the view. If the bar is out of the view, move the
+   * view so that the placeholder is visible again.
+   */
+  private void moveWindowForBar() {
+    Rectangle rectangle  = this.getVisibleRect();
+    int xLocationOfBar = lowX + 1 + currentBeat * xGraphStep;
+    if(xLocationOfBar > rectangle.getX() + rectangle.getWidth()) {
+      int newWindowX = xLocationOfBar;
+      int newWindowY = (int) rectangle.getY();
+      rectangle.setLocation(newWindowX, newWindowY);
+      this.scrollRectToVisible(rectangle);
+    }
   }
 
   /**

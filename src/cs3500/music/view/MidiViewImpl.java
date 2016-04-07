@@ -100,14 +100,19 @@ public class MidiViewImpl implements IMusicView {
   }
 
   public void viewMusicPerBeat(final int currentBeat) {
-    for (INote note : viewPiece.getNotesInBeat(currentBeat)) {
-      if (note.getStart() == currentBeat) {
-        try {
-          playNote(note);
-        } catch (InvalidMidiDataException e) {
-          e.printStackTrace();
+    try{
+      for (INote note : viewPiece.getNotesInBeat(currentBeat)) {
+        if (note.getStart() == currentBeat) {
+          try {
+            playNote(note);
+          } catch (InvalidMidiDataException e) {
+            e.printStackTrace();
+          }
         }
       }
+    }
+    catch (NullPointerException e) {
+      //Don't play notes if none exist in the beat.
     }
   }
 

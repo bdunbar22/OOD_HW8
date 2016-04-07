@@ -31,6 +31,7 @@ import java.util.concurrent.RunnableFuture;
  * <p>Press arrow keys to scroll</p>
  * <p>Press home and end to get to start and end of piece for viewing</p>
  * <p>Press 1 and 0 also goes to start and end of piece for viewing</p>
+ * <p>Press 't' to update the tempo! Have fun.</p>
  *
  * Created by Ben on 4/4/16.
  */
@@ -138,6 +139,7 @@ public class Controller implements IController{
         keyPresses.put(KeyEvent.VK_DOWN, new scrollDown());
         keyPresses.put(KeyEvent.VK_RIGHT, new scrollRight());
         keyPresses.put(KeyEvent.VK_LEFT, new scrollLeft());
+        keyPresses.put(KeyEvent.VK_T, new getNewTempo());
 
         KeyboardHandler keyboardHandler = new KeyboardHandler();
         keyboardHandler.setKeyHoldMap(keyTypes);
@@ -420,6 +422,33 @@ public class Controller implements IController{
             IGuiView view = (IGuiView)musicView;
             view.scrollLeft();
             musicView = view;
+        }
+    }
+    /**
+     * A runnable class to allow the tempo to be updated. If out of a valid range fix it for the
+     * user.
+     */
+    class getNewTempo implements Runnable {
+        public void run() {
+            try {
+                String newTempoString = JOptionPane.showInputDialog("Please input the new tempo "
+                    + "(50000-200000 to hear melodies):");
+
+                int tempo = Integer.parseInt(newTempoString);
+                if(tempo < 40000) {
+                    tempo = 40000;
+                }
+                if(tempo > 200000) {
+                    tempo = 200000;
+                }
+                piece.setTempo(tempo);
+                IViewPiece updatedViewPiece = new ViewPiece(piece);
+                musicView.updateViewPiece(updatedViewPiece);
+            }
+            catch (Exception exc) {
+                System.out.print(exc.getStackTrace());
+                //Don't change tempo if invalid entry.
+            }
         }
     }
 
