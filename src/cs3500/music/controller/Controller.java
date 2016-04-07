@@ -218,7 +218,7 @@ public class Controller implements IController{
         try {
             final int duration = length/20 + 1; //convert drag length to number of beats.
 
-            String pitchString = JOptionPane.showInputDialog("Please enter a value 1-13 to "
+            String pitchString = JOptionPane.showInputDialog("Please enter a value 1-12 to "
                 + "choose a Pitch (C - B respectively): ");
 
             String octaveString = JOptionPane.showInputDialog("Please input a two digit integer"

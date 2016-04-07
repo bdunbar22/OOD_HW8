@@ -30,6 +30,10 @@ public class CompositionBuilder implements ICompositionBuilder<IPiece> {
     Octave octave = new Octave(pitch/12);
     Pitch charPitch = Pitch.values()[pitch % 12];
     int duration = end - start;
+    if(duration < 1) {
+      duration = 1;
+      //support files that accidentally put an invalid duration.
+    }
 
     piece.addNote(new Note(charPitch, octave, start, duration, instrument, volume));
     return this;
