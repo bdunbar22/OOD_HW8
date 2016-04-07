@@ -2,11 +2,11 @@ package cs3500.music.model;
 
 /**
  * Represent the 12 distinct pitches used in the Western System of cs3500.music.
- *
+ * <p>
  * <i>Natural</i> notes are displayed as the capital letter for the given tone.
  * <i>Accidental</i> notes are supported as sharp notes. Both C# and D♭ represent the same tone,
  * but will be represented as C# in this application.
- *
+ * <p>
  * Created by Ben on 3/2/16.
  */
 public enum Pitch {
@@ -23,6 +23,7 @@ public enum Pitch {
     ASHARP("A#"),
     B("B");
 
+    private final static Pitch[] pitches = Pitch.values();
     private String displayString;
 
     Pitch(final String displayString) {
@@ -34,12 +35,9 @@ public enum Pitch {
      *
      * @return string display
      */
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return this.displayString;
     }
-
-    private final static Pitch[] pitches = Pitch.values();
 
     /**
      * Provide the next pitch in the list of pitches.

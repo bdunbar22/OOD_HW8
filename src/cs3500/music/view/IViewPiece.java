@@ -11,11 +11,12 @@ import java.util.Map;
 /**
  * The Model View to connect the Model and the views without giving the views too much control over
  * the model.
- *
+ * <p>
  * Created by Ben on 3/23/16.
  */
 public interface IViewPiece {
     //TODO: should only need get notes per beat.
+
     /**
      * Return a copied list of the notes from this note list. The notes should be copied so that
      * this note list will not be affected.

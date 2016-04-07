@@ -4,19 +4,19 @@ package cs3500.music.model;
  * The interface for a piece of cs3500.music.
  * A piece of cs3500.music is a collection of notes that have a certain tone, start time and
  * duration.
- *
+ * <p>
  * A piece of cs3500.music is editable so that notes can be added and removed. It also supports
  * merges of pieces. Pieces can be combined in parallel (both start at the same time) or in
  * serial (one piece
  * is appended to the other). When pieces are combined the originals will remain and a new piece
  * will be returned.
- *
+ * <p>
  * Basic functionality is derived from INoteList, while complex functionality is also provided in
  * this interface.
- *
+ * <p>
  * Created by Ben on 3/2/16.
  */
-public interface IPiece extends INoteList{
+public interface IPiece extends INoteList {
     /**
      * Allow for the serial merge of two pieces of cs3500.music.
      * pieceToAppend is added to the end of a copy of this piece with 1 beat of overlap.
@@ -52,7 +52,7 @@ public interface IPiece extends INoteList{
      * increment the field.
      *
      * @param field the field to change
-     * @param num the number of times to increment the field.
+     * @param num   the number of times to increment the field.
      * @return the new and improved piece.
      */
     IPiece changeField(NoteField field, final int num);
@@ -81,22 +81,16 @@ public interface IPiece extends INoteList{
     IPiece copy();
 
     /**
-     * Set the measure length of a piece of music. Default is 4.
-     * @param measure to set
-     */
-    void setMeasure(int measure);
-
-    /**
      * Get the measure length of a piece of music
      */
     int getMeasure();
 
     /**
-     * Every song should have a tempo.
+     * Set the measure length of a piece of music. Default is 4.
      *
-     * @param tempo to set
+     * @param measure to set
      */
-    void setTempo(final int tempo);
+    void setMeasure(int measure);
 
     /**
      * get the tempo of the song.
@@ -104,4 +98,11 @@ public interface IPiece extends INoteList{
      * @return tempo
      */
     int getTempo();
+
+    /**
+     * Every song should have a tempo.
+     *
+     * @param tempo to set
+     */
+    void setTempo(final int tempo);
 }

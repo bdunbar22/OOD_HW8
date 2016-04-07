@@ -8,7 +8,7 @@ import java.awt.event.MouseListener;
 
 /**
  * Allow for mouse events to cause edits to the model via controller functions.
- *
+ * <p>
  * Created by Ben on 4/6/16.
  */
 public class MouseHandler implements MouseListener {
@@ -29,8 +29,7 @@ public class MouseHandler implements MouseListener {
      *
      * @param e mouse event
      */
-    @Override
-    public void mouseClicked(MouseEvent e) {
+    @Override public void mouseClicked(MouseEvent e) {
         //Right click will delete note
         //Left click will add a note
         switch (e.getButton()) {
@@ -46,19 +45,16 @@ public class MouseHandler implements MouseListener {
      *
      * @param e mouse event
      */
-    @Override
-    public void mousePressed (MouseEvent e){
+    @Override public void mousePressed(MouseEvent e) {
         try {
             mousePoint = e.getPoint();
             noteFound = mouseHandlerHelper.checkForNoteFromMouse(e.getX(), e.getY());
             if (noteFound) {
                 currentNote = mouseHandlerHelper.getNoteFromMouse(e.getX(), e.getY());
-            }
-            else {
+            } else {
                 currentNote = null;
             }
-        }
-        catch (Exception exc) {
+        } catch (Exception exc) {
             //Do nothing if unusual input doesn't work.
         }
     }
@@ -71,8 +67,7 @@ public class MouseHandler implements MouseListener {
      *
      * @param e mouse event
      */
-    @Override
-    public void mouseReleased(MouseEvent e) {
+    @Override public void mouseReleased(MouseEvent e) {
         try {
             int dx = 1;
             switch (e.getButton()) {
@@ -84,12 +79,9 @@ public class MouseHandler implements MouseListener {
                             break;
                         case COPY:
                             if (noteFound) {
-                                mouseHandlerHelper.addNoteFromMouse(
-                                    e.getX(),
-                                    e.getY(),
-                                    (currentNote.getDuration() -1 ) * 20,
-                                    currentNote.getInstrument(),
-                                    currentNote.getVolume());
+                                mouseHandlerHelper.addNoteFromMouse(e.getX(), e.getY(),
+                                    (currentNote.getDuration() - 1) * 20,
+                                    currentNote.getInstrument(), currentNote.getVolume());
                             }
                             break;
                         case MOVE:
@@ -103,18 +95,15 @@ public class MouseHandler implements MouseListener {
                     }
                     break;
             }
-        }
-        catch (Exception exc) { /*Do nothing.*/ }
+        } catch (Exception exc) { /*Do nothing.*/ }
     }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
+    @Override public void mouseEntered(MouseEvent e) {
         // Nothing should be done, this is just mouse entering the part of the screen while
         // hovering.
     }
 
-    @Override
-    public void mouseExited(MouseEvent e) {
+    @Override public void mouseExited(MouseEvent e) {
         // Nothing should be done, this is just mouse leaving the part of the screen while
         // hovering.
     }
