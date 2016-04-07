@@ -6,6 +6,8 @@ import cs3500.music.view.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.io.InvalidClassException;
 import java.util.*;
 import java.util.Timer;
@@ -76,7 +78,8 @@ public class Controller implements IController {
     /**
      * Start displaying music.
      */
-    @Override public void start() {
+    @Override
+    public void start() {
         musicView.viewMusic();
     }
 
@@ -101,8 +104,8 @@ public class Controller implements IController {
                 "In order to have handlers, must also be an " + "IGuiview");
         }
 
-        MouseHandler mousehandler = configureMouseHandler();
-        KeyboardHandler keyboardHandler = configureKeyBoardHandler();
+        MouseListener mousehandler = configureMouseHandler();
+        KeyListener keyboardHandler = configureKeyBoardHandler();
 
         IGuiView view = (IGuiView) musicView;
         view.addMouseListener(mousehandler);
@@ -113,7 +116,7 @@ public class Controller implements IController {
     /**
      * Creates a key board handler that can be added to the view if the view is an IGuiView
      */
-    private KeyboardHandler configureKeyBoardHandler() {
+    private KeyListener configureKeyBoardHandler() {
         Map<Character, Runnable> keyTypes = new HashMap<>();
         Map<Integer, Runnable> keyPresses = new HashMap<>();
         Map<Integer, Runnable> keyReleases = new HashMap<>();
@@ -147,8 +150,8 @@ public class Controller implements IController {
      * Creates a mouse handler that implements mouse listener for the view.
      * This handler can be added to the view if the view is of the IGuiView type.
      */
-    private MouseHandler configureMouseHandler() {
-        MouseHandler mouseHandler = new MouseHandler(new mouseHelper());
+    private MouseListener configureMouseHandler() {
+        MouseListener mouseHandler = new MouseHandler(new mouseHelper());
         return mouseHandler;
     }
 

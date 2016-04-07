@@ -16,12 +16,10 @@ public class KeyboardHandler implements KeyListener {
     private Map<Character, Runnable> keyTypedMap;
     private Map<Integer, Runnable> keyReleasedMap;
 
-
     /**
      * Empty default constructor
      */
-    public KeyboardHandler() {
-    }
+    public KeyboardHandler() {}
 
     /**
      * Set the map for key type events. Key typed events in Java Swing are characters
