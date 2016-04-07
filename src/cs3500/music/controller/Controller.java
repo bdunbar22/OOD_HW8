@@ -432,14 +432,14 @@ public class Controller implements IController{
         public void run() {
             try {
                 String newTempoString = JOptionPane.showInputDialog("Please input the new tempo "
-                    + "(50000-200000 to hear melodies):");
+                    + "(10000-600000 should work fine depending on the song):");
 
                 int tempo = Integer.parseInt(newTempoString);
-                if(tempo < 40000) {
-                    tempo = 40000;
+                if(tempo < 10000) {
+                    tempo = 10000;
                 }
-                if(tempo > 200000) {
-                    tempo = 200000;
+                if(tempo > 600000) {
+                    tempo = 600000;
                 }
                 piece.setTempo(tempo);
                 IViewPiece updatedViewPiece = new ViewPiece(piece);
