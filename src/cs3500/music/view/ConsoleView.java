@@ -8,8 +8,8 @@ import java.io.PrintStream;
  * Created by Ben on 3/21/16.
  */
 public class ConsoleView implements IMusicView {
-    private IViewPiece viewPiece;
     private final Appendable appendable;
+    private IViewPiece viewPiece;
 
     public ConsoleView(IViewPiece viewPiece) {
         this.viewPiece = viewPiece;
@@ -27,8 +27,7 @@ public class ConsoleView implements IMusicView {
     public void viewMusic() {
         try {
             appendable.append(viewPiece.musicOutput());
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.print("Error creating console output.");
         }
     }
@@ -36,8 +35,7 @@ public class ConsoleView implements IMusicView {
     /**
      * Update the view piece being used by the console view.
      */
-    @Override
-    public void updateViewPiece(IViewPiece viewPiece) {
+    @Override public void updateViewPiece(IViewPiece viewPiece) {
         this.viewPiece = viewPiece;
         this.viewMusic();
     }

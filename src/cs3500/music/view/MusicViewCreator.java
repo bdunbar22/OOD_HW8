@@ -2,7 +2,7 @@ package cs3500.music.view;
 
 /**
  * Allow for the different classes that implement IMusicView to be created at runtime.
- *
+ * <p>
  * Created by Ben on 3/23/16.
  */
 public class MusicViewCreator {
@@ -13,7 +13,7 @@ public class MusicViewCreator {
     /**
      * Create the desired class.
      *
-     * @param viewType to choose.
+     * @param viewType  to choose.
      * @param viewPiece of music to display.
      * @return the IMusicView created.
      */
@@ -28,8 +28,9 @@ public class MusicViewCreator {
             case "composite":
                 return new CompositeView(viewPiece);
             default:
-                throw new IllegalArgumentException("This view type is not supported. Please choose"
-                    + "one of the following: \"console\", \"visual\", \"midi\", \"composite\"");
+                throw new IllegalArgumentException(
+                    "This view type is not supported. Please choose"
+                        + "one of the following: \"console\", \"visual\", \"midi\", \"composite\"");
         }
     }
 }

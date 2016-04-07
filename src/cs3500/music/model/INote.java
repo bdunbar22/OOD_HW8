@@ -5,7 +5,7 @@ package cs3500.music.model;
  * Should have equals, hashcode and toString overridden.
  * At a minimum any note class implementing this interface should have a start, duration,
  * pitch and octave that can be get and set.
- *
+ * <p>
  * Created by Ben on 3/21/16.
  */
 public interface INote {
@@ -59,25 +59,25 @@ public interface INote {
 
     int getStart();
 
-    int getDuration();
-
-    Pitch getPitch();
-
-    Octave getOctave();
-
-    int getInstrument();
-
-    int getVolume();
-
-    void setPitch(final Pitch pitch);
-
-    void setOctave(final Octave octave);
-
     void setStart(final int start);
+
+    int getDuration();
 
     void setDuration(final int duration);
 
+    Pitch getPitch();
+
+    void setPitch(final Pitch pitch);
+
+    Octave getOctave();
+
+    void setOctave(final Octave octave);
+
+    int getInstrument();
+
     void setInstrument(final int instrument);
+
+    int getVolume();
 
     void setVolume(final int volume);
 }

@@ -4,9 +4,9 @@ package cs3500.music.model;
  * Allow for given outputs for playing state to be displayed.
  */
 public enum Output {
-    START  ("  X  "),
+    START("  X  "),
     PLAYING("  |  "),
-    REST   ("     ");
+    REST("     ");
 
     private final String output;
 
@@ -14,8 +14,7 @@ public enum Output {
         this.output = output;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return output;
     }
 }

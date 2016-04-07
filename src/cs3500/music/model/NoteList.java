@@ -2,9 +2,7 @@ package cs3500.music.model;
 
 import javafx.util.Pair;
 
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * Implements INoteList
@@ -13,7 +11,7 @@ import java.util.List;
  *
  * Created by Ben on 3/2/16.
  */
-public class NoteList implements INoteList{
+public class NoteList implements INoteList {
     private List<INote> notes;
 
     public NoteList() {
@@ -67,7 +65,9 @@ public class NoteList implements INoteList{
     }
 
     @Override
-    public List<Pair<Octave, Pitch>> getToneRange() { return _getToneRange(); }
+    public List<Pair<Octave, Pitch>> getToneRange() {
+        return _getToneRange();
+    }
 
     @Override
     public Map<Integer, List<INote>> getConsolidationMap() {
@@ -75,13 +75,13 @@ public class NoteList implements INoteList{
     }
 
     private void _addNote(final INote note) {
-        if(this.notes.contains(note)) {
+        if (this.notes.contains(note)) {
             return;
         }
         this.notes.add(note);
     }
 
-    private void _addNotes(final INote ... notes) {
+    private void _addNotes(final INote... notes) {
         for (INote note : notes) {
             this.addNote(note);
         }
@@ -99,7 +99,7 @@ public class NoteList implements INoteList{
     }
 
     private void _removeNote(final INote old) {
-        if(!this.notes.contains(old)) {
+        if (!this.notes.contains(old)) {
             throw new IllegalArgumentException("Note was not found");
         }
         this.notes.remove(old);
@@ -110,7 +110,7 @@ public class NoteList implements INoteList{
     }
 
     private String _musicOutput() {
-        if(this.notes.size() == 0) {
+        if (this.notes.size() == 0) {
             return "There are no musical notes to display.";
         }
         final int songLength = this._getLastBeat();
@@ -118,21 +118,21 @@ public class NoteList implements INoteList{
         String output = "";
 
         //Get Header Row
-        for(int i = 0; i < String.valueOf(songLength).length(); i++) {
+        for (int i = 0; i < String.valueOf(songLength).length(); i++) {
             output += " ";
         }
         output += this.printNoteRange(toneRange) + "\n";
 
         //Get each subsequent row
         List<INote> notesInBeat = new ArrayList<>();
-        for(int i = 0; i <= songLength; i++) {
+        for (int i = 0; i <= songLength; i++) {
             output += this.getRowNumber(i, songLength);
 
             notesInBeat = this.getNotesInBeat(i);
 
-            for(Pair<Octave, Pitch> tone : toneRange) {
-                output += displayForNote(notesInBeat,
-                  new Note(tone.getValue(), tone.getKey(), i, 1));
+            for (Pair<Octave, Pitch> tone : toneRange) {
+                output +=
+                    displayForNote(notesInBeat, new Note(tone.getValue(), tone.getKey(), i, 1));
             }
             output += "\n";
         }
@@ -149,8 +149,8 @@ public class NoteList implements INoteList{
 
     private List<INote> _getNotesInBeat(final int beat) {
         List<INote> notesInBeat = new ArrayList<>();
-        for(INote note : this.notes) {
-            if(beat >= note.getStart() && beat < note.getStart() + note.getDuration()) {
+        for (INote note : this.notes) {
+            if (beat >= note.getStart() && beat < note.getStart() + note.getDuration()) {
                 notesInBeat.add(note.copy());
             }
         }
@@ -159,7 +159,7 @@ public class NoteList implements INoteList{
 
     private Map<Integer, List<INote>> _getConsolidationMap() {
         Map<Integer, List<INote>> data = new HashMap<>();
-        for(int i = 0; i <= this.getLastBeat(); i++) {
+        for (int i = 0; i <= this.getLastBeat(); i++) {
             data.put(i, this.getNotesInBeat(i));
         }
         return data;
@@ -168,7 +168,7 @@ public class NoteList implements INoteList{
     //For empty song return 0
     private int _getLastBeat() {
         int lastBeat = 0;
-        if(notes.size() < 1) {
+        if (notes.size() < 1) {
             return lastBeat;
         }
         for(INote note : notes) {
@@ -186,7 +186,7 @@ public class NoteList implements INoteList{
     private String getRowNumber(int row, int songLength) {
         int spacesNeeded = String.valueOf(songLength).length() - String.valueOf(row).length();
         String output = "";
-        for(int i = 0; i < spacesNeeded; i++) {
+        for (int i = 0; i < spacesNeeded; i++) {
             output += " ";
         }
         return output + String.valueOf(row);
@@ -197,7 +197,7 @@ public class NoteList implements INoteList{
      * This list should contain all of the tones between the extremes.
      */
     private List<Pair<Octave, Pitch>> _getToneRange() {
-        if(notes.size() == 0) {
+        if (notes.size() == 0) {
             return Arrays.asList(new Pair<>(new Octave(4), Pitch.C));
         }
         Collections.sort(this.notes, new PitchAndOctaveComparator());
@@ -207,14 +207,14 @@ public class NoteList implements INoteList{
         Pitch highPitch = this.notes.get(this.notes.size() - 1).getPitch();
         Octave highOctave = this.notes.get(this.notes.size() - 1).getOctave();
 
-        if(lowOctave.getValue() == highOctave.getValue()) {
+        if (lowOctave.getValue() == highOctave.getValue()) {
             return this.getSingleOctaveRange();
         }
 
-        List<Pair<Octave,Pitch>> range = new ArrayList<>();
+        List<Pair<Octave, Pitch>> range = new ArrayList<>();
         //Add (possibly partial) first octave
-        for(Pitch i = lowPitch; i.compareTo(Pitch.values()[Pitch.values().length - 1]) < 0;
-            i = i.nextPitch()) {
+        for (Pitch i = lowPitch;
+             i.compareTo(Pitch.values()[Pitch.values().length - 1]) < 0; i = i.nextPitch()) {
             range.add(new Pair<>(new Octave(lowOctave.getValue()), i));
         }
         //Add last pitch (next pitch would wrap so the highest should be added outside of loop)
@@ -222,14 +222,14 @@ public class NoteList implements INoteList{
             Pitch.values()[Pitch.values().length - 1]));
 
         //Add full middle octaves
-        for(int i = lowOctave.getValue() + 1; i < highOctave.getValue(); i++) {
+        for (int i = lowOctave.getValue() + 1; i < highOctave.getValue(); i++) {
             for (Pitch pitch : Pitch.values()) {
                 range.add(new Pair<>(new Octave(i), pitch));
             }
         }
 
         //Add (possibly partial) last octave
-        for(Pitch i = Pitch.values()[0]; i.compareTo(highPitch) < 0; i = i.nextPitch()) {
+        for (Pitch i = Pitch.values()[0]; i.compareTo(highPitch) < 0; i = i.nextPitch()) {
             range.add(new Pair<>(new Octave(highOctave.getValue()), i));
         }
         //Add high pitch (next pitch would wrap so the highest should be added outside of loop)
@@ -250,14 +250,14 @@ public class NoteList implements INoteList{
 
         //Note, this should never happen. If it does the code has been changed in a way that
         //is not valid.
-        if(lowOctave.getValue() != highOctave.getValue()) {
+        if (lowOctave.getValue() != highOctave.getValue()) {
             throw new IllegalArgumentException("Should not call getSingleOctaveRange for a piece "
                 + "with more than one octave.");
         }
 
         //Add the pitches from the high pitch to the low pitch.
-        List<Pair<Octave,Pitch>> range = new ArrayList<>();
-        for(Pitch i = lowPitch; i.compareTo(highPitch) < 0; i = i.nextPitch()) {
+        List<Pair<Octave, Pitch>> range = new ArrayList<>();
+        for (Pitch i = lowPitch; i.compareTo(highPitch) < 0; i = i.nextPitch()) {
             range.add(new Pair<>(new Octave(lowOctave.getValue()), i));
         }
         //Add high pitch (next pitch would wrap so the highest should be added outside of loop)
@@ -273,7 +273,7 @@ public class NoteList implements INoteList{
      */
     private String printNoteRange(List<Pair<Octave, Pitch>> toneRange) {
         String header = "";
-        for(Pair<Octave, Pitch> tone : toneRange) {
+        for (Pair<Octave, Pitch> tone : toneRange) {
             header += new Note(tone.getValue(), tone.getKey(), 0, 1).toString();
         }
         return header;
@@ -287,11 +287,10 @@ public class NoteList implements INoteList{
      * Playing takes precedence over continuing (persisting)
      */
     private String displayForNote(List<INote> notesInBeat, INote noteToCheck) {
-        for(INote note : notesInBeat) {
-            if(note.isStarting(noteToCheck)) {
+        for (INote note : notesInBeat) {
+            if (note.isStarting(noteToCheck)) {
                 return Output.START.toString();
-            }
-            else if(note.isPersisting(noteToCheck)) {
+            } else if (note.isPersisting(noteToCheck)) {
                 return Output.PLAYING.toString();
             }
         }

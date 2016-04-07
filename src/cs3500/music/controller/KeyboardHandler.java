@@ -8,7 +8,7 @@ import java.util.Map;
  * Implement KeyListener to provide for key board events to trigger controller methods that will
  * edit the model accordingly.
  * Uses a Map<Integer, Runnable> to get the handlers for specific key strokes.
- *
+ * <p>
  * Created by Ben on 4/4/16.
  */
 public class KeyboardHandler implements KeyListener {
@@ -49,8 +49,7 @@ public class KeyboardHandler implements KeyListener {
      * This is called when the view detects that a key has been typed. Find if anything has been
      * mapped to this key character and if so, execute it
      */
-    @Override
-    public void keyTyped(KeyEvent e) {
+    @Override public void keyTyped(KeyEvent e) {
         if (keyTypedMap.containsKey(e.getKeyChar()))
             keyTypedMap.get(e.getKeyChar()).run();
     }
@@ -59,8 +58,7 @@ public class KeyboardHandler implements KeyListener {
      * This is called when the view detects that a key has been pressed. Find if anything has been
      * mapped to this key code and if so, execute it
      */
-    @Override
-    public void keyPressed(KeyEvent e) {
+    @Override public void keyPressed(KeyEvent e) {
         if (keyPressedMap.containsKey(e.getKeyCode()))
             keyPressedMap.get(e.getKeyCode()).run();
     }
@@ -69,8 +67,7 @@ public class KeyboardHandler implements KeyListener {
      * This is called when the view detects that a key has been released. Find if anything has been
      * mapped to this key code and if so, execute it
      */
-    @Override
-    public void keyReleased(KeyEvent e) {
+    @Override public void keyReleased(KeyEvent e) {
         if (keyReleasedMap.containsKey(e.getKeyCode()))
             keyReleasedMap.get(e.getKeyCode()).run();
     }

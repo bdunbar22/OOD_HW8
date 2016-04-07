@@ -9,7 +9,7 @@ import java.util.Map;
  * Allow for notes to be stored in a list and manipulated.
  * Note that the start beat of a song is always beat 0. But Notes don't have to start at 0, meaning
  * there could be all rests at the start of a song.
- *
+ * <p>
  * Created by Ben on 3/2/16.
  */
 public interface INoteList {
@@ -27,7 +27,7 @@ public interface INoteList {
      *
      * @param notes to add
      */
-    void addNotes(final INote ... notes);
+    void addNotes(final INote... notes);
 
     /**
      * Allow for multiple notes to be added to a piece.
@@ -42,7 +42,7 @@ public interface INoteList {
      * The old note will be replaced with the new one.
      *
      * @param original note to edit.
-     * @param newNote has new properties.
+     * @param newNote  has new properties.
      * @throws IllegalArgumentException if the note is not present
      */
     void changeNote(final INote original, final INote newNote);
@@ -92,13 +92,12 @@ public interface INoteList {
 
     /**
      * Get a copied list of all of the notes that will be making sound at a given beat.
-     *
      */
     List<INote> getNotesInBeat(final int beat);
 
     /**
      * Return the last beat that will contain audible music in a song.
-     *Note a note at beat 0 with a duration of 1 will play on beat 0 only. So that is the last beat
+     * Note a note at beat 0 with a duration of 1 will play on beat 0 only. So that is the last beat
      * A note on beat 4 with a duration of 4 will play on beats 4, 5, 6, 7, so 7 is the last beat.
      * Note: a duration can not be 0.
      * Empty song has a last beat of 0 because nothing was played and the start beat of a song is

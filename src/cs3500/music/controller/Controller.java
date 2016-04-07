@@ -5,18 +5,15 @@ import cs3500.music.view.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
 import java.io.InvalidClassException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.RunnableFuture;
 
 /**
  * Allow for edits to be made to a piece of music via the
  * GUI view. Has a model that will be edited and a view that will be updated.
- *
+ * <p>
  * <h1>Functionality:</h1>
  * <p>Right click - delete a note</p>
  * <p>TOGGLE 'a', 'm', 'c' for operation modes.</p>
@@ -32,10 +29,13 @@ import java.util.concurrent.RunnableFuture;
  * <p>Press home and end to get to start and end of piece for viewing</p>
  * <p>Press 1 and 0 also goes to start and end of piece for viewing</p>
  * <p>Press 't' to update the tempo! Have fun.</p>
- *
+ * <p>
  * Created by Ben on 4/4/16.
  */
-public class Controller implements IController{
+public class Controller implements IController {
+    //tempo is number of microseconds per beat
+    //need period in milliseconds
+    private static final int TEMPO_TO_PERIOD = 1000;
     private IPiece piece;
     private IMusicView musicView;
     private Timer timer;
@@ -43,19 +43,14 @@ public class Controller implements IController{
     private Toggle toggle = Toggle.ADD;
     private int currentBeat;
 
-    //tempo is number of microseconds per beat
-    //need period in milliseconds
-    private static final int TEMPO_TO_PERIOD = 1000;
-
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
         this.musicView = musicView;
         this.playing = false;
         this.currentBeat = 0;
-        try{
+        try {
             configureHandlers();
-        }
-        catch (InvalidClassException e) {
+        } catch (InvalidClassException e) {
             //Do nothing. Could not add handlers to an IMusicView that was not also an
             //IGuiView
         }
@@ -68,11 +63,11 @@ public class Controller implements IController{
         this.piece = piece;
         this.playing = false;
         this.currentBeat = 0;
-        if(!(musicView instanceof IGuiView)) {
-            throw new InvalidClassException("In order to have handlers, must also be an "
-                + "IGuiview");
+        if (!(musicView instanceof IGuiView)) {
+            throw new InvalidClassException(
+                "In order to have handlers, must also be an " + "IGuiview");
         }
-        IGuiView view = (IGuiView)musicView;
+        IGuiView view = (IGuiView) musicView;
         view.addMouseListener(mockMouse);
         view.addKeyListener(mockKeyboard);
         this.musicView = view;
@@ -81,8 +76,7 @@ public class Controller implements IController{
     /**
      * Start displaying music.
      */
-    @Override
-    public void start() {
+    @Override public void start() {
         musicView.viewMusic();
     }
 
@@ -92,7 +86,7 @@ public class Controller implements IController{
      */
     private void updateEachBeat() {
         currentBeat++;
-        IGuiView view = (IGuiView)musicView;
+        IGuiView view = (IGuiView) musicView;
         view.playBeat(currentBeat);
     }
 
@@ -102,15 +96,15 @@ public class Controller implements IController{
      * a view that will accept these handlers.
      */
     private void configureHandlers() throws InvalidClassException {
-        if(!(musicView instanceof IGuiView)) {
-            throw new InvalidClassException("In order to have handlers, must also be an "
-              + "IGuiview");
+        if (!(musicView instanceof IGuiView)) {
+            throw new InvalidClassException(
+                "In order to have handlers, must also be an " + "IGuiview");
         }
 
         MouseHandler mousehandler = configureMouseHandler();
         KeyboardHandler keyboardHandler = configureKeyBoardHandler();
 
-        IGuiView view = (IGuiView)musicView;
+        IGuiView view = (IGuiView) musicView;
         view.addMouseListener(mousehandler);
         view.addKeyListener(keyboardHandler);
         musicView = view;
@@ -162,36 +156,17 @@ public class Controller implements IController{
      * When timing is required make timing available.
      */
     private void configureTiming() {
-        try{
-            if(!(musicView instanceof CompositeView)) {
-                throw new InvalidClassException("Only composite view requires timing to be "
-                    + "added");
+        try {
+            if (!(musicView instanceof CompositeView)) {
+                throw new InvalidClassException(
+                    "Only composite view requires timing to be " + "added");
             }
             this.timer = new Timer();
             playing = true;
-            int period = piece.getTempo()/TEMPO_TO_PERIOD;
+            int period = piece.getTempo() / TEMPO_TO_PERIOD;
             timer.schedule(new timerTask(this), 0, period);
-        }
-        catch (InvalidClassException e) {
+        } catch (InvalidClassException e) {
             //Do nothing. Only need timing in some cases.
-        }
-    }
-
-  /**
-   * Sets the currentBeat back to the start.
-   */
-  class Restart implements Runnable {
-        @Override public void run() {
-            currentBeat = 0;
-        }
-    }
-
-    /**
-     * Pause and play the song when space bar is hit.
-     */
-    class StopAndPlay implements Runnable {
-        public void run() {
-            toggleMusicPLay();
         }
     }
 
@@ -201,7 +176,7 @@ public class Controller implements IController{
      * of a mouse click. The volume will be based off of the drag length of the mouse.
      */
     private void addNote(int x, int y, int length) {
-        IGuiView view = (IGuiView)musicView;
+        IGuiView view = (IGuiView) musicView;
         INote addNote = view.makeNoteFromLocation(x, y, length);
         piece.addNote(addNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
@@ -211,21 +186,21 @@ public class Controller implements IController{
     /**
      * Allow for the location of the note to be given by the user as input
      * length of note is based on mouse drag distance.
-     *
+     * <p>
      * Invalid data will be ignored and the app will continue to run.
      */
     private void addNotePromptLocation(int length) {
         try {
-            final int duration = length/20 + 1; //convert drag length to number of beats.
+            final int duration = length / 20 + 1; //convert drag length to number of beats.
 
-            String pitchString = JOptionPane.showInputDialog("Please enter a value 1-12 to "
-                + "choose a Pitch (C - B respectively): ");
+            String pitchString = JOptionPane.showInputDialog(
+                "Please enter a value 1-12 to " + "choose a Pitch (C - B respectively): ");
 
-            String octaveString = JOptionPane.showInputDialog("Please input a two digit integer"
-                + " to choose an octave: ");
+            String octaveString = JOptionPane
+                .showInputDialog("Please input a two digit integer" + " to choose an octave: ");
 
-            String startBeatString = JOptionPane.showInputDialog("Please input the integer "
-                + "starting beat:");
+            String startBeatString =
+                JOptionPane.showInputDialog("Please input the integer " + "starting beat:");
 
             final Pitch[] pitches = Pitch.values();
             Pitch pitch = pitches[Integer.parseInt(pitchString)];
@@ -235,8 +210,7 @@ public class Controller implements IController{
             piece.addNote(new Note(pitch, octave, startBeat, duration));
             IViewPiece updatedViewPiece = new ViewPiece(piece);
             musicView.updateViewPiece(updatedViewPiece);
-        }
-        catch (Exception exc) {
+        } catch (Exception exc) {
             System.out.print(exc.getStackTrace());
             //Could note make note, continue.
         }
@@ -244,14 +218,15 @@ public class Controller implements IController{
 
     /**
      * Add a new note by passing params
-     * @param x location
-     * @param y location
-     * @param length duration of the note's sustain
+     *
+     * @param x          location
+     * @param y          location
+     * @param length     duration of the note's sustain
      * @param instrument instrument
-     * @param volume volume
-    */
+     * @param volume     volume
+     */
     private void addNote(int x, int y, int length, int instrument, int volume) {
-        IGuiView view = (IGuiView)musicView;
+        IGuiView view = (IGuiView) musicView;
         INote addNote = view.makeNoteFromLocation(x, y, length);
         addNote.setInstrument(instrument);
         addNote.setVolume(volume);
@@ -262,26 +237,24 @@ public class Controller implements IController{
 
     /**
      * Move a note to a different starting beat, pitch and octave.
-     * @param note that is being moved
+     *
+     * @param note   that is being moved
      * @param newPos to move to on view
      */
     private void moveNote(INote note, Point newPos) {
-        addNote(
-          (int)newPos.getX(),
-          (int)newPos.getY(),
-          (note.getDuration() - 1) * 20,
-          note.getInstrument(),
-          note.getVolume());
+        addNote((int) newPos.getX(), (int) newPos.getY(), (note.getDuration() - 1) * 20,
+            note.getInstrument(), note.getVolume());
         deleteNote(note);
     }
 
     /**
      * If possible will delete the chosen note from the piece.
+     *
      * @param x coordinate in view.
      * @param y coordinate in view.
      */
     private void deleteNote(final int x, final int y) {
-        if(!checkForNote(x, y)) {
+        if (!checkForNote(x, y)) {
             return;
         }
         INote deleteNote = getNote(x, y);
@@ -292,6 +265,7 @@ public class Controller implements IController{
 
     /**
      * Delete the given note
+     *
      * @param note to delete
      */
     private void deleteNote(INote note) {
@@ -299,14 +273,14 @@ public class Controller implements IController{
             piece.removeNote(note);
             IViewPiece updatedViewPiece = new ViewPiece(piece);
             musicView.updateViewPiece(updatedViewPiece);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             //Note wasn't present, do nothing.
         }
     }
 
     /**
      * Determine if getting a note will work.
+     *
      * @param x location
      * @param y location
      * @return boolean if note will be retrieved correctly.
@@ -323,9 +297,62 @@ public class Controller implements IController{
      * @return note that was found
      */
     private INote getNote(final int x, final int y) {
-        IGuiView view = (IGuiView)musicView;
+        IGuiView view = (IGuiView) musicView;
         return view.getNoteFromLocation(x, y);
     }
+
+    /**
+     * Determine if the song is over.
+     *
+     * @return true if song is over.
+     */
+    private boolean checkSongEnd() {
+        return (currentBeat >= piece.getLastBeat());
+    }
+
+    /**
+     * This should be called when the space bar is hit to start and stop play of music.
+     */
+    private void toggleMusicPLay() {
+        if (playing) {
+            timer.cancel();
+            playing = false;
+            timer = new Timer();
+        } else {
+            playing = true;
+            int period = piece.getTempo() / TEMPO_TO_PERIOD;
+            timer.schedule(new timerTask(this), 0, period);
+        }
+    }
+
+    /**
+     * Enum to determine the operating mode of the controller, whether it is currently adding,
+     * moving or copying notes.
+     */
+    public enum Toggle {
+        ADD, COPY, MOVE, LOCATION
+    }
+
+
+    /**
+     * Sets the currentBeat back to the start.
+     */
+    class Restart implements Runnable {
+        @Override public void run() {
+            currentBeat = 0;
+        }
+    }
+
+
+    /**
+     * Pause and play the song when space bar is hit.
+     */
+    class StopAndPlay implements Runnable {
+        public void run() {
+            toggleMusicPLay();
+        }
+    }
+
 
     /**
      * A runnable class that will allow the piece to be reversed when the 'r' key it typed.
@@ -348,6 +375,7 @@ public class Controller implements IController{
         }
     }
 
+
     /**
      * Sets toggle to ADD - allowing the user to add notes
      */
@@ -356,6 +384,7 @@ public class Controller implements IController{
             toggle = Toggle.LOCATION;
         }
     }
+
 
     /**
      * Sets the toggle to ADD if it is MOVE, and to MOVE otherwise
@@ -369,61 +398,68 @@ public class Controller implements IController{
         }
     }
 
+
     /**
      * Sets the toggle to ADD if it is COPY, and to COPY otherwise
      */
-    class copyToggle implements  Runnable {
-      @Override public void run() {
-          if (toggle == Toggle.COPY)
-              toggle = Toggle.ADD;
-          else
-              toggle = Toggle.COPY;
-      }
+    class copyToggle implements Runnable {
+        @Override public void run() {
+            if (toggle == Toggle.COPY)
+                toggle = Toggle.ADD;
+            else
+                toggle = Toggle.COPY;
+        }
     }
+
 
     /**
      * A runnable class to allow scrolling up.
      */
     class scrollUp implements Runnable {
         public void run() {
-            IGuiView view = (IGuiView)musicView;
+            IGuiView view = (IGuiView) musicView;
             view.scrollUp();
             musicView = view;
         }
     }
+
 
     /**
      * A runnable class to allow scrolling down.
      */
     class scrollDown implements Runnable {
         public void run() {
-            IGuiView view = (IGuiView)musicView;
+            IGuiView view = (IGuiView) musicView;
             view.scrollDown();
             musicView = view;
         }
     }
+
 
     /**
      * A runnable class to allow scrolling right.
      */
     class scrollRight implements Runnable {
         public void run() {
-            IGuiView view = (IGuiView)musicView;
+            IGuiView view = (IGuiView) musicView;
             view.scrollRight();
             musicView = view;
         }
     }
+
 
     /**
      * A runnable class to allow scrolling left.
      */
     class scrollLeft implements Runnable {
         public void run() {
-            IGuiView view = (IGuiView)musicView;
+            IGuiView view = (IGuiView) musicView;
             view.scrollLeft();
             musicView = view;
         }
     }
+
+
     /**
      * A runnable class to allow the tempo to be updated. If out of a valid range fix it for the
      * user.
@@ -435,94 +471,89 @@ public class Controller implements IController{
                     + "(10000-600000 should work fine depending on the song):");
 
                 int tempo = Integer.parseInt(newTempoString);
-                if(tempo < 10000) {
+                if (tempo < 10000) {
                     tempo = 10000;
                 }
-                if(tempo > 600000) {
+                if (tempo > 600000) {
                     tempo = 600000;
                 }
                 piece.setTempo(tempo);
                 IViewPiece updatedViewPiece = new ViewPiece(piece);
                 musicView.updateViewPiece(updatedViewPiece);
-            }
-            catch (Exception exc) {
+            } catch (Exception exc) {
                 System.out.print(exc.getStackTrace());
                 //Don't change tempo if invalid entry.
             }
         }
     }
 
+
     /**
      * A runnable class which changes the view to the end of the piece
      */
     class viewExtremaEnd implements Runnable {
         public void run() {
-            IGuiView view = (IGuiView)musicView;
+            IGuiView view = (IGuiView) musicView;
             view.scrollToEnd();
             musicView = view;
         }
     }
+
 
     /**
      * A runnable class which changes the view to the start of the piece
      */
     class viewExtremaStart implements Runnable {
         public void run() {
-            IGuiView view = (IGuiView)musicView;
+            IGuiView view = (IGuiView) musicView;
             view.scrollToStart();
             musicView = view;
         }
     }
+
 
     /**
      * Provide the mouse handler with necessary functions from the controller.
      */
     class mouseHelper implements MouseHandlerHelper {
         //provide use of controller's deleteNote
-        @Override
-        public void deleteNoteFromMouse(int x, int y) {
+        @Override public void deleteNoteFromMouse(int x, int y) {
             deleteNote(x, y);
         }
 
         //provide use of controller's checkForNote
-        @Override
-        public boolean checkForNoteFromMouse(int x, int y) {
+        @Override public boolean checkForNoteFromMouse(int x, int y) {
             return checkForNote(x, y);
         }
 
         //provide use of controller's addNote(x,y,length value)
-        @Override
-        public void addNoteFromMouse(int x, int y, int dx) {
+        @Override public void addNoteFromMouse(int x, int y, int dx) {
             addNote(x, y, dx);
         }
 
         //provide use of controller's add note with all fields.
-        @Override
-        public void addNoteFromMouse(int x, int y, int length, int instrument, int volume) {
+        @Override public void addNoteFromMouse(int x, int y, int length, int instrument,
+            int volume) {
             addNote(x, y, length, instrument, volume);
         }
 
         //provide use of controller's  move note
-        @Override
-        public void moveNoteFromMouse(INote old, Point point) {
+        @Override public void moveNoteFromMouse(INote old, Point point) {
             moveNote(old, point);
         }
 
         //provide use of controller's get note
-        @Override
-        public INote getNoteFromMouse(int x, int y) {
+        @Override public INote getNoteFromMouse(int x, int y) {
             return getNote(x, y);
         }
 
         ////provide use of controller's toggle status.
-        @Override
-        public Toggle getMoveToggleFromMouse() {
+        @Override public Toggle getMoveToggleFromMouse() {
             return toggle;
         }
 
         //provide use of controllers note creation with user location input
-        @Override
-        public void addNoteLocationNeeded(int dx) {
+        @Override public void addNoteLocationNeeded(int dx) {
             addNotePromptLocation(dx);
         }
     }
@@ -533,48 +564,19 @@ public class Controller implements IController{
      */
     class timerTask extends TimerTask {
         private Controller controller;
-        public timerTask(Controller controller){
+
+        public timerTask(Controller controller) {
             this.controller = controller;
         }
-        @Override
-        public void run() {
+
+        @Override public void run() {
             controller.updateEachBeat();
-            if(checkSongEnd()){
-                this.cancel();
+            try {
+                if (checkSongEnd()) {
+                    this.cancel();
+                }
+            } catch (ConcurrentModificationException e) {
             }
         }
-    }
-
-    /**
-     * Determine if the song is over.
-     * @return true if song is over.
-     */
-    private boolean checkSongEnd(){
-        return (currentBeat >= piece.getLastBeat());
-    }
-
-
-    /**
-     * This should be called when the space bar is hit to start and stop play of music.
-     */
-    private void toggleMusicPLay(){
-        if(playing){
-            timer.cancel();
-            playing = false;
-            timer = new Timer();
-        }
-        else {
-            playing = true;
-            int period = piece.getTempo()/TEMPO_TO_PERIOD;
-            timer.schedule(new timerTask(this), 0, period);
-        }
-    }
-
-    /**
-     * Enum to determine the operating mode of the controller, whether it is currently adding,
-     * moving or copying notes.
-     */
-    public enum Toggle {
-        ADD, COPY, MOVE, LOCATION
     }
 }

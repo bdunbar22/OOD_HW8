@@ -2,7 +2,7 @@ package cs3500.music.view;
 
 /**
  * This interface give the basic functionality we want to provide with out views.
- *
+ * <p>
  * Created by Ben on 3/21/16.
  */
 public interface IMusicView {
