@@ -69,11 +69,12 @@ public class MouseHandler implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         try {
+            int dx = 1;
             switch (e.getButton()) {
                 case MouseEvent.BUTTON1:
                     switch (mouseHandlerHelper.getMoveToggleFromMouse()) {
                         case ADD:
-                            int dx = e.getX() - mousePoint.x;
+                            dx = e.getX() - mousePoint.x;
                             mouseHandlerHelper.addNoteFromMouse(mousePoint.x, mousePoint.y, dx);
                             break;
                         case COPY:
@@ -91,6 +92,9 @@ public class MouseHandler implements MouseListener {
                                 mouseHandlerHelper.moveNoteFromMouse(currentNote, e.getPoint());
                             }
                             break;
+                        case LOCATION:
+                            dx = e.getX() - mousePoint.x;
+                            mouseHandlerHelper.addNoteLocationNeeded(dx);
                     }
                     break;
             }

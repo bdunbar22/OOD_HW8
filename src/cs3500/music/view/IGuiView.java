@@ -43,6 +43,26 @@ public interface IGuiView extends IMusicView {
   void scrollToStart();
 
   /**
+   * Scroll the viewport up.
+   */
+  void scrollUp();
+
+  /**
+   * Scroll the viewport down.
+   */
+  void scrollDown();
+
+  /**
+   * Scroll the viewport right.
+   */
+  void scrollRight();
+
+  /**
+   * Scroll the viewport left.
+   */
+  void scrollLeft();
+
+  /**
    * Based on the x and y coordinates provided this function will return the note chosen.
    * @param x location
    * @param y location
