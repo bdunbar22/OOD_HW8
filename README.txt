@@ -106,27 +106,45 @@ IPiece because the IPiece gives all of the functionality to provide small and co
 a piece of music during creation. This IPiece could then be used to make a IViewPiece to be used by
 the views.
 
-We decided to test our ConsoleView and MidiViewImpl by providing convenience constructors and
-mocking classes.
-In the console view we decided to use an appendable that could be sent an Appendable object to give
-system output during production runs and could be sent an Appendable with a StringBuffer in testing.
-In the MidiViewImpl we sent mock classes for a Synthesizer and Receiver. In the Mock synth we
-decided to use overridden functions for getReceiver (to return our mock reciever) and
-getMicrosecondPosition for testing. The receiver had a private StringBuilder that was updated with
-information from the MidiMessage and StartTime whenever the receiver.send() function was used. At
-the end of the test we were then able to compare the log from the string builder to what we would
-expect that song to give us.
+Controller Info:
+IController - controller interface
+Controller - controller impl
+KeyBoardHandler - implements KeyListener
+MouseHandler - implements mouse listener
+MouseHandlerHelper - Class similar to a Runnable except it offers specific functions to
+interact with the controller the way that was required.
 
-To make the program runnable we used string arguments to the main function to choose a text file to
-run and to choose which view to create using our MusicViewCreator. This was then usable on the
-command line by running java -jar OOD_hw6.jav "<filename>" "<console OR visual OR midi>".
+NEW INFORMATION:
+Controller functionality!!!!!!!!!!
+<h1>Functionality:</h1>
+<p>Right click - delete a note</p>
+<p>TOGGLE 'a', 'm', 'c', 'l' for operation modes.</p>
+<p>A = Add (default)</p>
+<p>M = Move </p>
+<p>C = Copy </p>
+<p>L = Location (user gets to enter a location outside of the song area)</p>
+<i>Pressing the key will enter the operation mode. Pressing a different key will switch
+modes. Starts at Add mode.</i>
+<p>Press 'r' reverses the song.</p>
+<p>Press 'b' to go back to the start</p>
+<p>Press arrow keys to scroll</p>
+<p>Press home and end to get to start and end of piece for viewing</p>
+<p>Press 1 and 0 also goes to start and end of piece for viewing</p>
+<p>Press 't' to update the tempo! Should do during pause. Have fun.</p>
 
-We updated our models from homework 5 to include a tempo member variable in the piece class and to
-provide the consolidation map mentioned above. We also decided to add the instrument and volume
-fields to the note model to better represent notes in real life. Finally, in our music piece model
-we added a measure variable so songs could have different timing like in real life and we added a
-current beat variable so that songs could be played in real time in the future (visual and midi
-views together).
+Space starts and starts in composition view.
+
+This uses a combination of key listening and mouse listening to create a music editor that is
+useful and fun to use. You can reverse the song, add notes, move notes, copy notes and scroll
+your view. What's not to love?
+
+Our KeyboardHandler and MouseHandler use a great design practice by being outside of the
+controller and getting configured by the controller to be added to the views.
+
+We made our composite view a IGuiView and allowed IGuiViews the ability to have listeners. We
+placed the location logic for the mouse in the panel view with functions the controller could
+call. This way the controller was able to make edits to the model, but the gui view itself was
+the only class that knew the actual nitty gritty details of the graphics and locations.
 
 All provided methods have been tested thoroughly.
 

@@ -61,7 +61,7 @@ public final class Note implements INote {
         this.octave = octave;
         this.start = start;
         this.duration = duration;
-        this.instrument = 0;
+        this.instrument = 1;
         this.volume = 64;
     }
 
