@@ -20,13 +20,15 @@ public final class Note implements INote {
     private int instrument;
     private int volume;
 
-    public Note(final Pitch pitch, final Octave octave, final int start, final int duration,
-        final int instrument, final int volume) {
+    public Note(final Pitch pitch, final Octave octave, final int start,
+        final int duration, final int instrument, final int volume) {
         if (start < 0) {
-            throw new IllegalArgumentException("Error. Note must start at beat 0 or later.");
+            throw new IllegalArgumentException(
+                "Error. Note must start at beat 0 or later.");
         }
         if (duration < 1) {
-            throw new IllegalArgumentException("Error. Durations must be 1 beat or greater.");
+            throw new IllegalArgumentException(
+                "Error. Durations must be 1 beat or greater.");
         }
         this.pitch = pitch;
         this.octave = octave;
@@ -45,12 +47,15 @@ public final class Note implements INote {
      * @param start    the start beat of the note
      * @param duration the length the note is audible for
      */
-    public Note(final Pitch pitch, final Octave octave, final int start, final int duration) {
+    public Note(final Pitch pitch, final Octave octave, final int start,
+        final int duration) {
         if (start < 0) {
-            throw new IllegalArgumentException("Error. Note must start at beat 0 or later.");
+            throw new IllegalArgumentException(
+                "Error. Note must start at beat 0 or later.");
         }
         if (duration < 1) {
-            throw new IllegalArgumentException("Error. Durations must be 1 beat or greater.");
+            throw new IllegalArgumentException(
+                "Error. Durations must be 1 beat or greater.");
         }
         this.pitch = pitch;
         this.octave = octave;
@@ -156,7 +161,8 @@ public final class Note implements INote {
 
     @Override public boolean equals(Object check) {
         if (!(check instanceof Note)) {
-            throw new IllegalArgumentException("Incompatible object being compared to a note.");
+            throw new IllegalArgumentException(
+                "Incompatible object being compared to a note.");
         }
         Note checkNote = (Note) check;
         return (this == check) || (this.checkTone(checkNote) &&
@@ -164,8 +170,8 @@ public final class Note implements INote {
     }
 
     @Override public int hashCode() {
-        return Objects
-            .hash(this.pitch.hashCode(), this.octave.getValue(), this.start, this.duration);
+        return Objects.hash(this.pitch.hashCode(), this.octave.getValue(), this.start,
+            this.duration);
     }
 
     /**
@@ -174,8 +180,8 @@ public final class Note implements INote {
      * @return a copy of this note.
      */
     public INote copy() {
-        return new Note(this.pitch, new Octave(this.octave.getValue()), this.start, this.duration,
-            this.instrument, this.volume);
+        return new Note(this.pitch, new Octave(this.octave.getValue()), this.start,
+            this.duration, this.instrument, this.volume);
     }
 
     /**

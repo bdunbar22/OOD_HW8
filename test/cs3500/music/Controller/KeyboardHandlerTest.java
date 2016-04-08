@@ -3,6 +3,7 @@ package cs3500.music.Controller;
 import cs3500.music.controller.KeyboardHandler;
 import org.junit.Test;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
@@ -20,17 +21,35 @@ public class KeyboardHandlerTest {
 
     @Test
     public void testKeyTyped() throws Exception {
-
-    }
-
-    @Test
-    public void testKeyPressed() throws Exception {
-
-    }
-
-    @Test
-    public void testKeyReleased() throws Exception {
-
+        KeyListener mockListener = createTestHandler();
+        KeyEvent mockKey = new KeyEvent(new Component() {
+            @Override public void setName(String name) {
+                super.setName(name);
+            }
+        }, 1, 1, 1, 1, ' ');
+        int[] eventArray = {
+            KeyEvent.VK_R,
+            KeyEvent.VK_END,
+            KeyEvent.VK_0,
+            KeyEvent.VK_HOME,
+            KeyEvent.VK_1,
+            KeyEvent.VK_M,
+            KeyEvent.VK_C,
+            KeyEvent.VK_A,
+            KeyEvent.VK_L,
+            KeyEvent.VK_SPACE,
+            KeyEvent.VK_B,
+            KeyEvent.VK_UP,
+            KeyEvent.VK_DOWN,
+            KeyEvent.VK_RIGHT,
+            KeyEvent.VK_LEFT,
+            KeyEvent.VK_T
+        };
+        for (int i : eventArray) {
+            mockKey.setKeyCode(i);
+            mockListener.keyPressed(mockKey);
+        }
+        assertEquals("r end zero home one m c a l space b up down right left t ", testHolder);
     }
 
     /**
@@ -68,112 +87,112 @@ public class KeyboardHandlerTest {
     class rPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "r";
+            testHolder += "r ";
         }
     }
 
     class endPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "end";
+            testHolder += "end ";
         }
     }
 
     class zeroPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "zero";
+            testHolder += "zero ";
         }
     }
 
     class homePress implements Runnable {
         @Override
         public void run() {
-            testHolder = "home";
+            testHolder += "home ";
         }
     }
 
     class onePress implements Runnable {
         @Override
         public void run() {
-            testHolder = "one";
+            testHolder += "one ";
         }
     }
 
     class mPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "m";
+            testHolder += "m ";
         }
     }
 
     class cPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "c";
+            testHolder += "c ";
         }
     }
 
     class aPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "a";
+            testHolder += "a ";
         }
     }
 
     class lPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "l";
+            testHolder += "l ";
         }
     }
 
     class spacePress implements Runnable {
         @Override
         public void run() {
-            testHolder = "space";
+            testHolder += "space ";
         }
     }
 
     class bPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "b";
+            testHolder += "b ";
         }
     }
 
     class upPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "up";
+            testHolder += "up ";
         }
     }
 
     class downPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "down";
+            testHolder += "down ";
         }
     }
 
     class rightPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "right";
+            testHolder += "right ";
         }
     }
 
     class leftPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "left";
+            testHolder += "left ";
         }
     }
 
     class tPress implements Runnable {
         @Override
         public void run() {
-            testHolder = "t";
+            testHolder += "t ";
         }
     }
 }

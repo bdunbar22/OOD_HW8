@@ -6,9 +6,9 @@ import java.util.*;
 
 /**
  * Implements INoteList
- *
+ * <p>
  * Contains a list of notes that can be played and edited.
- *
+ * <p>
  * Created by Ben on 3/2/16.
  */
 public class NoteList implements INoteList {
@@ -18,59 +18,51 @@ public class NoteList implements INoteList {
         notes = new ArrayList<>();
     }
 
-    @Override
-    public void addNote(final INote note) {
+    @Override public void addNote(final INote note) {
         _addNote(note);
     }
 
-    @Override
-    public void addNotes(final INote ... notes) {
+    @Override public void addNotes(final INote... notes) {
         _addNotes(notes);
     }
 
-    @Override
-    public void addNotes(final List<INote> notes) { _addNotes(notes);}
+    @Override public void addNotes(final List<INote> notes) {
+        _addNotes(notes);
+    }
 
-    @Override
-    public void changeNote(final INote old, final INote update) {
+    @Override public void changeNote(final INote old, final INote update) {
         _changeNote(old, update);
     }
 
-    @Override
-    public void removeNote(final INote old) {
+    @Override public void removeNote(final INote old) {
         _removeNote(old);
     }
 
-    @Override
-    public Boolean member(final INote check) {
+    @Override public Boolean member(final INote check) {
         return _member(check);
     }
 
-    @Override
-    public String musicOutput() {
+    @Override public String musicOutput() {
         return _musicOutput();
     }
 
-    @Override
-    public List<INote> getNotes() {
+    @Override public List<INote> getNotes() {
         return _getNotes();
     }
 
-    @Override
-    public List<INote> getNotesInBeat(final int beat) { return _getNotesInBeat(beat); }
+    @Override public List<INote> getNotesInBeat(final int beat) {
+        return _getNotesInBeat(beat);
+    }
 
-    @Override
-    public int getLastBeat() {
+    @Override public int getLastBeat() {
         return _getLastBeat();
     }
 
-    @Override
-    public List<Pair<Octave, Pitch>> getToneRange() {
+    @Override public List<Pair<Octave, Pitch>> getToneRange() {
         return _getToneRange();
     }
 
-    @Override
-    public Map<Integer, List<INote>> getConsolidationMap() {
+    @Override public Map<Integer, List<INote>> getConsolidationMap() {
         return _getConsolidationMap();
     }
 
@@ -131,8 +123,8 @@ public class NoteList implements INoteList {
             notesInBeat = this.getNotesInBeat(i);
 
             for (Pair<Octave, Pitch> tone : toneRange) {
-                output +=
-                    displayForNote(notesInBeat, new Note(tone.getValue(), tone.getKey(), i, 1));
+                output += displayForNote(notesInBeat,
+                    new Note(tone.getValue(), tone.getKey(), i, 1));
             }
             output += "\n";
         }
@@ -171,8 +163,8 @@ public class NoteList implements INoteList {
         if (notes.size() < 1) {
             return lastBeat;
         }
-        for(INote note : notes) {
-            if(note.getStart() + note.getDuration() - 1 > lastBeat) {
+        for (INote note : notes) {
+            if (note.getStart() + note.getDuration() - 1 > lastBeat) {
                 lastBeat = note.getStart() + note.getDuration() - 1;
             }
         }
@@ -184,7 +176,8 @@ public class NoteList implements INoteList {
      * equal to the width of the largest number beat in the piece of cs3500.music.
      */
     private String getRowNumber(int row, int songLength) {
-        int spacesNeeded = String.valueOf(songLength).length() - String.valueOf(row).length();
+        int spacesNeeded =
+            String.valueOf(songLength).length() - String.valueOf(row).length();
         String output = "";
         for (int i = 0; i < spacesNeeded; i++) {
             output += " ";
@@ -214,7 +207,8 @@ public class NoteList implements INoteList {
         List<Pair<Octave, Pitch>> range = new ArrayList<>();
         //Add (possibly partial) first octave
         for (Pitch i = lowPitch;
-             i.compareTo(Pitch.values()[Pitch.values().length - 1]) < 0; i = i.nextPitch()) {
+             i.compareTo(Pitch.values()[Pitch.values().length - 1]) < 0;
+             i = i.nextPitch()) {
             range.add(new Pair<>(new Octave(lowOctave.getValue()), i));
         }
         //Add last pitch (next pitch would wrap so the highest should be added outside of loop)
@@ -251,8 +245,9 @@ public class NoteList implements INoteList {
         //Note, this should never happen. If it does the code has been changed in a way that
         //is not valid.
         if (lowOctave.getValue() != highOctave.getValue()) {
-            throw new IllegalArgumentException("Should not call getSingleOctaveRange for a piece "
-                + "with more than one octave.");
+            throw new IllegalArgumentException(
+                "Should not call getSingleOctaveRange for a piece "
+                    + "with more than one octave.");
         }
 
         //Add the pitches from the high pitch to the low pitch.
