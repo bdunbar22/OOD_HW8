@@ -30,7 +30,8 @@ public class CompositeView implements IGuiView {
 
     /**
      * An audible representation of music is given in this view. This should play based on the
-     * current beat of the song. The controller can updateViewPiece the song and then view music at the
+     * current beat of the song. The controller can updateViewPiece the song and then view music
+     * at the
      * next beat again.
      */
     @Override public void viewMusic() {

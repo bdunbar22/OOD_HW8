@@ -146,6 +146,11 @@ placed the location logic for the mouse in the panel view with functions the con
 call. This way the controller was able to make edits to the model, but the gui view itself was
 the only class that knew the actual nitty gritty details of the graphics and locations.
 
+Our design changes from the previous assignment were mainly updates to the way the views worked
+. The most notable of which was updateViewPiece() which allows the view to get a new view model
+ and then has the view redisplay music with this new model. It was essential to create this to
+ perform editing while the song was playing and the result is spectacular.
+
 All provided methods have been tested thoroughly.
 
 Best Regards,
