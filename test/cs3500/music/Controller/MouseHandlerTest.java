@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  * Created by Ben on 4/7/16.
  */
 public class MouseHandlerTest {
-    private Controller.Toggle toggle;
+    private Controller.Toggle toggle = Controller.Toggle.MOVE;
     private String testString;
 
     /**
@@ -34,50 +34,79 @@ public class MouseHandlerTest {
     public void testMouseClicked() {
         testString = "";
         MouseListener mockListener = createTestHandler();
-        Component jpanel = new JPanel();
-        MouseEvent mouseEvent = new MouseEvent(jpanel, // which
+        Component jPanel = new JPanel();
+
+        MouseEvent mouseEvent = new MouseEvent(jPanel, // which
             MouseEvent.MOUSE_CLICKED, // type of mouse event
             System.currentTimeMillis(), // when
             0, // no modifiers
             10, 10, // where: at (10, 10}
+            10, 10,
             1, // only 1 click
-            false); // not a popup trigger
+            false,
+            MouseEvent.BUTTON3); // not a popup trigger
 
-        jpanel.addMouseListener(mockListener);
-        jpanel.dispatchEvent(mouseEvent);
-        mockListener.mouseClicked(mockKey);
+        jPanel.addMouseListener(mockListener);
+        jPanel.dispatchEvent(mouseEvent);
 
-        assertEquals("r end zero home one m c a l space b up down right left t ", testHolder);
+        assertEquals("deleteNote1", testString);
     }
 
+    /**
+     * Test for mouse pressed.
+     */
     @Test
     public void testMousePressed() {
+        testString = "";
+        MouseListener mockListener = createTestHandler();
+        Component jPanel = new JPanel();
+        MouseEvent mouseEvent = new MouseEvent(jPanel, // which
+            MouseEvent.MOUSE_PRESSED, // type of mouse event
+            System.currentTimeMillis(), // when
+            0, // no modifiers
+            10, 10, // where: at (10, 10}
+            10, 10,
+            1, // only 1 click
+            false,
+            MouseEvent.BUTTON1); // not a popup trigger
 
+        jPanel.addMouseListener(mockListener);
+        jPanel.dispatchEvent(mouseEvent);
+
+        assertEquals("getNote", testString);
     }
 
+    /**
+     * Test for mouse released.
+     */
     @Test
     public void testMouseReleased() {
+        testString = "";
+        MouseListener mockListener = createTestHandler();
+        Component jPanel = new JPanel();
+        MouseEvent mouseEvent = new MouseEvent(jPanel, // which
+            MouseEvent.MOUSE_RELEASED, // type of mouse event
+            System.currentTimeMillis(), // when
+            0, // no modifiers
+            10, 10, // where: at (10, 10}
+            10, 10,
+            1, // only 1 click
+            false,
+            MouseEvent.BUTTON1); // not a popup trigger
 
-    }
+        jPanel.addMouseListener(mockListener);
+        jPanel.dispatchEvent(mouseEvent);
 
-    @Test
-    public void testMouseEntered() {
-
-    }
-
-    @Test
-    public void testMouseExited() {
-
+        assertEquals("moveNote", testString);
     }
 
     /**
      * Create a handler to test
      */
     private MouseListener createTestHandler() {
-        MouseListener mouseHandler = new MouseHandler(new mouseHelper());
+        MouseListener mouseHandler = new MouseHandler(new mouseHelper(), true);
         return mouseHandler;
     }
-
 
     /**
      * Create a mouse helper.
@@ -158,6 +187,7 @@ public class MouseHandlerTest {
     }
 
     private INote getNote(final int x, final int y) {
+        testString += "getNote";
         return new Note(Pitch.A, new Octave(4), 4, 3);
     }
 }

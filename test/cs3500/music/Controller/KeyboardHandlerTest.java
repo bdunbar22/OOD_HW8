@@ -3,6 +3,7 @@ package cs3500.music.Controller;
 import cs3500.music.controller.KeyboardHandler;
 import org.junit.Test;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,14 +20,16 @@ import static org.junit.Assert.*;
 public class KeyboardHandlerTest {
     private String testHolder = "";
 
+    /**
+     * Key typed is the only method we needed. Testing here.
+     */
     @Test
-    public void testKeyTyped() throws Exception {
-        KeyListener mockListener = createTestHandler();
-        KeyEvent mockKey = new KeyEvent(new Component() {
-            @Override public void setName(String name) {
-                super.setName(name);
-            }
-        }, 1, 1, 1, 1, ' ');
+    public void testKeyTyped() {
+        KeyListener mockListener = createTestKeyHandler();
+        Component jPanel = new JPanel();
+
+        KeyEvent mockKey = new KeyEvent(jPanel, KeyEvent.KEY_PRESSED, 1, 1, 1, ' ');
+
         int[] eventArray = {
             KeyEvent.VK_R,
             KeyEvent.VK_END,
@@ -45,9 +48,13 @@ public class KeyboardHandlerTest {
             KeyEvent.VK_LEFT,
             KeyEvent.VK_T
         };
+
+        jPanel.addKeyListener(mockListener);
+
         for (int i : eventArray) {
             mockKey.setKeyCode(i);
             mockListener.keyPressed(mockKey);
+            //jPanel.dispatchEvent(mockKey);
         }
         assertEquals("r end zero home one m c a l space b up down right left t ", testHolder);
     }
@@ -55,7 +62,7 @@ public class KeyboardHandlerTest {
     /**
      * Create fake maps and put in a handler
      */
-    private KeyListener createTestHandler() {
+    public KeyListener createTestKeyHandler() {
         Map<Character, Runnable> keyTypes = new HashMap<>();
         Map<Integer, Runnable> keyPresses = new HashMap<>();
         Map<Integer, Runnable> keyReleases = new HashMap<>();

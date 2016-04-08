@@ -25,6 +25,14 @@ public class MouseHandler implements MouseListener {
     }
 
     /**
+     * Constructor with note found for testing.
+     */
+    public MouseHandler(MouseHandlerHelper mouseHandlerHelper, boolean noteFound) {
+        this.mouseHandlerHelper = mouseHandlerHelper;
+        this.noteFound = noteFound;
+    }
+
+    /**
      * handle when mouse is clicked. Right button clicks delete notes.
      *
      * @param e mouse event

@@ -17,6 +17,8 @@ public class CompositeView implements IGuiView {
     MidiViewImpl midiView;
     IGuiView guiViewFrame;
     IViewPiece viewPiece;
+    KeyListener listenerKey;
+    MouseListener listenerMouse;
     int startBeat;
 
     public CompositeView(IViewPiece viewPiece) {
@@ -51,7 +53,14 @@ public class CompositeView implements IGuiView {
      */
     @Override public void addKeyListener(KeyListener listener) {
         guiViewFrame.addKeyListener(listener);
+        this.listenerKey = listener;
     }
+
+    //For testing
+    public KeyListener getKeyListener() { return listenerKey; }
+
+    //For testing
+    public MouseListener getMouseListener() { return listenerMouse; }
 
     /**
      * Want the gui part of this view to listen to the mouse.
@@ -60,6 +69,7 @@ public class CompositeView implements IGuiView {
      */
     @Override public void addMouseListener(MouseListener listener) {
         guiViewFrame.addMouseListener(listener);
+        this.listenerMouse = listener;
     }
 
     /**

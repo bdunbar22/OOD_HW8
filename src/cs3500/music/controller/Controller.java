@@ -71,13 +71,10 @@ public class Controller implements IController {
         }
         IGuiView view = (IGuiView) musicView;
         this.musicView = view;
-        try {
-            configureHandlers();
-        } catch (InvalidClassException e) {
-            //Do nothing. Could not add handlers to an IMusicView that was not also an
-            //IGuiView
-        }
-        configureTiming();
+    }
+    //For Testing return a copy of the piece.
+    public IPiece getPiece() {
+        return piece.copy();
     }
 
     /**
@@ -518,7 +515,6 @@ public class Controller implements IController {
             musicView = view;
         }
     }
-
 
     /**
      * Provide the mouse handler with necessary functions from the controller.
