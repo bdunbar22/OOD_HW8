@@ -27,6 +27,10 @@ public class NoteImpl implements Note {
         this.note = new cs3500.music.model.Note(equalPitch, octaveToUse, start, end + 1 - start);
     }
 
+    public NoteImpl(INote note) {
+        this.note = note;
+    }
+
     /**
      * Constructor for all note fields.
      *
