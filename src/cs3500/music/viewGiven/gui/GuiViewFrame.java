@@ -6,7 +6,7 @@ import java.util.Objects;
 import javax.swing.*;
 
 import cs3500.music.adapters.MusicModel;
-import cs3500.music.model.Note;
+import cs3500.music.adapters.Note;
 import cs3500.music.viewGiven.GuiMusicView;
 
 /**

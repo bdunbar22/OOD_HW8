@@ -3,7 +3,7 @@ package cs3500.music.viewGiven;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
-import cs3500.music.model.Note;
+import cs3500.music.adapters.Note;
 
 /**
  * Interface to encapsulate functionality of GUI views

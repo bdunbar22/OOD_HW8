@@ -5,10 +5,10 @@ import cs3500.music.controller.IController;
 import cs3500.music.model.IPiece;
 import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicReader;
-import cs3500.music.viewGiven.IMusicView;
-import cs3500.music.viewGiven.IViewPiece;
-import cs3500.music.viewGiven.MusicViewCreator;
-import cs3500.music.viewGiven.ViewPiece;
+import cs3500.music.view.IMusicView;
+import cs3500.music.view.IViewPiece;
+import cs3500.music.view.MusicViewCreator;
+import cs3500.music.view.ViewPiece;
 
 import javax.sound.midi.InvalidMidiDataException;
 import java.io.BufferedReader;

@@ -6,8 +6,8 @@ import java.util.Objects;
 
 import javax.sound.midi.MidiUnavailableException;
 
-import cs3500.music.model.MusicModel;
-import cs3500.music.model.Note;
+import cs3500.music.adapters.MusicModel;
+import cs3500.music.adapters.Note;
 import cs3500.music.viewGiven.GuiMusicView;
 import cs3500.music.viewGiven.gui.GuiViewFrame;
 import cs3500.music.viewGiven.midi.MidiViewImpl;
