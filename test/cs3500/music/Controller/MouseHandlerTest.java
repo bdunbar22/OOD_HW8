@@ -7,9 +7,9 @@ import cs3500.music.model.INote;
 import cs3500.music.model.Note;
 import cs3500.music.model.Octave;
 import cs3500.music.model.Pitch;
-import cs3500.music.view.IGuiView;
-import cs3500.music.view.IViewPiece;
-import cs3500.music.view.ViewPiece;
+import cs3500.music.viewGiven.IGuiView;
+import cs3500.music.viewGiven.IViewPiece;
+import cs3500.music.viewGiven.ViewPiece;
 import org.junit.Test;
 
 import javax.swing.*;

@@ -1,7 +1,6 @@
 package cs3500.music.controller;
 
 import cs3500.music.model.*;
-import cs3500.music.view.*;
 
 import javax.swing.*;
 import java.awt.*;

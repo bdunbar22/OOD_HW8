@@ -2,19 +2,14 @@ package cs3500.music.Controller;
 
 import cs3500.music.controller.Controller;
 import cs3500.music.controller.IController;
-import cs3500.music.controller.KeyboardHandler;
-import cs3500.music.controller.MouseHandler;
 import cs3500.music.model.*;
-import cs3500.music.view.*;
 import org.junit.Test;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.InvalidClassException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
