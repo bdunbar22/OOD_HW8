@@ -49,4 +49,11 @@ public enum Pitch {
     public Pitch nextPitch() {
         return pitches[(this.ordinal() + 1) % pitches.length];
     }
+
+    /**
+     * Return the pitch with the given ordinal
+     */
+    public static Pitch get(int position) {
+        return pitches[position];
+    }
 }

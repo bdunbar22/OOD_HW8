@@ -2,6 +2,7 @@ package cs3500.music.adapters;
 
 import cs3500.music.model.INote;
 import cs3500.music.model.NoteComparator;
+import cs3500.music.model.Octave;
 
 /**
  * Implement the note adaption interface to allow for the correct use of the views.
@@ -11,9 +12,37 @@ import cs3500.music.model.NoteComparator;
 public class NoteImpl implements Note {
     private INote note;
 
-    //TODO: finish implementing
+    /**
+     * Widely used constructor.
+     *
+     * @param octave to use
+     * @param pitch to play
+     * @param start beat
+     * @param end beat
+     */
     public NoteImpl(int octave, Pitch pitch, int start, int end) {
-        //TODO: finish implementing
+        int whichPitch = pitch.ordinal();
+        cs3500.music.model.Pitch equalPitch = cs3500.music.model.Pitch.get(whichPitch);
+        Octave octaveToUse = new Octave(octave);
+        this.note = new cs3500.music.model.Note(equalPitch, octaveToUse, start, end + 1 - start);
+    }
+
+    /**
+     * Constructor for all note fields.
+     *
+     * @param octave to use
+     * @param pitch to use
+     * @param start position (beat)
+     * @param end position (beat)
+     * @param instrument to play
+     * @param volume to play at
+     */
+    public NoteImpl(int octave, Pitch pitch, int start, int end, int instrument, int volume) {
+        int whichPitch = pitch.ordinal();
+        cs3500.music.model.Pitch equalPitch = cs3500.music.model.Pitch.get(whichPitch);
+        Octave octaveToUse = new Octave(octave);
+        this.note = new cs3500.music.model.Note(equalPitch, octaveToUse, start, end + 1 -
+            start, instrument, volume);
     }
 
     @Override
