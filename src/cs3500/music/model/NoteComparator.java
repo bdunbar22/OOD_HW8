@@ -16,7 +16,8 @@ public final class NoteComparator implements Comparator<INote> {
         //Don't need to instantiate anything.
     }
 
-    @Override public int compare(INote note1, INote note2) {
+    @Override
+    public int compare(INote note1, INote note2) {
         //compare start beat first
         if (note1.getStart() < note2.getStart()) {
             return -1;
