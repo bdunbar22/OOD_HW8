@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 import cs3500.music.adapters.MusicModel;
-import cs3500.music.model.Note;
-import cs3500.music.model.Pitch;
+import cs3500.music.adapters.Note;
+import cs3500.music.adapters.Pitch;
 import cs3500.music.viewGiven.MusicView;
 
 /**

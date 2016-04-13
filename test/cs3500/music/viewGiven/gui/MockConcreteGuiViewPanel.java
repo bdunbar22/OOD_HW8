@@ -3,7 +3,7 @@ package cs3500.music.viewGiven.gui;
 import java.awt.*;
 import java.util.List;
 
-import cs3500.music.model.MusicModel;
+import cs3500.music.adapters.MusicModel;
 
 /**
  * Mock ConcreteGuiViewPanel for testing GuiViewFrame
