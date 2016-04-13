@@ -1,2 +1,7 @@
 Please place all code review comments on other teams code below.
 
+ViewFactory:
+    # Multiple constructor methods which have 2-case switch statements. On default case of each
+     statement, it calls the next most specific method. Instead of chaining methods, I would
+     think it's more efficient to just have one switch statement.
+
