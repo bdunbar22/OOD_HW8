@@ -9,10 +9,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import cs3500.music.model.ModelFactory;
-import cs3500.music.model.MusicModel;
-import cs3500.music.model.Pitch;
-import cs3500.music.model.impl.NoteImpl;
+import cs3500.music.adapters.ModelFactory;
+import cs3500.music.adapters.MusicModel;
+import cs3500.music.adapters.Pitch;
+import cs3500.music.adapters.NoteImpl;
 import cs3500.music.viewGiven.GuiMusicView;
 import cs3500.music.viewGiven.gui.GuiViewFrame;
 import cs3500.music.viewGiven.gui.MockConcreteGuiViewPanel;
