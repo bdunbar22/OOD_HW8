@@ -53,7 +53,7 @@ public class MusicModelImpl implements MusicModel {
 
     public int getNumberOfBeats() {
         //TODO: Make sure this is the last beat,
-        return piece.getLastBeat();
+        return piece.getLastBeat() + 1;
     }
 
     public void setNumberOfBeats(int numBeats) {
