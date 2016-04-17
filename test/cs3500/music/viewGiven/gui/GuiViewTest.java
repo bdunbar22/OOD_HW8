@@ -12,12 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cs3500.music.model.ModelFactory;
-import cs3500.music.model.MusicModel;
-import cs3500.music.model.Note;
-import cs3500.music.model.Pitch;
-import cs3500.music.model.impl.MusicModelBuilder;
-import cs3500.music.model.impl.NoteImpl;
+import cs3500.music.adapters.*;
 import cs3500.music.util.MusicReader;
 
 import static org.junit.Assert.assertEquals;
@@ -37,7 +32,7 @@ public class GuiViewTest {
 
   public static MusicModel mll()
       throws FileNotFoundException {
-    return MusicReader.parseFile(new FileReader(new File("res/mary-little-lamb.txt")),
+    return MusicReader.parseFile(new FileReader(new File("text/mary-little-lamb.txt")),
         new MusicModelBuilder());
   }
 

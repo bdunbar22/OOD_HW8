@@ -4,7 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import cs3500.music.model.ModelFactory;
+import cs3500.music.adapters.ModelFactory;
 import cs3500.music.viewGiven.gui.GuiViewFrame;
 import cs3500.music.viewGiven.midi.MidiViewImpl;
 import cs3500.music.viewGiven.text.TextView;

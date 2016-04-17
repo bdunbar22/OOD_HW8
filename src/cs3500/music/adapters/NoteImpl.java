@@ -4,6 +4,8 @@ import cs3500.music.model.INote;
 import cs3500.music.model.NoteComparator;
 import cs3500.music.model.Octave;
 
+import java.util.Objects;
+
 /**
  * Implement the note adaption interface to allow for the correct use of the views.
  *
@@ -102,5 +104,28 @@ public class NoteImpl implements Note {
     @Override
     public INote getNote() {
         return note.copy();
+    }
+
+    /**
+     * Use the existing equals from the private note member.
+     * @param check note
+     * @return true of false
+     */
+    @Override
+    public boolean equals(Object check) {
+        if (!(check instanceof Note)) {
+            throw new IllegalArgumentException(
+                "Incompatible object being compared to a note.");
+        }
+        Note checkNote = (Note) check;
+        return this.note.equals(checkNote.getNote());
+    }
+
+    /**
+     * Use hash code from existing note member, which is also used for the equals override.
+     * @return int hash code
+     */
+    @Override public int hashCode() {
+        return this.note.hashCode();
     }
 }

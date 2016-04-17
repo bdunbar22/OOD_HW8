@@ -57,7 +57,7 @@ public class MusicModelImpl implements MusicModel {
     }
 
     public void setNumberOfBeats(int numBeats) {
-        //TODO: this.
+        //Unnecessary for this implementation.
     }
 
     public int getTempo() {
@@ -70,7 +70,7 @@ public class MusicModelImpl implements MusicModel {
 
     public int getHighestNote() {
         List<Pair<Octave, Pitch>> toneList = piece.getToneRange();
-        Pair<Octave, Pitch> note = toneList.get(toneList.size());
+        Pair<Octave, Pitch> note = toneList.get(toneList.size()-1);
         return note.getValue().ordinal() + (note.getKey().getValue() * 12) + 12;
     }
 

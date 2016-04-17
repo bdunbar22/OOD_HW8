@@ -24,12 +24,7 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.Track;
 import javax.sound.midi.Transmitter;
 
-import cs3500.music.adapters.modelFactory;
-import cs3500.music.adapters.MusicModel;
-import cs3500.music.adapters.NoteImpl;
-import cs3500.music.adapters.Pitch;
-import cs3500.music.adapters.MusicModelBuilder;
-import cs3500.music.adapters.MusicModelImpl;
+import cs3500.music.adapters.*;
 import cs3500.music.util.MusicReader;
 import cs3500.music.viewGiven.MusicView;
 import cs3500.music.viewGiven.PlayableMusicView;
@@ -58,7 +53,7 @@ public class MidiViewTest {
 
   private static MusicModel mll()
       throws FileNotFoundException {
-    return MusicReader.parseFile(new FileReader(new File("res/mary-little-lamb.txt")),
+    return MusicReader.parseFile(new FileReader(new File("text/mary-little-lamb.txt")),
         new MusicModelBuilder());
   }
 
