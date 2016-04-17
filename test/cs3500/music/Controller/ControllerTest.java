@@ -3,6 +3,7 @@ package cs3500.music.Controller;
 import cs3500.music.controller.Controller;
 import cs3500.music.controller.IController;
 import cs3500.music.model.*;
+import cs3500.music.view.*;
 import org.junit.Test;
 
 import javax.swing.*;

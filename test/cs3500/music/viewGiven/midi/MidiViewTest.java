@@ -24,12 +24,12 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.Track;
 import javax.sound.midi.Transmitter;
 
-import cs3500.music.model.ModelFactory;
-import cs3500.music.model.MusicModel;
-import cs3500.music.model.impl.NoteImpl;
-import cs3500.music.model.Pitch;
-import cs3500.music.model.impl.MusicModelBuilder;
-import cs3500.music.model.impl.MusicModelImpl;
+import cs3500.music.adapters.modelFactory;
+import cs3500.music.adapters.MusicModel;
+import cs3500.music.adapters.NoteImpl;
+import cs3500.music.adapters.Pitch;
+import cs3500.music.adapters.MusicModelBuilder;
+import cs3500.music.adapters.MusicModelImpl;
 import cs3500.music.util.MusicReader;
 import cs3500.music.viewGiven.MusicView;
 import cs3500.music.viewGiven.PlayableMusicView;
