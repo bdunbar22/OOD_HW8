@@ -146,7 +146,7 @@ public class TextViewPublicTest {
     StringBuilder sb = new StringBuilder();
     MusicView view = new TextView(sb, emptyModel());
     view.render();
-    assertEquals("   C1 \n0     \n", sb.toString());
+    assertEquals("   C4 \n0     \n", sb.toString());
   }
 
   @Test
@@ -168,7 +168,7 @@ public class TextViewPublicTest {
     sb = new StringBuilder();
     model = model();
     textView = new TextView(sb, model);
-    model.addNote(new NoteImpl(4, Pitch.C, 3, 9, 64, 10));
+    model.addNote(new NoteImpl(4, Pitch.C, 3, 9, 10, 64));
 
     // test simple case
     String expectedText =
@@ -194,7 +194,7 @@ public class TextViewPublicTest {
   public void rerenderTest() {
 
     MusicModel model = emptyModel();
-    String expectedText = "   C1 \n0     \n";
+    String expectedText = "   C4 \n0     \n";
     StringBuilder sb = new StringBuilder();
     MusicView view = new TextView(sb, model);
     view.render();
@@ -265,7 +265,7 @@ public class TextViewPublicTest {
     notesToAdd.add(new NoteImpl(2, Pitch.GSHARP, 0, 4, 5, 12));
     notesToAdd.add(new NoteImpl(2, Pitch.GSHARP, 1, 4, 6, 87));
     notesToAdd.add(new NoteImpl(2, Pitch.GSHARP, 2, 4, 12, 19));
-    notesToAdd.add(new NoteImpl(2, Pitch.GSHARP, 3, 4, 76, 120));
+    notesToAdd.add(new NoteImpl(2, Pitch.GSHARP, 3, 4, 5, 120));
     notesToAdd.add(new NoteImpl(2, Pitch.GSHARP, 4, 4, 3, 15));
     // shuffle to make sure drawing isn't determined by addition order
     Collections.shuffle(notesToAdd);
@@ -291,7 +291,7 @@ public class TextViewPublicTest {
   public void refreshTest() {
 
     MusicModel model = emptyModel();
-    String expectedText = "   C1 \n0     \n";
+    String expectedText = "   C4 \n0     \n";
     StringBuilder sb = new StringBuilder();
     MusicView view = new TextView(sb, model);
     view.refresh();

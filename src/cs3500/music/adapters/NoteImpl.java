@@ -42,11 +42,16 @@ public class NoteImpl implements Note {
      * @param end position (beat)
      * @param instrument to play
      * @param volume to play at
+     * @throws IllegalStateException if instrument is not valid.
      */
-    public NoteImpl(int octave, Pitch pitch, int start, int end, int instrument, int volume) {
+    public NoteImpl(int octave, Pitch pitch, int start, int end, int instrument, int volume)
+        throws IllegalStateException {
         int whichPitch = pitch.ordinal();
         cs3500.music.model.Pitch equalPitch = cs3500.music.model.Pitch.get(whichPitch);
         Octave octaveToUse = new Octave(octave);
+        if(instrument > 16 || instrument < 0) {
+            throw new IllegalStateException("Instrument out of valid range.");
+        }
         this.note = new cs3500.music.model.Note(equalPitch, octaveToUse, start, end + 1 -
             start, instrument, volume);
     }

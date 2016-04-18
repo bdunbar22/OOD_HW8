@@ -2,21 +2,59 @@ package cs3500.music.adapters;
 
 import cs3500.music.model.*;
 import cs3500.music.model.Pitch;
+import cs3500.music.view.IViewPiece;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Implement the model interface necesarry to use the provided view classes from the other group.
+ *
  * Created by Ben on 4/13/16.
  */
 public class MusicModelImpl implements MusicModel {
     IPiece piece = new Piece();
 
+    /**
+     * Allow to create a new music model.
+     */
+    public MusicModelImpl() {
+        this.piece = new Piece();
+    }
+
+    /**
+     * Allow to create a music model from our existing model.
+     * @param piece to use
+     */
+    public MusicModelImpl(IPiece piece) {
+        this.piece = piece;
+    }
+
+    /**
+     * Allow to create music model from our view model.
+     * @param viewPiece to use.
+     */
+    public MusicModelImpl(IViewPiece viewPiece) {
+        this.piece = new Piece();
+        this.piece.addNotes(viewPiece.getNotes());
+    }
+
+    /**
+     * Add notes to the model.
+     *
+     * @param note the Note to add
+     */
     public void addNote(Note note) {
         piece.addNote(note.getNote());
     }
 
+    /**
+     * Get the notes at a beat.
+     *
+     * @param beat the beat at which to query
+     * @return the notes.
+     */
     public List<Note> getNotesAtBeat(int beat) {
         List<Note> result = new ArrayList<>();
         for (INote note : piece.getNotesInBeat(beat)) {

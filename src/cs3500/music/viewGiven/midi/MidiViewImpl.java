@@ -231,5 +231,4 @@ public class MidiViewImpl implements PlayableMusicView {
   public boolean correspondsTo(MusicModel model) {
     return Objects.requireNonNull(model, "Model must not be null") == this.model;
   }
-
 }

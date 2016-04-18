@@ -1,5 +1,10 @@
 package cs3500.music.view;
 
+import cs3500.music.adapters.MusicModel;
+import cs3500.music.adapters.MusicModelImpl;
+import cs3500.music.adapters.TextViewAdapter;
+import cs3500.music.model.IPiece;
+
 /**
  * Allow for the different classes that implement IMusicView to be created at runtime.
  * <p>
@@ -18,9 +23,12 @@ public class MusicViewCreator {
      * @return the IMusicView created.
      */
     public static IMusicView create(String viewType, IViewPiece viewPiece) {
+        MusicModel musicModel = new MusicModelImpl(viewPiece);
         switch (viewType) {
             case "console":
                 return new ConsoleView(viewPiece);
+            case "console2":
+                return new TextViewAdapter(musicModel);
             case "visual":
                 return new GuiViewFrame(viewPiece);
             case "midi":
