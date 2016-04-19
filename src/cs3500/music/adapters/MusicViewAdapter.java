@@ -26,9 +26,10 @@ public class MusicViewAdapter implements IMusicView {
     }
 
     /**
-     * Use the music view refresh to implement the update view piece function. The provided
-     * view class had a model given to it before so the view piece argument of this
-     * function will not be used.
+     * Use the music view refresh to implement the update view piece function.
+     * //TODO: requested for a method to update the model being stored so that the view could
+     * be updated without needing to know the exact refernence in memory to the view it is
+     * dealing with.
      *
      * @param viewPiece new model view to update with.
      */

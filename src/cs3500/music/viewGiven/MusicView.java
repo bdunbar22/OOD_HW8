@@ -29,5 +29,4 @@ public interface MusicView {
    * @throws NullPointerException if model is null
    */
   boolean correspondsTo(MusicModel model);
-
 }
