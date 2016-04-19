@@ -64,6 +64,13 @@ public class MusicModelImpl implements MusicModel {
         return result;
     }
 
+    /**
+     * Add music to a music model.
+     *
+     * @param otherMusic   the other piece of music to add
+     * @param startingBeat the beat at which to insert the other piece of music
+     * @return resulting music model
+     */
     public MusicModel addMusic(MusicModel otherMusic, int startingBeat) {
         MusicModelImpl otherMusicImpl = (MusicModelImpl) otherMusic;
         IPiece otherPiece = otherMusicImpl.getPiece();
@@ -72,8 +79,18 @@ public class MusicModelImpl implements MusicModel {
         return this;
     }
 
+    /**
+     * Get the piece that is being used by the adapter as a copy.
+     * @return piece of music.
+     */
     public IPiece getPiece() {return this.piece.copy(); }
 
+    /**
+     * Concatenate two pieces of music.
+     *
+     * @param otherMusic another piece of music
+     * @return resulting music model.
+     */
     public MusicModel concatenateMusic(MusicModel otherMusic) {
         MusicModelImpl otherMusicImpl = (MusicModelImpl) otherMusic;
         IPiece otherPiece = otherMusicImpl.getPiece();
@@ -81,37 +98,81 @@ public class MusicModelImpl implements MusicModel {
         return this;
     }
 
+    /**
+     * Combine music via parallel addition of music.
+     *
+     * @param otherMusic another piece of music
+     * @return
+     */
     public MusicModel overlayMusic(MusicModel otherMusic) {
         return this.addMusic(otherMusic, 0);
     }
 
+    /**
+     * Remove a note from a song.
+     *
+     * @param n the note to remove
+     */
     public void removeNote(Note n) {
         piece.removeNote(n.getNote());
     }
 
+    /**
+     * Get the number of beats in a song.
+     *
+     * @return int number of beats.
+     */
     public int getNumberOfBeats() {
         //TODO: Make sure this is the last beat,
         return piece.getLastBeat() + 1;
     }
 
+    /**
+     * Set the number of beats in the song.
+     *
+     * @param numBeats the new number of beats in the piece of music
+     */
     public void setNumberOfBeats(int numBeats) {
         //Unnecessary for this implementation.
     }
 
+    /**
+     * Get the tempo in the appropriate magnitude.
+     *
+     * @return int tempo
+     */
     public int getTempo() {
         return piece.getTempo()/10;
     }
 
+    /**
+     * Set the tempo
+     *
+     * @param tempo the new tempo
+     */
     public void setTempo(int tempo) {
         piece.setTempo(tempo);
     }
 
+    /**
+     * Get the highest note in the piece. This means as a tone (pitch & octave) and represented
+     * as an integer, as expected from the adapted model.
+     *
+     * @return highest note as an integer representation.
+     */
     public int getHighestNote() {
         List<Pair<Octave, Pitch>> toneList = piece.getToneRange();
         Pair<Octave, Pitch> note = toneList.get(toneList.size()-1);
         return note.getValue().ordinal() + (note.getKey().getValue() * 12) + 12;
     }
 
+
+    /**
+     * Get the lowest note in the piece. This means as a tone (pitch & octave) and represented
+     * as an integer, as expected from the adapted model.
+     *
+     * @return lowest note as an integer representation.
+     */
     public int getLowestNote() {
         List<Pair<Octave, Pitch>> toneList = piece.getToneRange();
         Pair<Octave, Pitch> note = toneList.get(0);

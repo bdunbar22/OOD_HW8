@@ -29,6 +29,10 @@ public class NoteImpl implements Note {
         this.note = new cs3500.music.model.Note(equalPitch, octaveToUse, start, end + 1 - start);
     }
 
+    /**
+     * Make an adapted note from a given note.
+     * @param note to use
+     */
     public NoteImpl(INote note) {
         this.note = note;
     }
@@ -56,37 +60,71 @@ public class NoteImpl implements Note {
             start, instrument, volume);
     }
 
+    /**
+     * See if two notes have the same tone.
+     *
+     * @param that another Note
+     * @return true if same tone. False otherwise.
+     */
     @Override
     public boolean sameSound(Note that) {
         return (getPitch() == that.getPitch() && getOctave() == that.getOctave());
     }
 
+    /**
+     * Compare two notes.
+     *
+     * @param o note to compare.
+     * @return integer result of comparison.
+     */
     @Override
     public int compareTo(Note o) {
         NoteComparator comparator = new NoteComparator();
         return comparator.compare(note, o.getNote());
     }
 
+    /**
+     * Get the end beat of a note.
+     *
+     * @return integer ending beat.
+     */
     @Override
     public int getEndBeat() {
         return note.getStart() + note.getDuration() - 1;
     }
 
+    /**
+     * Get the instrument being used.
+     * @return instrument.
+     */
     @Override
     public int getInstrument() {
         return note.getInstrument();
     }
 
+    /**
+     * Get the octave of a note.
+     * @return octave of note.
+     */
     @Override
     public int getOctave() {
         return note.getOctave().getValue();
     }
 
+    /**
+     * Get the start beat of a note.
+     * @return start beat.
+     */
     @Override
     public int getStartBeat() {
         return note.getStart();
     }
 
+    /**
+     * Get the note value.
+     *
+     * @return integer value
+     */
     @Override
     public int getValue() {
         int octave = note.getOctave().getValue();
@@ -94,18 +132,31 @@ public class NoteImpl implements Note {
         return (octave + 1) * 12 + pitchVal;
     }
 
+    /**
+     * Get the volume of a note.
+     *
+     * @return volume.
+     */
     @Override
     public int getVolume() {
         return note.getVolume();
     }
 
+    /**
+     * Get the pitch of a note.
+     *
+     * @return pitch
+     */
     @Override
     public Pitch getPitch() {
         int whichPitch = note.getPitch().ordinal();
         return Pitch.getPitch(whichPitch);
     }
 
-    //Allow to see what note is contained via copy.
+    /**
+     * Allow to see what note is contained via copy.
+     * @return note
+     */
     @Override
     public INote getNote() {
         return note.copy();
