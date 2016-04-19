@@ -92,7 +92,8 @@ public class GuiMusicViewAdapter implements IGuiView {
     }
 
     @Override public void scrollToStart() {
-
+        //TODO: for scrolling use draw from, get start beat, and get start note.
+        //see GuiViewFrame for details.
     }
 
     @Override public void scrollUp() {
@@ -115,10 +116,7 @@ public class GuiMusicViewAdapter implements IGuiView {
 
     }
 
-
-
     @Override public void updateViewPiece(IViewPiece viewPiece) {
 
     }
-
 }
