@@ -1,9 +1,12 @@
 package cs3500.music.view;
 
+import cs3500.music.adapters.GuiMusicViewAdapter;
 import cs3500.music.adapters.MusicModel;
 import cs3500.music.adapters.MusicModelImpl;
 import cs3500.music.adapters.MusicViewAdapter;
+import cs3500.music.viewGiven.GuiMusicView;
 import cs3500.music.viewGiven.MusicView;
+import cs3500.music.viewGiven.PlayableMusicView;
 import cs3500.music.viewGiven.ViewFactory;
 
 /**
@@ -36,6 +39,8 @@ public class MusicViewCreator {
     public static IMusicView create(String viewType, IViewPiece viewPiece) {
         MusicModel musicModel = new MusicModelImpl(viewPiece);
         MusicView musicView;
+        GuiMusicView guiMusicView;
+        PlayableMusicView playableMusicView;
         switch (viewType) {
             case "console":
                 return new ConsoleView(viewPiece);
@@ -45,25 +50,25 @@ public class MusicViewCreator {
             case "visual":
                 return new GuiViewFrame(viewPiece);
             case "visual2":
-                //TODO: make an adapter from gui music view to IGuiView and then use it
-                //instead of the music view adapter here.
-                musicView = ViewFactory.createMusicView("visual", musicModel);
-                return new MusicViewAdapter(musicView);
+                guiMusicView = ViewFactory.createGuiMusicView("visual", musicModel);
+                return new GuiMusicViewAdapter(guiMusicView);
             case "midi":
                 return new MidiViewImpl(viewPiece);
             case "midi2":
-                //TODO: make an adapter from playable music view to a ICompositeView
-                // use it instead of the music view adapter here.
-                musicView = ViewFactory.createMusicView("midi", musicModel);
-                return new MusicViewAdapter(musicView);
+                //TODO: we should make an interface that works like our IGuiView but only
+                // offers play beat instead of all of the other things. Then give that to our
+                // controller somehow adapted to an exiting class. Maybe make the IGuiView
+                // extend the new interface and then just check it matches that type for the
+                // timer setup in the controller. This would keep old code working and make the
+                // new code okay.
+                //playableMusicView = ViewFactory.createPlayableMusicView("midi", musicModel);
+                //return new GuiMusicViewAdapter(playableMusicView);
+                return new MidiViewImpl(viewPiece);
             case "composite":
                 return new CompositeView(viewPiece);
             case "composite2":
-                //TODO: make an adapter from playable music view to a
-                // ICompositeView
-                // use it instead of the music view adapter here.
-                musicView = ViewFactory.createMusicView("visual-midi", musicModel);
-                return new MusicViewAdapter(musicView);
+                guiMusicView = ViewFactory.createGuiMusicView("visual-midi", musicModel);
+                return new GuiMusicViewAdapter(guiMusicView);
             default:
                 throw new IllegalArgumentException(
                     "This view type is not supported. Please choose"

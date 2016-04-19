@@ -162,7 +162,7 @@ public class Controller implements IController {
      */
     private void configureTiming() {
         try {
-            if (!(musicView instanceof CompositeView)) {
+            if (!(musicView instanceof IGuiView)) {
                 throw new InvalidClassException(
                     "Only composite view requires timing to be " + "added");
             }
