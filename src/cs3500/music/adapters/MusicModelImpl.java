@@ -99,7 +99,7 @@ public class MusicModelImpl implements MusicModel {
     }
 
     public int getTempo() {
-        return piece.getTempo();
+        return piece.getTempo()/10;
     }
 
     public void setTempo(int tempo) {
