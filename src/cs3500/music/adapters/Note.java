@@ -6,9 +6,6 @@ import cs3500.music.model.INote;
  * Interface to represent Notes in a MusicModel
  */
 public interface Note extends Comparable<Note> {
- //TODO: Make sure our notes will work, change if needed on our side.
-  //TODO: Remove this file.
-
   /** Get the numeric value of this Note. Numeric value is calculated using the following
    * formula: (octave + 1)*12 + numeric value of pitch. C4 therefore has value 60.
    *

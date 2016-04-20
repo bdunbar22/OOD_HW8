@@ -181,4 +181,25 @@ public class GuiViewFrame extends JFrame implements GuiMusicView {
     return displayPanel.correspondsTo(Objects.requireNonNull(model, "Model must not be null"));
   }
 
+  /**
+   * Return a reference to the MusicModel this View is rendering.
+   *
+   * @return a reference to the MusicModel this View is rendering.
+   */
+  @Override
+  public MusicModel getModel() {
+    return displayPanel.getModel();
+  }
+
+  /**
+   * Change this view to render the input MusicModel
+   *
+   * @param model a new Model to render
+   * @throws NullPointerException if model is null
+   */
+  @Override
+  public void updateModel(MusicModel model) {
+    this.displayPanel.updateModel(model);
+  }
+
 }

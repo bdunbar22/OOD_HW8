@@ -28,9 +28,6 @@ public class CompositeView implements IGuiView {
         this.startBeat = 0;
     }
 
-    //TODO: make a IComposite view and use it instead of Composite view inside of the
-    // controller. This was a design flaw we had before that will help us out if we fix it.
-
     /**
      * An audible representation of music is given in this view. This should play based on the
      * current beat of the song. The controller can updateViewPiece the song and then view music

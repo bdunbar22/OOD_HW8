@@ -116,7 +116,15 @@ public class GuiMusicViewAdapter implements IGuiView {
 
     }
 
-    @Override public void updateViewPiece(IViewPiece viewPiece) {
-
+    /**
+     * Use the update and refresh functions of the gui music view to provide the update view
+     * piece functionality.
+     *
+     * @param viewPiece new model view to update with.
+     */
+    @Override
+    public void updateViewPiece(IViewPiece viewPiece) {
+        this.guiMusicView.updateModel(new MusicModelImpl(viewPiece));
+        this.guiMusicView.refresh();
     }
 }

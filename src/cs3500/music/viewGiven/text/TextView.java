@@ -14,8 +14,8 @@ import cs3500.music.viewGiven.MusicView;
  */
 public class TextView implements MusicView {
 
-  private final MusicModel model;
   private final Appendable appendable;
+  private MusicModel model;
 
   /**
    * Construct a TextView of the specified model. Prints a view to the specified appendable when
@@ -178,6 +178,27 @@ public class TextView implements MusicView {
   @Override
   public boolean correspondsTo(MusicModel model) {
     return Objects.requireNonNull(model, "Model must not be null") == this.model;
+  }
+
+  /**
+   * Return a reference to the MusicModel this View is rendering.
+   *
+   * @return a reference to the MusicModel this View is rendering.
+   */
+  @Override
+  public MusicModel getModel() {
+    return this.model;
+  }
+
+  /**
+   * Change this view to render the input MusicModel
+   *
+   * @param model a new Model to render
+   * @throws NullPointerException if model is null
+   */
+  @Override
+  public void updateModel(MusicModel model) {
+    this.model = Objects.requireNonNull(model, "Model cannot be null");
   }
 
 }

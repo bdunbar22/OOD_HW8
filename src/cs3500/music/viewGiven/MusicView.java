@@ -29,4 +29,20 @@ public interface MusicView {
    * @throws NullPointerException if model is null
    */
   boolean correspondsTo(MusicModel model);
+
+  /**
+   * Return a reference to the MusicModel this View is rendering.
+   *
+   * @return a reference to the MusicModel this View is rendering.
+   */
+  MusicModel getModel();
+
+  /**
+   * Change this view to render the input MusicModel
+   *
+   * @param model a new Model to render
+   * @throws NullPointerException if model is null
+   */
+  void updateModel(MusicModel model);
+
 }

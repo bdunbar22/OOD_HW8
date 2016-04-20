@@ -25,7 +25,7 @@ public class MidiViewImpl implements PlayableMusicView {
   private final Sequencer sequencer;
   private final Sequence sequence;
   private final Map<Integer, Integer> instrumentChannels;
-  private final MusicModel model;
+  private MusicModel model;
   private Track track;
 
   /**
@@ -231,4 +231,26 @@ public class MidiViewImpl implements PlayableMusicView {
   public boolean correspondsTo(MusicModel model) {
     return Objects.requireNonNull(model, "Model must not be null") == this.model;
   }
+
+  /**
+   * Return a reference to the MusicModel this View is rendering.
+   *
+   * @return a reference to the MusicModel this View is rendering.
+   */
+  @Override
+  public MusicModel getModel() {
+    return this.model;
+  }
+
+  /**
+   * Change this view to render the input MusicModel
+   *
+   * @param model a new Model to render
+   * @throws NullPointerException if model is null
+   */
+  @Override
+  public void updateModel(MusicModel model) {
+    this.model = Objects.requireNonNull(model, "Model cannot be null");
+  }
+
 }

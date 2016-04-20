@@ -19,7 +19,7 @@ public class GuiMidiView implements GuiMusicView {
 
   private final GuiMusicView gui;
   private final MidiViewImpl midi;
-  private final MusicModel model;
+  private MusicModel model;
 
   /**
    * Create a view from the specified model.
@@ -222,5 +222,27 @@ public class GuiMidiView implements GuiMusicView {
   @Override
   public boolean correspondsTo(MusicModel model) {
     return Objects.requireNonNull(model, "Model must not be null") == this.model;
+  }
+
+  /**
+   * Return a reference to the MusicModel this View is rendering.
+   *
+   * @return a reference to the MusicModel this View is rendering.
+   */
+  @Override
+  public MusicModel getModel() {
+    return model;
+  }
+
+  /**
+   * Change this view to render the input MusicModel
+   *
+   * @param model a new Model to render
+   * @throws NullPointerException if model is null
+   */
+  @Override
+  public void updateModel(MusicModel model) {
+    this.gui.updateModel(model);
+    this.midi.updateModel(model);
   }
 }

@@ -2,14 +2,14 @@ package cs3500.music.viewGiven.gui;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.*;
 
 import cs3500.music.adapters.MusicModel;
-import cs3500.music.adapters.NoteImpl;
-import cs3500.music.adapters.Pitch;
 import cs3500.music.adapters.Note;
-//TODO: see if allowed to change their import statements
+import cs3500.music.adapters.Pitch;
+import cs3500.music.adapters.NoteImpl;
 
 /**
  * A panel containing a visual view of a model
@@ -39,7 +39,7 @@ public class ConcreteGuiViewPanel extends JPanel {
 
   private static final Color SUSTCOLOR = Color.GREEN; // color of note sustains
 
-  private final MusicModel model;
+  private MusicModel model;
 
   private double currentBeat; // beat where progress bar is drawn
   private int startBeat; // leftmost beat column drawn (corresponds to beat in MusicModel)
@@ -372,4 +372,24 @@ public class ConcreteGuiViewPanel extends JPanel {
   boolean correspondsTo(MusicModel model) {
     return model == this.model;
   }
+
+  /**
+   * Return a reference to the MusicModel this View is rendering.
+   *
+   * @return a reference to the MusicModel this View is rendering.
+   */
+  MusicModel getModel() {
+    return this.model;
+  }
+
+  /**
+   * Change this view to render the input MusicModel
+   *
+   * @param model a new Model to render
+   * @throws NullPointerException if model is null
+   */
+  void updateModel(MusicModel model) {
+    this.model = Objects.requireNonNull(model, "Model cannot be null");
+  }
+
 }
