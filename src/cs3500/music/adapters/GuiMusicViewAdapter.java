@@ -34,7 +34,6 @@ public class GuiMusicViewAdapter implements IGuiView {
      */
     @Override public void viewMusic() {
         this.guiMusicView.render();
-        this.guiMusicView.play();
     }
 
     /**
@@ -98,11 +97,9 @@ public class GuiMusicViewAdapter implements IGuiView {
      */
     @Override
     public void playBeat(int currentBeat) {
-        this.guiMusicView.pause();
         this.guiMusicView.setBeat(currentBeat);
         this.guiMusicView.play();
         this.guiMusicView.pause();
-
     }
 
     @Override public void scrollToStart() {
