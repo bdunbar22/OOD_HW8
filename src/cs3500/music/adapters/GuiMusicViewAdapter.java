@@ -98,6 +98,7 @@ public class GuiMusicViewAdapter implements IGuiView {
         this.guiMusicView.pause();
         this.guiMusicView.setBeat(currentBeat);
         this.guiMusicView.play();
+        this.guiMusicView.pause();
 
     }
 
