@@ -1,6 +1,7 @@
 package cs3500.music.adapters;
 
 import cs3500.music.model.INote;
+import cs3500.music.view.GuiViewFrame;
 import cs3500.music.view.IGuiView;
 import cs3500.music.view.IViewPiece;
 import cs3500.music.viewGiven.GuiMusicView;
@@ -94,6 +95,8 @@ public class GuiMusicViewAdapter implements IGuiView {
     @Override public void scrollToStart() {
         //TODO: for scrolling use draw from, get start beat, and get start note.
         //see GuiViewFrame for details.
+        guiMusicView.drawFrom(0, guiMusicView.getStartNote());
+        guiMusicView.refresh();
     }
 
     @Override public void scrollUp() {
@@ -113,7 +116,11 @@ public class GuiMusicViewAdapter implements IGuiView {
     }
 
     @Override public void scrollToEnd() {
-
+        cs3500.music.viewGiven.gui.GuiViewFrame temp =
+            (cs3500.music.viewGiven.gui.GuiViewFrame) guiMusicView;
+        guiMusicView.drawFrom(guiMusicView.getModel().getNumberOfBeats() - temp
+            .getPreferredSize().width, guiMusicView.getStartNote());
+        guiMusicView.refresh();
     }
 
     /**
