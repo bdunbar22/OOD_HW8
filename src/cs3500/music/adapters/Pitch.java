@@ -17,8 +17,6 @@ public enum Pitch {
   ASHARP(10, "A#"),
   B(11, "B");
 
-  //TODO: Make sure our pitches will work, change if needed on our side.
-  //TODO: Remove this file.
   private int numValue; // numerical value of this Pitch, 0 indexed
   private String name; // String name of this pitch
 

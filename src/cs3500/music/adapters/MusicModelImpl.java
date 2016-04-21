@@ -136,7 +136,6 @@ public class MusicModelImpl implements MusicModel {
      */
     @Override
     public int getNumberOfBeats() {
-        //TODO: Make sure this is the last beat,
         return piece.getLastBeat() + 1;
     }
 

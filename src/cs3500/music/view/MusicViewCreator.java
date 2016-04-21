@@ -55,18 +55,6 @@ public class MusicViewCreator {
             case "midi":
                 return new MidiViewImpl(viewPiece);
             case "midi2":
-                //TODO: we should make an interface that works like our IGuiView but only
-                // offers play beat  (IPlayBeat) instead of all of the other things. Then our
-                // IGuiView can extend it and our controller will just check to see if it is of
-                // that type when configuring the timer.
-
-                //playableMusicView = ViewFactory.createPlayableMusicView("midi", musicModel);
-                //return new PlayableMusicViewAdapter(playableMusicView);
-                //PlayableMusicViewAdapter should implement IPlayBeat (which extends IMusicView)
-
-                //TODO: other option given below -> without touching controller at all from here
-                //convert playable music view into just an IMusicView and override the play
-                // music so that it playes non-stop given a playable music view.
                 playableMusicView = ViewFactory.createPlayableMusicView("midi", musicModel);
                 return new MusicViewAdapter(playableMusicView);
             case "composite":
