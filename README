@@ -1,0 +1,99 @@
+README
+
+Working in collaboration: Ben Dunbar and Sam Letcher
+
+Hello,
+
+This readme gives information on controller use and the ways in which we were able to
+successfully use the provided code.
+
+
+IMPORTANT!!!
+Configured location of text files in relation to the JAR for our Project:
+"../../../text/" + filename
+filename should include .txt in the command line argument.
+
+The Music Editor! It realizes a model for representing and editing music. It allows for a
+number of operations to be made to a musical work. It also provides eight views to be used on
+the model. The four views provided by the other group for this homework have been added and
+are working correctly just like the old views that we had.
+
+For homework 8 we made the following changes to our existing code:
+- Added missing javadocs.
+- Fixed one line  in the controller where a concrete class was being reference instead of
+  an interface. It didn't affect functionality but improved the quality of the code.
+
+For homework 8 we took the following steps to adapt for the provided code:
+------------------------------------------------------------------------------------------------
+1. Model adapting.
+   We adapted our model and notes to give the functionality of their model and notes. We did not
+   run into any difficult problems here.
+   See ----- MusicModelImpl.java ------
+   See ----- NoteImpl.java ------
+
+2. View creator updates.
+   We updated our view creator to allow for the creation of the new views
+   provided by the upstream group. It works just like before but now offers the additional
+   options. To do this we made use of their view creator within ours. We would create an
+   instance of their view class, and then give that to our adapted view class.
+   Offers:
+   "console" - our text view
+   "visual" - our gui view
+   "midi" - our audible view
+   "composite" - our editable and playable view!
+   "console2" - the provider's text view
+   "visual2" - the provider's gui view
+   "midi2" - the provider's audible view
+   "composite2" - the provider's editable and playable view!
+   See ----- MusicViewCreator.java ------
+
+3. View Adapting.
+   We made adapter classes to make it so that we used the provided views like black boxes to
+   implement our view interfaces. We adapted their normal MusicView to our IMusicView and we
+   adapted their GuiMusicView to our IGuiView.
+   After doing this correctly with some debugging, we successfully used the provided views. We
+   were able to do this without having to make any changes to our controller because of their
+   views.
+   This was made challenging because they had used a sequencer and we had used a timer for the
+   audible playback of music and we were blocked a couple times. However, we were successfully
+   able to make their view act like ours. Specifically, we had a playBeat method in our IGuiView
+   and were able to implement it eventually using their Play() and Pause() methods.
+   See ----- GuiMusicViewAdapter.java ------
+   See ----- MusicViewAdapter.java ------
+------------------------------------------------------------------------------------------------
+
+Controller Info:
+IController - controller interface
+Controller - controller impl
+KeyBoardHandler - implements KeyListener
+MouseHandler - implements mouse listener
+MouseHandlerHelper - Class similar to a Runnable except it offers specific functions to
+interact with the controller the way that was required.
+
+Controller functionality!!!!!!!!!!
+<h1>Functionality:</h1>
+<p>Right click - delete a note</p>
+<p>TOGGLE 'a', 'm', 'c', 'l' for operation modes.</p>
+<p>A = Add (default)</p>
+<p>M = Move </p>
+<p>C = Copy </p>
+<p>L = Location (user gets to enter a location outside of the song area)</p>
+<i>Pressing the key will enter the operation mode. Pressing a different key will switch
+modes. Starts at Add mode.</i>
+<p>Press 'r' reverses the song.</p>
+<p>Press 'b' to go back to the start</p>
+<p>Press arrow keys to scroll</p>
+<p>Press home and end to get to start and end of piece for viewing</p>
+<p>Press 1 and 0 also goes to start and end of piece for viewing</p>
+<p>Press 't' to update the tempo! Should do during pause. Have fun.</p>
+
+Space starts and starts in composition view.
+
+This uses a combination of key listening and mouse listening to create a music editor that is
+useful and fun to use. You can reverse the song, add notes, move notes, copy notes and scroll
+your view. What's not to love?
+
+All provided methods have been tested thoroughly.
+
+Best Regards,
+Ben Dunbar & Sam Letcher
