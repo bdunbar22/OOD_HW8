@@ -159,14 +159,15 @@ public class GuiMusicViewAdapter implements IGuiView {
     }
 
     private Dimension getPreferredSize() {
-        if (guiMusicView instanceof cs3500.music.viewGiven.gui.GuiViewFrame) {
-            cs3500.music.viewGiven.gui.GuiViewFrame temp
-                = (cs3500.music.viewGiven.gui.GuiViewFrame) guiMusicView;
-            return temp.getPreferredSize();
+        try {
+            if (guiMusicView instanceof cs3500.music.viewGiven.gui.GuiViewFrame) {
+                cs3500.music.viewGiven.gui.GuiViewFrame temp = (cs3500.music.viewGiven.gui.GuiViewFrame) guiMusicView;
+                return temp.getPreferredSize();
+            } else
+                throw new IllegalArgumentException("View is of invalid type");
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
-        else if (guiMusicView instanceof GuiMidiView) {
-            GuiMidiView temp = (GuiMidiView) guiMusicView;
-            temp
-        }
+        return null;
     }
 }
