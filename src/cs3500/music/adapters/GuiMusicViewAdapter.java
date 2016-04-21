@@ -34,6 +34,7 @@ public class GuiMusicViewAdapter implements IGuiView {
      */
     @Override public void viewMusic() {
         this.guiMusicView.render();
+        this.guiMusicView.play();
     }
 
     /**
@@ -97,10 +98,16 @@ public class GuiMusicViewAdapter implements IGuiView {
      */
     @Override
     public void playBeat(int currentBeat) {
-        this.guiMusicView.setBeat(currentBeat);
-        this.guiMusicView.play();
-        this.guiMusicView.pause();
+        //The given model uses a synthesizer. So it will play automatically.
+        //Exteneded controller can pause and start.
+
+        //this.guiMusicView.pause();
+        //this.guiMusicView.setBeat(currentBeat);
+        //this.guiMusicView.play();
     }
+    //TODO: maybe make an extended controller and just call pause and play separately when
+    // pressing space bar successive times. That was for sure we know it is not our fault that
+    // this is not working.
 
     @Override public void scrollToStart() {
         //TODO: for scrolling use draw from, get start beat, and get start note.
