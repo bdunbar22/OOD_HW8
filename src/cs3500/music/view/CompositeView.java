@@ -21,6 +21,11 @@ public class CompositeView implements IGuiView {
     MouseListener listenerMouse;
     int startBeat;
 
+    /**
+     * Constructor for composite view.
+     *
+     * @param viewPiece to use for viewing
+     */
     public CompositeView(IViewPiece viewPiece) {
         midiView = new MidiViewImpl(viewPiece);
         guiViewFrame = new GuiViewFrame(viewPiece);
@@ -34,15 +39,19 @@ public class CompositeView implements IGuiView {
      * at the
      * next beat again.
      */
-    @Override public void viewMusic() {
+    @Override
+    public void viewMusic() {
         guiViewFrame.viewMusic();
         midiView.viewMusicPerBeat(startBeat);
     }
 
     /**
      * Update the view piece being used by the member views.
+     *
+     * @param viewPiece new model view to update with.
      */
-    @Override public void updateViewPiece(IViewPiece viewPiece) {
+    @Override
+    public void updateViewPiece(IViewPiece viewPiece) {
         guiViewFrame.updateViewPiece(viewPiece);
         midiView.updateViewPiece(viewPiece);
     }
@@ -52,7 +61,8 @@ public class CompositeView implements IGuiView {
      *
      * @param listener for keys
      */
-    @Override public void addKeyListener(KeyListener listener) {
+    @Override
+    public void addKeyListener(KeyListener listener) {
         guiViewFrame.addKeyListener(listener);
         this.listenerKey = listener;
     }
@@ -68,7 +78,8 @@ public class CompositeView implements IGuiView {
      *
      * @param listener for mouse
      */
-    @Override public void addMouseListener(MouseListener listener) {
+    @Override
+    public void addMouseListener(MouseListener listener) {
         guiViewFrame.addMouseListener(listener);
         this.listenerMouse = listener;
     }
@@ -76,49 +87,85 @@ public class CompositeView implements IGuiView {
     /**
      * Offer the gui frames initialize.
      */
-    @Override public void initialize() {
+    @Override
+    public void initialize() {
         guiViewFrame.initialize();
     }
 
     /**
      * Allow composite view to give the get note from location by using the gui views method.
+     *
+     * @return note
      */
-    @Override public INote getNoteFromLocation(int x, int y) {
+    @Override
+    public INote getNoteFromLocation(int x, int y) {
         return guiViewFrame.getNoteFromLocation(x, y);
     }
 
     /**
      * Allow composite view to make the note from location by using the gui views method.
+     * @return note
      */
-    @Override public INote makeNoteFromLocation(int x, int y, int length) {
+    @Override
+    public INote makeNoteFromLocation(int x, int y, int length) {
         return guiViewFrame.makeNoteFromLocation(x, y, length);
     }
 
-    @Override public void scrollToStart() {
+    /**
+     * Scroll to start.
+     */
+    @Override
+    public void scrollToStart() {
         guiViewFrame.scrollToStart();
     }
 
-    @Override public void scrollToEnd() {
+    /**
+     * Scroll to end.
+     */
+    @Override
+    public void scrollToEnd() {
         guiViewFrame.scrollToEnd();
     }
 
-    @Override public void scrollUp() {
+    /**
+     * Scroll upwards.
+     */
+    @Override
+    public void scrollUp() {
         guiViewFrame.scrollUp();
     }
 
-    @Override public void scrollRight() {
+    /**
+     * Scroll right.
+     */
+    @Override
+    public void scrollRight() {
         guiViewFrame.scrollRight();
     }
 
-    @Override public void scrollDown() {
+    /**
+     * Scroll down.
+     */
+    @Override
+    public void scrollDown() {
         guiViewFrame.scrollDown();
     }
 
-    @Override public void scrollLeft() {
+    /**
+     * Scroll left.
+     */
+    @Override
+    public void scrollLeft() {
         guiViewFrame.scrollLeft();
     }
 
-    @Override public void playBeat(final int currentBeat) {
+    /**
+     * Play the notes that will be audible at this beat.
+     *
+     * @param currentBeat to view for
+     */
+    @Override
+    public void playBeat(final int currentBeat) {
         this.guiViewFrame.playBeat(currentBeat);
         this.midiView.viewMusicPerBeat(currentBeat);
     }

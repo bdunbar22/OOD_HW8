@@ -18,54 +18,130 @@ public class NoteList implements INoteList {
         notes = new ArrayList<>();
     }
 
-    @Override public void addNote(final INote note) {
+    /**
+     * Add a note to the list.
+     *
+     * @param note to add.
+     */
+    @Override
+    public void addNote(final INote note) {
         _addNote(note);
     }
 
-    @Override public void addNotes(final INote... notes) {
+    /**
+     * Add multiple notes to the list.
+     *
+     * @param notes to add
+     */
+    @Override
+    public void addNotes(final INote... notes) {
         _addNotes(notes);
     }
 
-    @Override public void addNotes(final List<INote> notes) {
+    /**
+     * Add multiple notes to the list.
+     *
+     * @param notes to add
+     */
+    @Override
+    public void addNotes(final List<INote> notes) {
         _addNotes(notes);
     }
 
-    @Override public void changeNote(final INote old, final INote update) {
+    /**
+     * Change a note. Change the old note to the updated version given.
+     *
+     * @param old to change
+     * @param update to use
+     */
+    @Override
+    public void changeNote(final INote old, final INote update) {
         _changeNote(old, update);
     }
 
-    @Override public void removeNote(final INote old) {
+    /**
+     * Remove a note from the piece if possible.
+     * @param old to remove.
+     */
+    @Override
+    public void removeNote(final INote old) {
         _removeNote(old);
     }
 
-    @Override public Boolean member(final INote check) {
+    /**
+     * See if a note is in the list.
+     *
+     * @param check note to look for
+     * @return true if present.
+     */
+    @Override
+    public Boolean member(final INote check) {
         return _member(check);
     }
 
-    @Override public String musicOutput() {
+    /**
+     * Get the string output.
+     *
+     * @return string.
+     */
+    @Override
+    public String musicOutput() {
         return _musicOutput();
     }
 
-    @Override public List<INote> getNotes() {
+    /**
+     * Get a copied list of notes from the notelist.
+     *
+     * @return notes
+     */
+    @Override
+    public List<INote> getNotes() {
         return _getNotes();
     }
 
-    @Override public List<INote> getNotesInBeat(final int beat) {
+    /**
+     * Get all the notes that will be present at a given beat.
+     *
+     * @param beat to return for
+     * @return all notes in beat.
+     */
+    @Override
+    public List<INote> getNotesInBeat(final int beat) {
         return _getNotesInBeat(beat);
     }
 
-    @Override public int getLastBeat() {
+    /**
+     * Get the last beat of a song.
+     * @return last beat integer
+     */
+    @Override
+    public int getLastBeat() {
         return _getLastBeat();
     }
 
-    @Override public List<Pair<Octave, Pitch>> getToneRange() {
+    /**
+     * Get the tone range of a song. A tone is a pitch and octave pair.
+     *
+     * @return range.
+     */
+    @Override
+    public List<Pair<Octave, Pitch>> getToneRange() {
         return _getToneRange();
     }
 
-    @Override public Map<Integer, List<INote>> getConsolidationMap() {
+    /**
+     * Get a consolidated version of the data. Used for fast access.
+     *
+     * @return consolidated data.
+     */
+    @Override
+    public Map<Integer, List<INote>> getConsolidationMap() {
         return _getConsolidationMap();
     }
 
+    /*
+     Add note to the list.
+     */
     private void _addNote(final INote note) {
         if (this.notes.contains(note)) {
             return;

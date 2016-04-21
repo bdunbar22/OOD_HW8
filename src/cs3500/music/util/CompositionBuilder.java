@@ -15,15 +15,38 @@ public class CompositionBuilder implements ICompositionBuilder<IPiece> {
         this.piece = new Piece();
     }
 
+    /**
+     * Build the piece.
+     *
+     * @return piece
+     */
+    @Override
     public IPiece build() {
         return piece;
     }
 
+    /**
+     * Set the tempo.
+     *
+     * @param tempo The speed, in microseconds per beat
+     * @return a builder
+     */
+    @Override
     public ICompositionBuilder<IPiece> setTempo(int tempo) {
         piece.setTempo(tempo);
         return this;
     }
 
+    /**
+     * Allow for the build of a composition by adding a note.
+     *
+     * @param start      The start time of the note, in beats
+     * @param end        The end time of the note, in beats
+     * @param instrument The instrument number (to be interpreted by MIDI)
+     * @param pitch      The pitch (in the range [0, 127], where 60 represents C4, the middle-C)
+     * @param volume     The volume (in the range [0, 127])
+     * @return
+     */
     public ICompositionBuilder<IPiece> addNote(int start, int end, int instrument, int pitch,
         int volume) {
         pitch = pitch - 12;

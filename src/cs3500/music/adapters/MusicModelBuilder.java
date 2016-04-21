@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * Builder class for MusicModel
+ * Builder class for MusicModel. Allow to create a music model.
  */
 public class MusicModelBuilder implements ICompositionBuilder<MusicModel> {
 

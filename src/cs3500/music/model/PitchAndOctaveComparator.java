@@ -13,7 +13,15 @@ public class PitchAndOctaveComparator implements Comparator<INote> {
         //Don't need to instantiate anything.
     }
 
-    @Override public int compare(INote note1, INote note2) {
+    /**
+     * Compare notes based on pitch and octave.
+     *
+     * @param note1 to use.
+     * @param note2 to compare.
+     * @return note comparison
+     */
+    @Override
+    public int compare(INote note1, INote note2) {
         //compare octave
         if (note1.getOctave().getValue() < note2.getOctave().getValue()) {
             return -1;

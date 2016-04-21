@@ -106,12 +106,14 @@ public class MouseHandler implements MouseListener {
         } catch (Exception exc) { /*Do nothing.*/ }
     }
 
-    @Override public void mouseEntered(MouseEvent e) {
+    @Override
+    public void mouseEntered(MouseEvent e) {
         // Nothing should be done, this is just mouse entering the part of the screen while
         // hovering.
     }
 
-    @Override public void mouseExited(MouseEvent e) {
+    @Override
+    public void mouseExited(MouseEvent e) {
         // Nothing should be done, this is just mouse leaving the part of the screen while
         // hovering.
     }

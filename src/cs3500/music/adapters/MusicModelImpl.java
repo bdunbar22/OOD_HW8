@@ -3,24 +3,28 @@ package cs3500.music.adapters;
 import cs3500.music.model.*;
 import cs3500.music.model.Pitch;
 import cs3500.music.view.IViewPiece;
+import cs3500.music.view.ViewPiece;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implement the model interface necesarry to use the provided view classes from the other group.
+ * Implement the model interface necessary to use the provided view classes from the other group.
+ * Adapting the existing model to the provided model interface so that the functionality of the
+ * existing model is used to allow the provided views to work with music.
  *
  * Created by Ben on 4/13/16.
  */
 public class MusicModelImpl implements MusicModel {
     IPiece piece = new Piece();
-
+    IViewPiece viewPiece;
     /**
      * Allow to create a new music model.
      */
     public MusicModelImpl() {
         this.piece = new Piece();
+        this.viewPiece = new ViewPiece(piece);
     }
 
     /**
@@ -29,6 +33,7 @@ public class MusicModelImpl implements MusicModel {
      */
     public MusicModelImpl(IPiece piece) {
         this.piece = piece;
+        this.viewPiece = new ViewPiece(piece);
     }
 
     /**
@@ -38,6 +43,7 @@ public class MusicModelImpl implements MusicModel {
     public MusicModelImpl(IViewPiece viewPiece) {
         this.piece = new Piece();
         this.piece.addNotes(viewPiece.getNotes());
+        this.viewPiece = viewPiece;
     }
 
     /**
@@ -45,6 +51,7 @@ public class MusicModelImpl implements MusicModel {
      *
      * @param note the Note to add
      */
+    @Override
     public void addNote(Note note) {
         piece.addNote(note.getNote());
     }
@@ -55,9 +62,10 @@ public class MusicModelImpl implements MusicModel {
      * @param beat the beat at which to query
      * @return the notes.
      */
+    @Override
     public List<Note> getNotesAtBeat(int beat) {
         List<Note> result = new ArrayList<>();
-        for (INote note : piece.getNotesInBeat(beat)) {
+        for (INote note : viewPiece.getNotesInBeat(beat)) {
             result.add(new NoteImpl(note));
         }
 
@@ -71,6 +79,7 @@ public class MusicModelImpl implements MusicModel {
      * @param startingBeat the beat at which to insert the other piece of music
      * @return resulting music model
      */
+    @Override
     public MusicModel addMusic(MusicModel otherMusic, int startingBeat) {
         MusicModelImpl otherMusicImpl = (MusicModelImpl) otherMusic;
         IPiece otherPiece = otherMusicImpl.getPiece();
@@ -91,6 +100,7 @@ public class MusicModelImpl implements MusicModel {
      * @param otherMusic another piece of music
      * @return resulting music model.
      */
+    @Override
     public MusicModel concatenateMusic(MusicModel otherMusic) {
         MusicModelImpl otherMusicImpl = (MusicModelImpl) otherMusic;
         IPiece otherPiece = otherMusicImpl.getPiece();
@@ -102,8 +112,9 @@ public class MusicModelImpl implements MusicModel {
      * Combine music via parallel addition of music.
      *
      * @param otherMusic another piece of music
-     * @return
+     * @return the model
      */
+    @Override
     public MusicModel overlayMusic(MusicModel otherMusic) {
         return this.addMusic(otherMusic, 0);
     }
@@ -113,6 +124,7 @@ public class MusicModelImpl implements MusicModel {
      *
      * @param n the note to remove
      */
+    @Override
     public void removeNote(Note n) {
         piece.removeNote(n.getNote());
     }
@@ -122,8 +134,8 @@ public class MusicModelImpl implements MusicModel {
      *
      * @return int number of beats.
      */
+    @Override
     public int getNumberOfBeats() {
-        //TODO: Make sure this is the last beat,
         return piece.getLastBeat() + 1;
     }
 
@@ -132,8 +144,9 @@ public class MusicModelImpl implements MusicModel {
      *
      * @param numBeats the new number of beats in the piece of music
      */
+    @Override
     public void setNumberOfBeats(int numBeats) {
-        //Unnecessary for this implementation.
+        //Unnecessary for this implementation. This is never used...
     }
 
     /**
@@ -141,6 +154,7 @@ public class MusicModelImpl implements MusicModel {
      *
      * @return int tempo
      */
+    @Override
     public int getTempo() {
         return piece.getTempo()/10;
     }
@@ -150,6 +164,7 @@ public class MusicModelImpl implements MusicModel {
      *
      * @param tempo the new tempo
      */
+    @Override
     public void setTempo(int tempo) {
         piece.setTempo(tempo);
     }
@@ -160,12 +175,12 @@ public class MusicModelImpl implements MusicModel {
      *
      * @return highest note as an integer representation.
      */
+    @Override
     public int getHighestNote() {
         List<Pair<Octave, Pitch>> toneList = piece.getToneRange();
         Pair<Octave, Pitch> note = toneList.get(toneList.size()-1);
         return note.getValue().ordinal() + (note.getKey().getValue() * 12) + 12;
     }
-
 
     /**
      * Get the lowest note in the piece. This means as a tone (pitch & octave) and represented
@@ -173,6 +188,7 @@ public class MusicModelImpl implements MusicModel {
      *
      * @return lowest note as an integer representation.
      */
+    @Override
     public int getLowestNote() {
         List<Pair<Octave, Pitch>> toneList = piece.getToneRange();
         Pair<Octave, Pitch> note = toneList.get(0);
