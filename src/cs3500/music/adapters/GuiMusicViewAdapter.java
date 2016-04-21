@@ -1,10 +1,13 @@
 package cs3500.music.adapters;
 
 import cs3500.music.model.INote;
+import cs3500.music.view.GuiViewFrame;
 import cs3500.music.view.IGuiView;
 import cs3500.music.view.IViewPiece;
 import cs3500.music.viewGiven.GuiMusicView;
+import cs3500.music.viewGiven.guimidi.GuiMidiView;
 
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -105,26 +108,43 @@ public class GuiMusicViewAdapter implements IGuiView {
     @Override public void scrollToStart() {
         //TODO: for scrolling use draw from, get start beat, and get start note.
         //see GuiViewFrame for details.
+        guiMusicView.drawFrom(0, guiMusicView.getStartNote());
+        guiMusicView.refresh();
     }
 
     @Override public void scrollUp() {
-
+        guiMusicView.drawFrom(
+            guiMusicView.getStartBeat(),
+            guiMusicView.getStartNote() + 1);
+        guiMusicView.refresh();
     }
 
     @Override public void scrollDown() {
-
+        guiMusicView.drawFrom(
+            guiMusicView.getStartBeat(),
+            guiMusicView.getStartNote() - 1);
+        guiMusicView.refresh();
     }
 
     @Override public void scrollRight() {
-
+        guiMusicView.drawFrom(
+            guiMusicView.getStartBeat() + 1,
+            guiMusicView.getStartNote());
+        guiMusicView.refresh();
     }
 
     @Override public void scrollLeft() {
-
+        guiMusicView.drawFrom(
+            guiMusicView.getStartBeat() - 1,
+            guiMusicView.getStartNote());
+        guiMusicView.refresh();
     }
 
     @Override public void scrollToEnd() {
-
+        guiMusicView.drawFrom(
+            guiMusicView.getModel().getNumberOfBeats() - getPreferredSize().width/20 + 10,
+            guiMusicView.getStartNote());
+        guiMusicView.refresh();
     }
 
     /**
@@ -137,5 +157,17 @@ public class GuiMusicViewAdapter implements IGuiView {
     public void updateViewPiece(IViewPiece viewPiece) {
         this.guiMusicView.updateModel(new MusicModelImpl(viewPiece));
         this.guiMusicView.refresh();
+    }
+
+    private Dimension getPreferredSize() {
+        if (guiMusicView instanceof cs3500.music.viewGiven.gui.GuiViewFrame) {
+            cs3500.music.viewGiven.gui.GuiViewFrame temp
+                = (cs3500.music.viewGiven.gui.GuiViewFrame) guiMusicView;
+            return temp.getPreferredSize();
+        }
+        else if (guiMusicView instanceof GuiMidiView) {
+            GuiMidiView temp = (GuiMidiView) guiMusicView;
+            temp
+        }
     }
 }
