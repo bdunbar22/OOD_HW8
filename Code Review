@@ -5,3 +5,8 @@ ViewFactory:
      statement, it calls the next most specific method. Instead of chaining methods, I would
      think it's more efficient to just have one switch statement.
 
+Can not add multiple notes at once based on the interface we were given.
+
+The gui view has a row of reduced width due to the thick line between octaves.
+
+The use of threads made it so that a couple tests didn't pass and it was hard to work with.

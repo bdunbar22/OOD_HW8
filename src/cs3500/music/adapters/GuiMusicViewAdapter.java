@@ -7,6 +7,7 @@ import cs3500.music.viewGiven.GuiMusicView;
 
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 /**
  * Implement the IGuiView using the provided GuiMusicView.
@@ -30,6 +31,7 @@ public class GuiMusicViewAdapter implements IGuiView {
      */
     @Override public void viewMusic() {
         this.guiMusicView.render();
+        this.guiMusicView.play();
     }
 
     /**
@@ -86,8 +88,16 @@ public class GuiMusicViewAdapter implements IGuiView {
         //Done automatically with render.
     }
 
-    //TODO: implement
-    @Override public void playBeat(int currentBeat) {
+    /**
+     * Allow for a single beat of a song to be played.
+     *
+     * @param currentBeat to view for
+     */
+    @Override
+    public void playBeat(int currentBeat) {
+        this.guiMusicView.pause();
+        this.guiMusicView.setBeat(currentBeat);
+        this.guiMusicView.play();
 
     }
 
