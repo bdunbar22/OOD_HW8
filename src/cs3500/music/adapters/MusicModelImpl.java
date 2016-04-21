@@ -3,6 +3,7 @@ package cs3500.music.adapters;
 import cs3500.music.model.*;
 import cs3500.music.model.Pitch;
 import cs3500.music.view.IViewPiece;
+import cs3500.music.view.ViewPiece;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -15,12 +16,13 @@ import java.util.List;
  */
 public class MusicModelImpl implements MusicModel {
     IPiece piece = new Piece();
-
+    IViewPiece viewPiece;
     /**
      * Allow to create a new music model.
      */
     public MusicModelImpl() {
         this.piece = new Piece();
+        this.viewPiece = new ViewPiece(piece);
     }
 
     /**
@@ -29,6 +31,7 @@ public class MusicModelImpl implements MusicModel {
      */
     public MusicModelImpl(IPiece piece) {
         this.piece = piece;
+        this.viewPiece = new ViewPiece(piece);
     }
 
     /**
@@ -38,6 +41,7 @@ public class MusicModelImpl implements MusicModel {
     public MusicModelImpl(IViewPiece viewPiece) {
         this.piece = new Piece();
         this.piece.addNotes(viewPiece.getNotes());
+        this.viewPiece = viewPiece;
     }
 
     /**
@@ -57,7 +61,7 @@ public class MusicModelImpl implements MusicModel {
      */
     public List<Note> getNotesAtBeat(int beat) {
         List<Note> result = new ArrayList<>();
-        for (INote note : piece.getNotesInBeat(beat)) {
+        for (INote note : viewPiece.getNotesInBeat(beat)) {
             result.add(new NoteImpl(note));
         }
 

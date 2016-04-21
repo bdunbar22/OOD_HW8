@@ -1,16 +1,14 @@
 package cs3500.music.adapters;
 
 import cs3500.music.model.INote;
-import cs3500.music.view.GuiViewFrame;
 import cs3500.music.view.IGuiView;
 import cs3500.music.view.IViewPiece;
 import cs3500.music.viewGiven.GuiMusicView;
-import cs3500.music.viewGiven.guimidi.GuiMidiView;
+import cs3500.music.viewGiven.gui.GuiViewFrame;
 
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.util.List;
 
 /**
  * Implement the IGuiView using the provided GuiMusicView.
@@ -19,6 +17,8 @@ import java.util.List;
  */
 public class GuiMusicViewAdapter implements IGuiView {
     private GuiMusicView guiMusicView;
+
+    private static final int TEMPO_TO_PERIOD = 1000;
 
     /**
      * Create the adapter from an existing gui music view.
@@ -34,7 +34,7 @@ public class GuiMusicViewAdapter implements IGuiView {
      */
     @Override public void viewMusic() {
         this.guiMusicView.render();
-        this.guiMusicView.play();
+        this.playBeat(0);
     }
 
     /**
@@ -79,7 +79,7 @@ public class GuiMusicViewAdapter implements IGuiView {
     @Override public INote makeNoteFromLocation(int x, int y, int length) {
         Note note = this.guiMusicView.getNoteFromPosition(x, y);
         INote note1 = note.getNote();
-        note1.setDuration(length/20);
+        note1.setDuration(length/20 + 1);
         return note1;
     }
 
@@ -92,26 +92,34 @@ public class GuiMusicViewAdapter implements IGuiView {
     }
 
     /**
-     * Allow for a single beat of a song to be played.
+     * Allow for a single beat of a song to be played. Allow for a refresh of the midi view.
      *
      * @param currentBeat to view for
      */
     @Override
     public void playBeat(int currentBeat) {
-        //The given model uses a synthesizer. So it will play automatically.
-        //Exteneded controller can pause and start.
-
-        //this.guiMusicView.pause();
-        //this.guiMusicView.setBeat(currentBeat);
-        //this.guiMusicView.play();
+        if(this.guiMusicView instanceof GuiViewFrame) {
+            this.guiMusicView.setBeat(currentBeat);
+            this.guiMusicView.refresh();
+            return;
+        }
+        Thread t = new Thread(() -> {
+                this.guiMusicView.setBeat(currentBeat);
+                this.guiMusicView.play();
+                long waitTime = this.guiMusicView.getModel().getTempo()/TEMPO_TO_PERIOD;
+                try {
+                    Thread.sleep(waitTime);
+                }
+                catch (InterruptedException e) {
+                    //do nothing.
+                }
+                this.guiMusicView.pause();
+        });
+        t.start();
     }
-    //TODO: maybe make an extended controller and just call pause and play separately when
-    // pressing space bar successive times. That was for sure we know it is not our fault that
-    // this is not working.
+
 
     @Override public void scrollToStart() {
-        //TODO: for scrolling use draw from, get start beat, and get start note.
-        //see GuiViewFrame for details.
         guiMusicView.drawFrom(0, guiMusicView.getStartNote());
         guiMusicView.refresh();
     }
