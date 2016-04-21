@@ -45,6 +45,12 @@ public class Controller implements IController {
     private Toggle toggle = Toggle.ADD;
     private int currentBeat;
 
+    /**
+     * Constructor for the controller. Given a piece and view.
+     *
+     * @param piece to use
+     * @param musicView to display
+     */
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
         this.musicView = musicView;

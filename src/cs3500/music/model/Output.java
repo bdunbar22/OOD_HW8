@@ -14,7 +14,13 @@ public enum Output {
         this.output = output;
     }
 
-    @Override public String toString() {
+    /**
+     * Convert to string.
+     *
+     * @return string result
+     */
+    @Override
+    public String toString() {
         return output;
     }
 }

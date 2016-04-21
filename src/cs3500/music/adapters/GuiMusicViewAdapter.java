@@ -12,6 +12,9 @@ import java.awt.event.MouseListener;
 
 /**
  * Implement the IGuiView using the provided GuiMusicView.
+ * This allows for the provided GuiMusicView to act like the IGuiView originally designed. In
+ * this way the gui view provided is adapted to the existing gui view and the controller does
+ * not need any modifications.
  *
  * Created by Ben on 4/18/16.
  */
@@ -32,7 +35,8 @@ public class GuiMusicViewAdapter implements IGuiView {
     /**
      * Allow for the normal display of music.
      */
-    @Override public void viewMusic() {
+    @Override
+    public void viewMusic() {
         this.guiMusicView.render();
         this.playBeat(0);
     }
@@ -49,6 +53,8 @@ public class GuiMusicViewAdapter implements IGuiView {
 
     /**
      * Allow for the addition of a mouse listener.
+     *
+     * @param listener mouse listener.
      */
     @Override
     public void addMouseListener(MouseListener listener) {
@@ -118,40 +124,62 @@ public class GuiMusicViewAdapter implements IGuiView {
         t.start();
     }
 
-
-    @Override public void scrollToStart() {
+    /**
+     * Allow for scrolling to the start of a piece.
+     */
+    @Override
+    public void scrollToStart() {
         guiMusicView.drawFrom(0, guiMusicView.getStartNote());
         guiMusicView.refresh();
     }
 
-    @Override public void scrollUp() {
+    /**
+     * Allow for scrolling upwards on the gui.
+     */
+    @Override
+    public void scrollUp() {
         guiMusicView.drawFrom(
             guiMusicView.getStartBeat(),
             guiMusicView.getStartNote() + 1);
         guiMusicView.refresh();
     }
 
-    @Override public void scrollDown() {
+    /**
+     * Allow for scrolling down on the gui.
+     */
+    @Override
+    public void scrollDown() {
         guiMusicView.drawFrom(
             guiMusicView.getStartBeat(),
             guiMusicView.getStartNote() - 1);
         guiMusicView.refresh();
     }
 
-    @Override public void scrollRight() {
+    /**
+     * Allow for scrolling right on the gui.
+     */
+    @Override
+    public void scrollRight() {
         guiMusicView.drawFrom(
             guiMusicView.getStartBeat() + 1,
             guiMusicView.getStartNote());
         guiMusicView.refresh();
     }
 
-    @Override public void scrollLeft() {
+    /**
+     * Allow for scrolling left on the gui.
+     */
+    @Override
+    public void scrollLeft() {
         guiMusicView.drawFrom(
             guiMusicView.getStartBeat() - 1,
             guiMusicView.getStartNote());
         guiMusicView.refresh();
     }
 
+    /**
+     * Allow to scroll to the end of the gui view.
+     */
     @Override public void scrollToEnd() {
         guiMusicView.drawFrom(
             guiMusicView.getModel().getNumberOfBeats() - getPreferredSize().width/20 + 10,
@@ -171,6 +199,7 @@ public class GuiMusicViewAdapter implements IGuiView {
         this.guiMusicView.refresh();
     }
 
+    //Get the normal size that is used for the gui.
     private Dimension getPreferredSize() {
         try {
             if (guiMusicView instanceof cs3500.music.viewGiven.gui.GuiViewFrame) {

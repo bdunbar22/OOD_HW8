@@ -15,7 +15,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-
+/**
+ * This is the main class that allows for the use of the music editor.
+ */
 public class MusicEditor {
     /**
      * Arguments to main should be the text file name and the view to use.
@@ -26,9 +28,10 @@ public class MusicEditor {
      */
     public static void main(String[] args) throws IOException, InvalidMidiDataException {
         try {
-            String fileName = "mystery-1.txt";//args[0];
-            String desiredView = "composite2";//args[1];
-            BufferedReader in = new BufferedReader(new FileReader("text/" + fileName));
+            String fileName = args[0];
+            String desiredView = args[1];
+            BufferedReader in = new BufferedReader(new FileReader("../../../text/" +
+                fileName));
             IPiece piece = MusicReader.parseFile(in, new CompositionBuilder());
             IViewPiece viewPiece = new ViewPiece(piece);
             IMusicView view = MusicViewCreator.create(desiredView, viewPiece);

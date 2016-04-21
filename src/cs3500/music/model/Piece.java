@@ -22,10 +22,12 @@ public final class Piece extends NoteList implements IPiece {
         this.tempo = 500000;
     }
 
+    @Override
     public int getMeasure() {
         return measure;
     }
 
+    @Override
     public void setMeasure(int measure) {
         this.measure = measure;
     }
@@ -38,15 +40,24 @@ public final class Piece extends NoteList implements IPiece {
         this.currentBeat = beat;
     }
 
+    @Override
     public int getTempo() {
         return this.tempo;
     }
 
+    @Override
     public void setTempo(final int tempo) {
         this.tempo = tempo;
     }
 
-    @Override public IPiece serialMerge(IPiece piece) {
+    /**
+     * Serial merge two pieces.
+     *
+     * @param piece to add
+     * @return new piece.
+     */
+    @Override
+    public IPiece serialMerge(IPiece piece) {
         IPiece builder = this.copy();
         final int lastNote = builder.getLastBeat();
 
@@ -57,14 +68,28 @@ public final class Piece extends NoteList implements IPiece {
         return builder;
     }
 
-    @Override public IPiece parallelMerge(IPiece piece) {
+    /**
+     * Parallel merge two pieces.
+     *
+     * @param piece to merge
+     * @return new piece
+     */
+    @Override
+    public IPiece parallelMerge(IPiece piece) {
         IPiece builder = this.copy();
         List<INote> notesToAdd = piece.getNotes();
         builder.addNotes(notesToAdd);
         return builder;
     }
 
-    @Override public IPiece changeField(NoteField field) {
+    /**
+     * Change a parameter on all of the notes in the piece. Based on given field.
+     *
+     * @param field to change
+     * @return new piece.
+     */
+    @Override
+    public IPiece changeField(NoteField field) {
         IPiece piece = this.copy();
         List<INote> notes = piece.getNotes();
         for (INote note : notes) {
@@ -75,7 +100,17 @@ public final class Piece extends NoteList implements IPiece {
         return piece;
     }
 
-    @Override public IPiece changeField(NoteField field, final int num) {
+
+    /**
+     * Change a parameter on all of the notes in the piece. Based on given field.
+     * Changes it th number of times provided
+     *
+     * @param field to change
+     * @param num times to increment.
+     * @return new piece.
+     */
+    @Override
+    public IPiece changeField(NoteField field, final int num) {
         //get piece after one change
         IPiece piece = this.changeField(field);
         //change that piece the rest of the times needed
@@ -85,7 +120,13 @@ public final class Piece extends NoteList implements IPiece {
         return piece;
     }
 
-    @Override public IPiece reversePiece() {
+    /**
+     * Reverse a piece.
+     *
+     * @return reversed piece
+     */
+    @Override
+    public IPiece reversePiece() {
         IPiece reversed = this.copy();
         final int lastBeat = reversed.getLastBeat();
         //get notes returns a deep copy of the list. But the changeNote function will use the
@@ -98,7 +139,13 @@ public final class Piece extends NoteList implements IPiece {
         return reversed;
     }
 
-    @Override public IPiece copy() {
+    /**
+     * Copy a piece.
+     *
+     * @return new piece
+     */
+    @Override
+    public IPiece copy() {
         IPiece copy = new Piece();
         List<INote> notes = this.getNotes();
         copy.addNotes(notes);

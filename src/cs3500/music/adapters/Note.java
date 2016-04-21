@@ -65,6 +65,9 @@ public interface Note extends Comparable<Note> {
    */
   boolean sameSound(Note that);
 
-  //see a copy of the corresponding model note.
+  /**
+   * Allow for the return of the stored INote.
+   * @return note.
+   */
   INote getNote();
 }

@@ -20,6 +20,7 @@ public class GuiViewFrame extends JFrame implements IGuiView {
 
     /**
      * Creates new GuiView
+     * @param viewPiece to use
      */
     public GuiViewFrame(IViewPiece viewPiece) {
         this.displayPanel = new GuiViewPanel(viewPiece);
@@ -30,6 +31,12 @@ public class GuiViewFrame extends JFrame implements IGuiView {
         this.pack();
     }
 
+    /**
+     * Create a GuiView from a viewpiece and scroll pane.
+     *
+     * @param viewPiece to use
+     * @param scrollPane to use
+     */
     public GuiViewFrame(IViewPiece viewPiece, JScrollPane scrollPane) {
         this.displayPanel = new GuiViewPanel(viewPiece);
         this.displayPanel.setPreferredSize(this.getPreferredSize());
@@ -42,25 +49,34 @@ public class GuiViewFrame extends JFrame implements IGuiView {
     /**
      * Make the frame visible
      */
-    @Override public void initialize() {
+    @Override
+    public void initialize() {
         this.setVisible(true);
     }
 
-    @Override public Dimension getPreferredSize() {
+    /**
+     * Get the preferred size of the panel
+     *
+     * @return dimension
+     */
+    @Override
+    public Dimension getPreferredSize() {
         return new Dimension(1500, 600);
     }
 
     /**
      * Show the graphical representation of the piece of music by making the frame visible.
      */
-    @Override public void viewMusic() {
+    @Override
+    public void viewMusic() {
         this.initialize();
     }
 
     /**
      * Update the view piece being used by the display panel
      */
-    @Override public void updateViewPiece(IViewPiece viewPiece) {
+    @Override
+    public void updateViewPiece(IViewPiece viewPiece) {
         this.displayPanel.resetViewPiece(viewPiece);
     }
 
@@ -69,8 +85,8 @@ public class GuiViewFrame extends JFrame implements IGuiView {
      *
      * @param listener to add
      */
-
-    @Override public void addMouseListener(MouseListener listener) {
+    @Override
+    public void addMouseListener(MouseListener listener) {
         this.displayPanel.addMouseListener(listener);
     }
 
@@ -81,7 +97,8 @@ public class GuiViewFrame extends JFrame implements IGuiView {
      * @param y location
      * @return note object if found.
      */
-    @Override public INote getNoteFromLocation(int x, int y) {
+    @Override
+    public INote getNoteFromLocation(int x, int y) {
         return displayPanel.getNoteFromLocation(x, y);
     }
 
@@ -93,7 +110,8 @@ public class GuiViewFrame extends JFrame implements IGuiView {
      * @param y location
      * @return note object made.
      */
-    @Override public INote makeNoteFromLocation(int x, int y, int length) {
+    @Override
+    public INote makeNoteFromLocation(int x, int y, int length) {
         return displayPanel.makeNoteFromLocation(x, y, length);
     }
 
@@ -107,29 +125,39 @@ public class GuiViewFrame extends JFrame implements IGuiView {
         displayPanel.scrollRectToVisible(r);
     }
 
-    @Override public void playBeat(final int currentBeat) {
+    /**
+     * Play the music at a given beat.
+     *
+     * @param currentBeat to view for
+     */
+    @Override
+    public void playBeat(final int currentBeat) {
         this.displayPanel.updateBeat(currentBeat);
     }
 
-    @Override public void scrollUp() {
+    @Override
+    public void scrollUp() {
         Rectangle r = displayPanel.getVisibleRect();
         r.translate(0, -30);
         displayPanel.scrollRectToVisible(r);
     }
 
-    @Override public void scrollRight() {
+    @Override
+    public void scrollRight() {
         Rectangle r = displayPanel.getVisibleRect();
         r.translate(30, 0);
         displayPanel.scrollRectToVisible(r);
     }
 
-    @Override public void scrollDown() {
+    @Override
+    public void scrollDown() {
         Rectangle r = displayPanel.getVisibleRect();
         r.translate(0, 30);
         displayPanel.scrollRectToVisible(r);
     }
 
-    @Override public void scrollLeft() {
+    @Override
+    public void scrollLeft() {
         Rectangle r = displayPanel.getVisibleRect();
         r.translate(-30, 0);
         displayPanel.scrollRectToVisible(r);

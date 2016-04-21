@@ -20,6 +20,16 @@ public final class Note implements INote {
     private int instrument;
     private int volume;
 
+    /**
+     * Allow for the creation of a note.
+     *
+     * @param pitch to use.
+     * @param octave to use.
+     * @param start beat.
+     * @param duration in beats.
+     * @param instrument to play.
+     * @param volume to use.
+     */
     public Note(final Pitch pitch, final Octave octave, final int start,
         final int duration, final int instrument, final int volume) {
         if (start < 0) {
@@ -65,50 +75,62 @@ public final class Note implements INote {
         this.volume = 64;
     }
 
+    @Override
     public int getStart() {
         return this.start;
     }
 
+    @Override
     public void setStart(final int start) {
         this.start = start;
     }
 
+    @Override
     public int getDuration() {
         return this.duration;
     }
 
+    @Override
     public void setDuration(final int duration) {
         this.duration = duration;
     }
 
+    @Override
     public Pitch getPitch() {
         return this.pitch;
     }
 
+    @Override
     public void setPitch(final Pitch pitch) {
         this.pitch = pitch;
     }
 
+    @Override
     public Octave getOctave() {
         return new Octave(this.octave.getValue());
     }
 
+    @Override
     public void setOctave(final Octave octave) {
         this.octave = octave;
     }
 
+    @Override
     public int getInstrument() {
         return this.instrument;
     }
 
+    @Override
     public void setInstrument(final int instrument) {
         this.instrument = instrument;
     }
 
+    @Override
     public int getVolume() {
         return this.volume;
     }
 
+    @Override
     public void setVolume(final int volume) {
         this.volume = volume;
     }
@@ -142,6 +164,7 @@ public final class Note implements INote {
      *
      * @param field to increment
      */
+    @Override
     public void increment(NoteField field) {
         switch (field) {
             case PITCH:
@@ -159,7 +182,14 @@ public final class Note implements INote {
         }
     }
 
-    @Override public boolean equals(Object check) {
+    /**
+     * Override equals for notes.
+     *
+     * @param check note
+     * @return true if equal.
+     */
+    @Override
+    public boolean equals(Object check) {
         if (!(check instanceof Note)) {
             throw new IllegalArgumentException(
                 "Incompatible object being compared to a note.");
@@ -169,7 +199,12 @@ public final class Note implements INote {
             this.start == checkNote.start && this.duration == checkNote.duration);
     }
 
-    @Override public int hashCode() {
+    /**
+     * Override hash code.
+     * @return unique integer. Same for notes that are equal.
+     */
+    @Override
+    public int hashCode() {
         return Objects.hash(this.pitch.hashCode(), this.octave.getValue(), this.start,
             this.duration);
     }
@@ -179,6 +214,7 @@ public final class Note implements INote {
      *
      * @return a copy of this note.
      */
+    @Override
     public INote copy() {
         return new Note(this.pitch, new Octave(this.octave.getValue()), this.start,
             this.duration, this.instrument, this.volume);
@@ -191,6 +227,7 @@ public final class Note implements INote {
      * @param checkNote to compare against.
      * @return true if the tone is the same and the note is starting to play.
      */
+    @Override
     public Boolean isStarting(INote checkNote) {
         return this.checkTone(checkNote) && this.start == checkNote.getStart();
     }
@@ -204,6 +241,7 @@ public final class Note implements INote {
      * @return true if the tone is the same and this note is persisting to play during start beat
      * of check note.
      */
+    @Override
     public Boolean isPersisting(INote checkNote) {
         if (!this.checkTone(checkNote)) {
             return false;

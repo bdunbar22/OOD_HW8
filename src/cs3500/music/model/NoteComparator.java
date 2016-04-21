@@ -16,6 +16,13 @@ public final class NoteComparator implements Comparator<INote> {
         //Don't need to instantiate anything.
     }
 
+    /**
+     * Compare two notes. Used to sort by starting beat, then pitch and octave
+     *
+     * @param note1 to use.
+     * @param note2 to compare.
+     * @return integer result.
+     */
     @Override
     public int compare(INote note1, INote note2) {
         //compare start beat first

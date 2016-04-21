@@ -14,6 +14,11 @@ public class MidiViewImpl implements IMusicView {
     private final Receiver receiver;
     private IViewPiece viewPiece;
 
+    /**
+     * Constructor for midi viewing
+     *
+     * @param viewPiece to use
+     */
     public MidiViewImpl(IViewPiece viewPiece) {
         this.viewPiece = viewPiece;
         Synthesizer trySynth;
