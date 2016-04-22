@@ -1,57 +1,62 @@
-Please place all code review comments on other teams code below.
+Code Review For Code From: kelseeng & shockman
+
+Factory and interface files provided:
 
 Factory - ViewFactory:
     # Implementation: Multiple constructor methods which have 2-case switch statements. On the
-    default
-    case of
-    each statement, it calls the next most specific builder method. Instead of chaining
-    methods, we would think it's more efficient to just have one switch statement which can
-    call any of the constructors and then return a new object of the required MusicView type.
+    default case of each statement, it calls the next most specific builder method. Instead of
+    chaining methods, we would think it's more efficient to just have one switch statement
+    which can call any of the constructors and then return a new object of the required
+    MusicView type.
 
     # Your javadocs are well written and appropriately descriptive.
 
 Interface - MusicView
     # Method - Refresh(): We believe that since there is no need for a refresh method for any
-    of the console views or midi views, this method should be moved GuiMusicView.
+    static views, like the text view, this method should be moved to GuiMusicView.
 
-    # Implementation: We think it may have been better to use a ViewModel, rather than a model
+    # Implementation: We think it may have been better to use a view model, rather than a model
     interface.
 
 Interface - PlayableMusicView
     # Implementation: We think this file is fine and well documented. All of the methods you
-    included are
-    appropriate and there aren't any that we could think to add.
+    included are appropriate and there aren't any that we could think to add.
 
 Interface - GuiMusicView
     # Method - getStartNote(): We think the javadoc could have been a bit more descriptive as
-    to how to use this method. We would have expected to receive a Note object, rather an int.
+    to how to use this method. Based on the java doc we would have expected to receive a Note
+    object, rather than an int.
 
     # Implementation: We believe that GuiMusicView should have a getPreferredSize method
     because it is useful for some external methods, and at the moment cannot be accessed.
 
     # Implementation: We think you could have provided scrolling methods here, given that most
     gui views will need to scroll, and that this is the most appropriate location for them.
+    Scrolling is possible via the draw from method and the get for start beat and note, but it
+    was confusing to work with.
 
-
-The following classes were sent to us to aid in the implementation of our adapter.
+The following classes were sent to us to use as black boxes when adapting the provided interfaces
+ to realize the functionality of our existing interfaces. Code review comments are included.
 
 Class - TextView:
     # Method - Refresh(): As we mentioned above, and as your code shows (refresh simply calls
     render()), there is no need for a refresh method in a text view.
 
 Class - MidiViewImpl:
-    # Method - BuildInstrumentMap(): We think this should be a private method since no external
-    class or methods should need to use it.
+    # Method - BuildInstrumentMap(): We think this should be marked as a private method since no
+    external class or methods should need to use it.
 
 Class - GuiMidiView:
     # Method - Render(): Render only displays the gui, but doesn't start playback of the midi -
     which is then called separately. We believe that Render() should start playback
     immediately.
 
-    # Implementation: The use of threads made it so that a couple tests didn't pass and it was
-    difficult to work with. We got repeated ConcurrentModificationExceptions and had
-    difficulty making a working composite view. We think that it would have been better to
-    just use one thread for the whole file, and manipulate that using a sequencer.
+    # Implementation: The use of new threads for each call to play() made it so that a couple
+    of your tests didn't pass and it was difficult to work with. We got repeated
+    ConcurrentModificationExceptions and had difficulty making a working composite view. We
+    think that it would have been better to just use one thread for the whole file, and
+    manipulate that using a sequencer. On the bright side though, we did eventually get the
+    composite view working, so the code itself was not broken, just confusing.
 
 Class - GuiViewFrame:
     # Method - GetPreferredSize(): This should be overridden from the Interface, as stated above.
@@ -61,12 +66,18 @@ Class - ConcreteGuiViewPanel:
     in the row directly below appear too narrow.
 
     # Implementation: As the gui view scrolls, the beat numbers in the top left corner tend to
-    overlap and cut each other off. We would suggest implementing a scrollable panel, rather
-    than just repainting your current view.
+    overlap and cut each other off. We would suggest implementing a scrollable panel and
+    changing which section is being viewed, rather than just repainting your current view.
 
 Outside error:
     # We found that you can not manually add multiple notes at once to the model, based on the
     view we were given. We would suggest adding a method which takes a List<Note>.
 
 Aside from the concerns detailed above, we found their code to be accessible and appropriately
-documented.
+documented and it was possible to adapt their code correctly and have a working product at the
+end of the assignment.
+
+Thanks,
+Ben & Sam
+
+

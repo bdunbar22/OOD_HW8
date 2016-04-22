@@ -201,15 +201,6 @@ public class GuiMusicViewAdapter implements IGuiView {
 
     //Get the normal size that is used for the gui.
     private Dimension getPreferredSize() {
-        try {
-            if (guiMusicView instanceof cs3500.music.viewGiven.gui.GuiViewFrame) {
-                cs3500.music.viewGiven.gui.GuiViewFrame temp = (cs3500.music.viewGiven.gui.GuiViewFrame) guiMusicView;
-                return temp.getPreferredSize();
-            } else
-                throw new IllegalArgumentException("View is of invalid type");
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new Dimension(1500, 500);
     }
 }
